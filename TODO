@@ -1,0 +1,57 @@
+This file records things that should be done to improve the tutorial
+presentation. Remove them from this lest when you apply the changes to
+the content.
+
+From Phil at ICS 2011:
+
+We used the slide deck from the similar-length tutorial session from
+the (2011) workshop. The timing was OK but not great, with the
+pre-intermission segment fitting in the 2-hour session before the
+break, and the post-intermission segment wrapping up somewhat early in
+the remaining 1.5 hours. We then switched to discussing broader
+questions, returning to some earlier discussions, and talking about
+prospective applications.
+
+The selection of content was mostly good, but a bit weird in places.
+
+- The deep dive on migratable threads might be sensible with a (long)
+discussion of AMPI, but that was explicitly out of scope so the
+threads discussion didn't really fit in.
+
+- One missing piece that I'd like to see is an early slide or two on
+the principles and philosophy of Charm++ programming: virtualization,
+overdecomposition, migratability, and the various things that are
+thereby intrinsic or extrinsic to application logic (respectively:
+decomposition, communication, control flow; mapping, load balancing,
+fault tolerance).
+
+- There were some points where the slides were not in a good order
+pedagogically, with the content creating forward references in the
+lecture, or leading the students to ask questions whose answers were
+forward references. This breaks up the natural flow of the lectures,
+and sometimes led to confusion.
+
+Here are a few points that I recall from looking over the slides now:
+0. [name of Blue Waters/BGQ communication API] is mentioned on the
+portability slides, while even that is apparently still NDA. LAPI is
+also mentioned in reference to the Blue Waters software stack.
+1. Chare array broadcasts should be discussed after the Hello World
+example showing point-to-point
+2. Prioritized execution should mention *critical paths* - the big use
+in NAMD, OpenAtom, ChaNGa
+3. The detail of the runtime queue being implemented in three chunks
+is utterly irrelevant detail. It's a priority queue, period.
+4. Initcall is deprecated in favor of initnode/initproc (per chamxi's
+own output), so shouldn't be mentioned. If it's still used in NAMD, we
+should fix that.
+5. Exclusive entry methods refer to node groups, which are discussed
+afterward. Perhaps those should be reordered.
+6. The definitions of group and nodegroup examples inherit from Group
+and NodeGroup, respectively. For consistency, we should always use
+CBase_foo. This also means that if a group is changed to or from an
+array, that part of its definition need not change.
+7. When mentioning fault tolerance, emphasize that message delivery is
+always reliable at the application layer. Developers don't need to
+follow the crazy "resilient MPI programming" movement that's starting.
+This should be explicit and clear in papers and presentations on
+Charm++ FT as well.
