@@ -1,0 +1,16 @@
+mainmodule main { 
+ 
+ readonly float targetDiff; 
+ readonly int gridWidth; 
+ readonly int gridHeight; 
+ readonly int tileWidth; 
+ readonly int tileHeight; 
+ 
+ mainchare Main { 
+ entry Main(); 
+ entry void reductionCallback(CkReductionMsg* msg); 
+ }; 
+ 
+ extern module tile; 
+} 
+
