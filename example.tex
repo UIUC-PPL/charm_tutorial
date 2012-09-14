@@ -1,0 +1,66 @@
+\documentclass{beamer}
+
+\input{tutorial_preamble}
+
+\begin{document}
+
+\begin{frame}[fragile]
+
+  \frametitle{Title of the Slide}
+
+  \begin{itemize}
+    \item point 1
+      \begin{itemize}
+      \item point 1.a
+        \begin{itemize}
+        \item point 1.a.i
+        \item point 1.a.ii
+        \end{itemize}
+      \item point 1.b
+      \end{itemize}
+    \item point 2
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Code Segment}
+
+  \begin{lstlisting}[basicstyle=\footnotesize]
+    for (remoteCount = 0; remoteCount < 6; remoteCount++) {
+        when updateGhosts[i](int i, int d, int w, int h, double b[w*h])
+        atomic { updateBoundary(d, w, h, b); }
+    }
+  \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Column Layout w/image}
+
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{itemize}
+      \item Overlap can be used to get back some of the asynchrony within a chare
+        \begin{itemize}
+        \item But it is constrained
+        \item Makes for more disciplined programming, 
+          \begin{itemize}
+          \item with fewer race conditions
+          \end{itemize}
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=0.8\textwidth]{classSlides/diagrams/overlapFlow.png}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Code Segment from File}
+  \lstinputlisting[basicstyle=\tiny,linerange={22-49}]{classSlides/code/jacobi3dSYNC.ci}
+\end{frame}
+
+
+\end{document}
