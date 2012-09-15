@@ -1,0 +1,56 @@
+\begin{frame}[fragile]
+  \frametitle{Task Parallelism with Objects}
+  \begin{itemize}
+    \item Divide-and-conquer
+      \begin{itemize}
+      \item Each object recursively creates $n$ objects that divide the problem
+        into subproblems
+      \item Each object $t$ then waits for all $n$ objects to finish and then may
+        `combine' the responses
+      \item At some point the recursion stops (at the bottom of the tree), and
+        some sequential kernel is executed
+      \item Then the result is propagated upward in the tree recursively
+      \item Examples: fibonacci, quick sort, $\ldots$
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fibonacci Example}
+  \begin{itemize}
+    \item Each \code{Fib} object is a task that performs one of two actions:
+      \begin{itemize}
+        \item Creates two new \code{Fib} objects to compute $fib(n-1)$ and
+          $fib(n-2)$ and then waits for the response, adding up the two
+          responses when they arrive
+          \begin{itemize}
+          \item After both arrive, sends a response message with the result to
+            the parent object
+          \item Or prints the value and exits if it is the root
+          \end{itemize}
+        \item If $n = 1$ or $n = 0$ (passed down from the parent) it sends a
+          response message with $n$ back to the parent object
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fibonacci Example}
+  \lstinputlisting[basicstyle=\tiny]{code/fibPsuedo.cpp}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fibonacci Execution}
+   \begin{center}
+     \includegraphics<1>[width=0.9\textwidth]{figures/tree1.pdf}
+     \includegraphics<2>[width=0.9\textwidth]{figures/tree2.pdf}
+     \includegraphics<3>[width=0.9\textwidth]{figures/tree3.pdf}
+     \includegraphics<4>[width=0.9\textwidth]{figures/tree4.pdf}
+     \includegraphics<5>[width=0.9\textwidth]{figures/tree5.pdf}
+     \includegraphics<6>[width=0.9\textwidth]{figures/tree6.pdf}
+     \includegraphics<7>[width=0.9\textwidth]{figures/tree7.pdf}
+     \includegraphics<8>[width=0.9\textwidth]{figures/tree8.pdf}
+     \includegraphics<9>[width=0.9\textwidth]{figures/tree9.pdf}
+     \includegraphics<10>[width=0.9\textwidth]{figures/tree10.pdf}
+   \end{center}
+\end{frame}

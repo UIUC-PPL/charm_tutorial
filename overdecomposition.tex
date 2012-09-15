@@ -1,0 +1,97 @@
+%% Grainsize slides
+
+\begin{frame}
+  \frametitle{Amdahls’s Law and Grainsize}
+  \begin{itemize}
+    \item Original ``law'':
+      \begin{itemize}
+      \item If a program has $K$\% sequential section, then speedup is limited
+        to $\frac{100}{K}$.
+        \begin{itemize}
+        \item If the rest of the program is parallelized completely
+        \end{itemize}
+      \end{itemize}
+    \item Grainsize corollary:
+      \begin{itemize}
+      \item If any individual piece of work is $> K$ time units, and the
+        sequential program takes $T_{seq}$, 
+        \begin{itemize}
+        \item Speedup is limited to $\frac{T_{seq}}{K}$
+        \end{itemize}
+      \end{itemize}
+    \item So:
+      \begin{itemize}
+      \item Examine performance data via histograms to find the sizes of
+        remappable work units
+      \item If some are too big, change the decomposition method to make
+        smaller units
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Grainsize}
+  \begin{itemize}
+    \item (working) Definition: the amount of computation per potentially
+      parallel event (task creation, enqueue/dequeue, messaging, locking. .)
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.7\textwidth]{figures/grain1.png} \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Grainsize and Overhead}
+  \begin{itemize}
+    \item What is the ideal grainsize?
+    \item Should it depend on the number of processors?
+    
+  \end{itemize}
+  \begin{center}
+    $T_1 = T \left( 1 + \frac{v}{g} \right)$\\
+    $T_p = max \left\{ g, \frac{T_1}{p} \right\}$\\
+    $T_p = max \left\{ g, \frac{T\left( 1+ \frac{v}{g} \right)}{p} \right\}$\\
+    $v$: overhead per message,\\
+    $T_p$: $p$ processor completion time\\
+    $g$: grainsize (computation per message)
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Grainsize and Scalability}
+  \begin{center} \includegraphics[width=0.7\textwidth]{figures/grain2.png} \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Rules of thumb for grainsize}
+  \begin{itemize}
+    \item Make it as small as possible, as long as it amortizes the overhead
+    \item More specifically, ensure:
+      \begin{itemize}
+      \item \textit{Average} grainsize is greater than $kv$ (say $10v$)
+      \item No single grain should be allowed to be too large 
+        \begin{itemize}
+          \item Must be smaller than $\frac{T}{p}$, but actually we can express
+            it as:
+          \item Must be smaller than $kmv$ (say $100v$)
+        \end{itemize}
+      \end{itemize}
+    \item Important corollary:
+      \begin{itemize}
+      \item You can be at close to optimal grainsize without having to think
+        about $p$, the number of processors
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{How to determine/ensure grainsize}
+  \begin{itemize}
+    \item Compiler techniques can help, but only in some cases
+      \begin{itemize}
+        \item Note that they don't need precise determination of grainsize,
+          just one that will satisfy a broad inequality
+          \begin{itemize}
+            \item $kv < g < mkv$ ($10v < g < 100v$)
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
