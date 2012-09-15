@@ -1,0 +1,79 @@
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects}
+  \begin{itemize}
+    \item Many problems have inherent order or structure
+    \item Especially trditional `technical computing' problems
+    \item Solution should use matching abstractions
+    \item Arrays, lists, maps of parallel objects
+    \item Specific segment of data, and associated computation and
+      communication
+    \item Need system support for efficient indexing
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects: Concepts}
+  \begin{itemize}
+    \item Basic examples
+      \begin{itemize}
+      \item Matrix block
+      \item Chunk of unstructured mesh
+      \item Portion of distributed data structure
+      \item Volume of simulation space
+      \end{itemize}
+      \pause
+    \item Advanced Examples
+      \begin{itemize}
+      \item Abstract portions of computation
+      \item Interactions among basic objects or underlying entities
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects}
+  \begin{itemize}
+    \item Structured: 1D, 2D, \ldots, 6D
+    \item Unstructured: Anything hashable
+      \pause
+    \item Dense
+    \item Sparse
+      \pause
+    \item Static - all created at once
+    \item Dynamic - elements come and go
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+
+  \frametitle{Collections of Objects}
+  \framesubtitle{Collective Operations}
+
+  \begin{itemize}
+    \item Broadcast: send a message to all objects in a collection \\
+      \lstinline{collection.method(foo, bar, baz);}
+    \item Multicacst: send a message to \emph{some} elements
+    \item Reduction: 
+  \end{itemize}
+
+\end{frame}
+
+
+
+%% Object Collections: Supporting Data Decomposition (Phil)
+
+%%     Motivate why object collections are needed
+%%         simple adding numbers example
+%%     Object Collections
+%%         decompose data and associated work
+%%         1/2/3D or more (eg: mesh chunk)
+%%         dense / sparse (sparse solvers, collision detection)
+%%         grow / shrink dynamically (AMR)
+%%         each object exposes same functionality (methods)
+%%         collection should be collectively addressable (method invocation on all objects)
+%%         show sample pseudo-code snippets
+%%     Object Collections: Collectives
+%%     Examples
+%%         simple scale a distributed vector (mcast)
+%%         simple add array of numbers (mcast + redn)
+%%         matrix vector product (mcast + gather)
