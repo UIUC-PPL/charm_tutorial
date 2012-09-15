@@ -5,6 +5,6 @@ mainmodule fib {
 
   chare Fib {
     entry Fib(int n, bool isRoot, CProxy_Fib parent);
-    entry void response(int value);
+    entry void respond(int value);
   };
 };
