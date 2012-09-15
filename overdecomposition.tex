@@ -95,3 +95,33 @@
       \end{itemize}
   \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Performance of Fibonacci Example}
+  \begin{itemize}
+  \item How much work/computation does each chare do in this example?
+  \item What are some of the overheads of this approach?
+  \item Is there way we can reduce/amortize the overhead?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Possible Solution}
+  \begin{itemize}
+  \item Set a sequential threshold in the computational tree
+    \begin{itemize}
+    \item Past this threshold (i.e. when $n < threshold$), instead of
+      constructing two new chares, compute the fibonacci sequentially
+    \end{itemize}
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.7\textwidth]{figures/tree-threshold.pdf} \end{center}
+  \begin{itemize}
+    \item $fib(5), fib(4)$ are fine grains, $fib(3), fib(2)$ are coarser grains
+    \item The coarser grains now amortize the cost of the fine-grained execution
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fibonacci w/Threshold Example}
+  \lstinputlisting[basicstyle=\tiny]{code/fib2.C}
+\end{frame}

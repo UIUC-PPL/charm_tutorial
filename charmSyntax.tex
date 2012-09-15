@@ -126,8 +126,8 @@ mainmodule hello {
 #include <stdio.h>
 #include "hello.decl.h"
 
-struct Main : public CBase_Main {
-  Main(CkArgMsg* m) {
+class Main : public CBase_Main {
+  public: Main(CkArgMsg* m) {
     ckout << "Hello World!" << endl;
     CkExit();
   };
@@ -409,4 +409,14 @@ entry void foobar2(CProxy_Main main);
 \begin{frame}[fragile]
   \frametitle{PI Example}
   \lstinputlisting{code/piWorker.C}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fibonacci Example}
+  \lstinputlisting{code/fib1.ci}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fibonacci Example}
+  \lstinputlisting[basicstyle=\tiny]{code/fib1.C}
 \end{frame}

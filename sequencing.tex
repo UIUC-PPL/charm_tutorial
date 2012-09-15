@@ -63,6 +63,43 @@
 %if -> while -> for
 
 \begin{frame}[fragile]
+  \frametitle{Structured Dagger Constructs: \code{when}}
+  \begin{itemize}
+    \item The \code{when} construct
+      \begin{itemize}
+        \item Declare the actions to perform when a message is received
+        \item In sequence, it acts like a blocking receive
+        %\item A \code{when} must have a corresponding declaration of an entry
+         % method
+        %\item The actual body of the corresponding entry method is generated
+        %\item A \code{when} is contextual: you may have different actions for
+        %  the same entry method depending on context
+      \end{itemize}
+    \item \code{when} semantics:
+      \begin{lstlisting}[basicstyle=\tiny]
+entry void someMethod() {
+  atomic { /* block1 */ }
+  when entryMethod1(parameters) atomic { /* block2 */ }
+  when entryMethod2(parameters) atomic { /* block3 */ }
+  atomic { /* block4 */ }
+}
+
+entry void entryMethod1(parameters);
+entry void entryMethod2(parameters);
+      \end{lstlisting}
+    \item Sequence
+      \begin{itemize}
+        \item Sequentially execute \code{/* block1 */}
+        \item Wait for \code{entryMethod1} to arrive, if it has not, return control
+          back to the Charm++ scheduler, otherwise, execute \code{/* block2 */}
+        \item Wait for \code{entryMethod2} to arrive, if it has not, return control
+          back to the Charm++ scheduler, otherwise, execute \code{/* block3 */}
+        \item Sequentially execute \code{/* block4 */}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Structured Dagger Constructs: \code{atomic}}
   \begin{itemize}
     \item The \code{atomic} construct
@@ -93,41 +130,6 @@ atomic {
 \begin{frame}[fragile]
   \frametitle{Structured Dagger Constructs: \code{when}}
   \begin{itemize}
-    \item The \code{when} construct
-      \begin{itemize}
-        \item Declare the actions to perform when a message is received
-        \item In sequence, it acts like a blocking receive
-        \item A \code{when} must have a corresponding declaration of an entry
-          method
-        \item The actual body of the corresponding entry method is generated
-        %\item A \code{when} is contextual: you may have different actions for
-        %  the same entry method depending on context
-      \end{itemize}
-    \item \code{when} semantics:
-      \begin{lstlisting}[basicstyle=\tiny]
-entry void someMethod() {
-  atomic { /* block1 */ }
-  when entryMethod1(parameters) {
-    // ... further code ...
-  }
-  atomic { /* block2 */ }
-}
-
-entry void entryMethod1(parameters);
-      \end{lstlisting}
-    \item Sequence
-      \begin{itemize}
-        \item Sequentially execute \code{/* block1 */}
-        \item Wait for \code{entryMethod1} to arrive, if it has not, return control
-          back to the Charm++ scheduler, otherwise, execute \code{/* further code */}
-        \item Sequentially execute \code{/* block2 */}
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{when}}
-  \begin{itemize}
   \item Execute \code{/* further sdag */} when \code{myMethod} arrives
   \begin{lstlisting}[basicstyle=\scriptsize]
 when myMethod(int param1, int param2)
@@ -149,6 +151,48 @@ when myMethod1(int param1, int param2)
   \end{lstlisting}
 
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Structured Dagger Boilerplate}
+  \begin{itemize}
+    \item Structured Dagger can be used in any entry method (except for a constructor)
+      \begin{itemize}
+      \item Can be used in a \code{mainchare}, \code{chare}, or \code{array}
+      \end{itemize}
+    \item For any class that has Structured Dagger in it you must insert two
+      calls:
+       \begin{itemize}
+         \item The Structured Dagger macro: \code{[ClassName]\_SDAG\_CODE}
+         \item Call the \code{\_\_sdag\_init()} initializer in the constructor
+         \item For later: call the \code{\_\_sdag\_pup()} in the \code{pup} method
+       \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structured Dagger Boilerplate}
+  The .ci file:
+  \begin{lstlisting}
+    [mainchare,chare,array] MyFoo {
+      ...
+      entry void method(parameters) {
+        // ... structured dagger code here ...
+      };
+      ...
+    }
+  \end{lstlisting}
+
+  The .cpp file:
+  \begin{lstlisting}
+    class MyFoo : public CBase_MyFoo {
+      MyFoo_SDAG_CODE /* insert SDAG macro */
+    public:
+      MyFoo() {
+        __sdag_init(); /* call SDAG initialization in constructor */
+      }
+    };
+  \end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -187,24 +231,24 @@ when myMethod1(int param1, int param2) {
 
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: Reference Numbers}
-  \begin{itemize}
-    \item Entry methods can be \emph{tagged} with a \emph{reference number}
-    \item A reference number is a special field in the envelope of the message
-      that is sent
-    \item By default, the reference number is a \code{short}
-    \item This can be changed when compiling charm:
-      \begin{itemize}
-      \item Add this to the build flags:
-        \code{--with-refnum-type=int}
-      \item For example, compiling on BG/P with the IBM XLC compiler:
+% \begin{frame}[fragile]
+%   \frametitle{Structured Dagger Constructs: Reference Numbers}
+%   \begin{itemize}
+%     \item Entry methods can be \emph{tagged} with a \emph{reference number}
+%     \item A reference number is a special field in the envelope of the message
+%       that is sent
+%     \item By default, the reference number is a \code{short}
+%     \item This can be changed when compiling charm:
+%       \begin{itemize}
+%       \item Add this to the build flags:
+%         \code{--with-refnum-type=int}
+%       \item For example, compiling on BG/P with the IBM XLC compiler:
 
-      \end{itemize}
-  \end{itemize}
-\code{./build charm++ bluegenep xlc --with-refnum-type=int -g -O0}
+%       \end{itemize}
+%   \end{itemize}
+% \code{./build charm++ bluegenep xlc --with-refnum-type=int -g -O0}
 
-\end{frame}
+% \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Structured Dagger Constructs: \code{when}}
@@ -227,29 +271,101 @@ when myMethod1(int param1, int param2) {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{when}}
+  \frametitle{Structured Dagger Constructs: \code{if-then-else}}
   \begin{itemize}
-  \item Another example:
+  \item The \code{if-then-else} construct:
+    \begin{itemize}
+    \item Same as the typical C if-then-else semantics and syntax
+    \end{itemize}
   \end{itemize}
-  .ci file:
   \begin{lstlisting}
-    chare MyChare {
-      entry MyChare();
-      entry void startWork() {
-        atomic { myRef = 100; }
-        when method1[myRef1](short ref, bool param1) /*  block1 */
-        when method2[myRef2](short ref, bool param1) /* block2 */
-      };
+  if (thisIndex.x == 10) {
+    forall [block] (0 : numBlocks - 1, 1) {
+      if (isPrime(block))
+        when method1[block](short ref, bool someVal) /* code block1 */
+    }
+  } else {
+    when method2(int payload) atomic {
+      //... some C++ code
+    }
+  }
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structured Dagger Constructs: \code{for}}
+  \begin{itemize}
+  \item The \code{for} construct:
+    \begin{itemize}
+    \item Defines a sequenced \code{for} loop (like a sequential C for loop)
+    \item Once the body for the $i$th iteration completes, the $i+1$ iteration
+      is started
+    \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}
+    for (iter = 0; iter < maxIter; ++iter) {
+      when recvLeft[iter](short num, int len, double data[len])
+        atomic { computeKernel(LEFT, data); }
+      when recvRight[iter](short num, int len, double data[len])
+        atomic { computeKernel(RIGHT, data); }
     }
   \end{lstlisting}
-  .cpp file:
+  \begin{itemize}
+  \item \code{iter} must be defined in the class as a member
+  \end{itemize}
   \begin{lstlisting}
-    class MyChare : public CBase_MyChare {
-       int myRef1, myRef2;
-       MyChare() : myRef2(200) { }
+    class Foo : public CBase_Foo {
+      public: int iter;
     };
   \end{lstlisting}
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structured Dagger Constructs: \code{while}}
+  \begin{itemize}
+  \item The \code{while} construct:
+    \begin{itemize}
+    \item Defines a sequenced \code{while} loop (like a sequential C while loop)
+    \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}
+    while (i < numNeighbors) {
+      when recvData(int len, double data[len]) {
+        atomic {
+          /* do something */
+        }
+        when method1() /* block1 */
+        when method2() /* block2 */
+      }
+      atomic { i++; }
+    }
+  \end{lstlisting}
+\end{frame}
+
+% \begin{frame}[fragile]
+%   \frametitle{Structured Dagger Constructs: \code{when}}
+%   \begin{itemize}
+%   \item Another example:
+%   \end{itemize}
+%   .ci file:
+%   \begin{lstlisting}
+%     chare MyChare {
+%       entry MyChare();
+%       entry void startWork() {
+%         atomic { myRef = 100; }
+%         when method1[myRef1](short ref, bool param1) /*  block1 */
+%         when method2[myRef2](short ref, bool param1) /* block2 */
+%       };
+%     }
+%   \end{lstlisting}
+%   .cpp file:
+%   \begin{lstlisting}
+%     class MyChare : public CBase_MyChare {
+%        int myRef1, myRef2;
+%        MyChare() : myRef2(200) { }
+%     };
+%   \end{lstlisting}
+% \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Structured Dagger Constructs: \code{overlap}}
@@ -299,60 +415,6 @@ when myMethod1(int param1, int param2) {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{for}}
-  \begin{itemize}
-  \item The \code{for} construct:
-    \begin{itemize}
-    \item Defines a sequenced \code{for} loop (like a sequential C for loop)
-    \item Once the body for the $i$th iteration completes, the $i+1$ iteration
-      is started
-    \end{itemize}
-  \end{itemize}
-  \begin{lstlisting}
-    for (iter = 0; iter < maxIter; ++iter) {
-      overlap {
-        when recvLeft[iter](short num, int len, double data[len])
-          atomic { computeKernel(LEFT, data); }
-        when recvRight[iter](short num, int len, double data[len])
-          atomic { computeKernel(RIGHT, data); }
-      }
-    }
-  \end{lstlisting}
-  \begin{itemize}
-  \item \code{iter} must be defined in the class as a member
-  \end{itemize}
-  \begin{lstlisting}
-    class Foo : public CBase_Foo {
-      public: int iter;
-    };
-  \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{while}}
-  \begin{itemize}
-  \item The \code{while} construct:
-    \begin{itemize}
-    \item Defines a sequenced \code{while} loop (like a sequential C while loop)
-    \end{itemize}
-  \end{itemize}
-  \begin{lstlisting}
-    while (i < numNeighbors) {
-      when recvData(int len, double data[len]) {
-        atomic {
-          /* do something */
-        }
-        overlap {
-          when method1() /* block1 */
-          when method2() /* block2 */
-        }
-      }
-      atomic { i++; }
-    }
-  \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Structured Dagger Constructs: \code{forall}}
   \begin{itemize}
   \item The \code{forall} construct:
@@ -370,71 +432,6 @@ when myMethod1(int param1, int param2) {
   \begin{itemize}
     \item Assume \code{block} is declared in the class as \code{public: short block;}
   \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{if-then-else}}
-  \begin{itemize}
-  \item The \code{if-then-else} construct:
-    \begin{itemize}
-    \item Same as the typical C if-then-else semantics and syntax
-    \end{itemize}
-  \end{itemize}
-  \begin{lstlisting}
-  if (thisIndex.x == 10) {
-    forall [block] (0 : numBlocks - 1, 1) {
-      if (isPrime(block))
-        when method1[block](short ref, bool someVal) /* code block1 */
-    }
-  } else {
-    when method2(int payload) atomic {
-      //... some C++ code
-    }
-  }
-  \end{lstlisting}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Structured Dagger Boilerplate}
-  \begin{itemize}
-    \item Structured Dagger can be used in any entry method (except for a constructor)
-      \begin{itemize}
-      \item Can be used in a \code{mainchare}, \code{chare}, or \code{array}
-      \end{itemize}
-    \item For any class that has Structured Dagger in it you must insert two
-      calls:
-       \begin{itemize}
-         \item The Structured Dagger macro: \code{[ClassName]\_SDAG\_CODE}
-         \item Call the \code{\_\_sdag\_init()} initializer in the constructor
-         \item For later: call the \code{\_\_sdag\_pup()} in the \code{pup} method
-       \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Structured Dagger Boilerplate}
-  The .ci file:
-  \begin{lstlisting}
-    [mainchare,chare,array] MyFoo {
-      ...
-      entry void method(parameters) {
-        // ... structured dagger code here ...
-      };
-      ...
-    }
-  \end{lstlisting}
-
-  The .cpp file:
-  \begin{lstlisting}
-    class MyFoo : public CBase_MyFoo {
-      MyFoo_SDAG_CODE /* insert SDAG macro */
-    public:
-      MyFoo() {
-        __sdag_init(); /* call SDAG initialization in constructor */
-      }
-    };
-  \end{lstlisting}
 \end{frame}
 
 % \begin{frame}[fragile]

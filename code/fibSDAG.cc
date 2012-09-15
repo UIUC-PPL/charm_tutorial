@@ -1,11 +1,12 @@
 #include "fib.decl.h"
 #define THRESHOLD 10
 
-struct Main : public CBase_Main {
-  Main(CkArgMsg* m) { CProxy_Fib::ckNew(atoi(m->argv[1]), true, CProxy_Fib()); }
+class Main : public CBase_Main {
+public: Main(CkArgMsg* m) { CProxy_Fib::ckNew(atoi(m->argv[1]), true, CProxy_Fib()); }
 };
 
-struct Fib : public CBase_Fib {
+class Fib : public CBase_Fib {
+public:
   Fib_SDAG_CODE
   CProxy_Fib parent; bool isRoot;
 
