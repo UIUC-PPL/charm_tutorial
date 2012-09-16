@@ -108,7 +108,7 @@
 \end{frame}
 
 
-\begin{frame}[fragile]
+\begin{frame}[t]
 \frametitle{Harnessing Parallelism}
 \framesubtitle{Trends in System Architecture}
   \begin{itemize}
@@ -129,7 +129,7 @@
 \end{frame}
 
 
-\begin{frame}[fragile]
+\begin{frame}[t]
 \frametitle{Harnessing Parallelism}
 \framesubtitle{Programming Models: MPI}
   \begin{itemize}
@@ -146,10 +146,36 @@
 
 \begin{frame}[fragile]
 \frametitle{Harnessing Parallelism}
-\framesubtitle{2D Jacobi Iterations}
-  \begin{itemize}
-  \item foo
-  \end{itemize}
+\framesubtitle{2D Jacobi Iterations: 5-point Stencil}
+   \begin{center} \includegraphics[width=0.6\textwidth]{figures/2DJacobi_NeighborComm.jpg} \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Harnessing Parallelism}
+\framesubtitle{2D Jacobi Iterations: No Overlap}
+    \lstinputlisting{code/jacobi2D-mpi.c}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Harnessing Parallelism}
+\framesubtitle{2D Jacobi Iterations: Some Overlap}
+    \lstinputlisting{code/jacobi2D-mpi-nonblocking.c}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Harnessing Parallelism}
+\framesubtitle{Composing Independent Parallel Modules}
+    fig to show space division
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Harnessing Parallelism}
+\framesubtitle{Composing Independent Parallel Modules}
+    fig to show time division
 \end{frame}
 
 \begin{frame}
