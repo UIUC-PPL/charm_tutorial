@@ -2,7 +2,7 @@
   \frametitle{Collections of Objects}
   \begin{itemize}
     \item Many problems have inherent order or structure
-    \item Especially trditional `technical computing' problems
+    \item Especially traditional `technical computing' problems
     \item Solution should use matching abstractions
     \item Arrays, lists, maps of parallel objects
     \item Specific segment of data, and associated computation and
@@ -45,18 +45,39 @@
 \end{frame}
 
 \begin{frame}[fragile]
-
-  \frametitle{Collections of Objects}
-  \framesubtitle{Collective Operations}
-
+  \frametitle{Collections of Objects: Communication}
   \begin{itemize}
-    \item Broadcast: send a message to all objects in a collection \\
-      \lstinline{collection.method(foo, bar, baz);}
-    \item Multicacst: send a message to \emph{some} elements
-    \item Reduction: 
+    \item Point-to-point: to one element of a collection
+    \item Broadcast: message to whole collection
+    \item Multicast: message to subset of collection
+    \item Reductions: message from (part of) collection
+    \item Runtime system must provide efficient delivery for all
   \end{itemize}
-
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects: Runtime Service}
+  \begin{itemize}
+    \item System knows how to `find' objects efficiently: $(collection, index) \to processor$
+    \item Applications can specify a mapping, or use simple
+      runtime-provided options (e.g. blocked, round-robin)
+    \item Distribution can be static, or dynamic!
+    \item Key abstraction: application logic doesn't change, even
+      though performance might
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects: Runtime Service}
+  \begin{itemize}
+    \item Can develop and test logic in objects separately from their distribution
+    \item Separation in time: make it work, then make it fast
+    \item Division of labor: domain specialist writes object code, computationalist writes mapping
+    \item Portability: different mappings for different systems, scales, or configurations
+    \item Shared progress: improved mapping techniaues can benefit existing code
+  \end{itemize}
+\end{frame}
+
 
 
 
