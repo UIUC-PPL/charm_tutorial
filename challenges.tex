@@ -1,9 +1,40 @@
-\begin{frame}[fragile]
-\frametitle{Getting Performance from Parallelism: Challenges}
-\framesubtitle{Machine characteristics}
+\begin{frame}[t]
+\frametitle{Harnessing Parallelism}
+\framesubtitle{Trends in System Architecture}
+    \begin{itemize}
+        \item Data movement is increasingly expensive
+            \begin{itemize}
+                \item (relatively) slow memory
+                \item (relatively) slow interconnects
+            \end{itemize}
+        \item Energy / Power considerations will exacerbate above
+        \pause
+        \item Compute resources are cheap
+            \begin{itemize}
+                \item Smaller footprint on silicon
+                \item Lower energy share compared to memory + interconnect
+            \end{itemize}
+    \end{itemize}
+    \pause
+    \begin{block}{Implications}
+       More available compute cycles for each incoming byte of data
+       %\pause
+       %\begin{itemize}
+       %    \item Restructure code to extract all flops from incoming operands
+       %    \item Avoid moving data. Instead recompute!
+       %    \item Commmunication-avoiding algorithms?
+       %\end{itemize}
+    \end{block}
+\end{frame}
+
+
+\begin{frame}[shrink]
+\frametitle{Harnessing Parallelism}
+\framesubtitle{Trends in System Architecture}
   \begin{columns}
-    \begin{column}{0.55\textwidth}
+    \begin{column}{0.60\textwidth}
       \begin{itemize}
+      \item However, compute resources are not faster cores, but \textbf{more cores}
       \item Unprecedented levels of available concurrency
         \begin{itemize}
         \item IBM BG/Q
@@ -20,19 +51,35 @@
         \end{itemize}
       \end{itemize}
     \end{column}
-    \begin{column}{0.45\textwidth}
+    \begin{column}{0.40\textwidth}
       \includegraphics[width=1\textwidth]{figures/mira.jpg}
     \end{column}
   \end{columns}
+
+    \pause
+    \begin{block}{Implications}
+        \begin{itemize}
+            \item Each thread of execution has to:
+                \begin{itemize}
+                    \item operate on lesser data
+                    \item wait relatively longer for remote data
+                \end{itemize}
+            \item Have to operate in \textbf{strong scaling} regime
+            % Even if you don't do anything, an 8GB problem will have to run on
+            % more cores a few years from now simply because there will be many
+            % more cores for the same 8GB 
+            % If a product has to stay ahead of the competition, it has to scale
+            % the same problem to even more cores with time to run faster
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 
 \begin{frame}[fragile]
-  \frametitle{Getting Performance from Parallelism: Challenges}
-  \framesubtitle{Machine characteristics}
+\frametitle{Harnessing Parallelism}
+\framesubtitle{Trends in System Architecture}
   \begin{itemize}
-  \item Longer data movement latencies (memory and network)
-  \item Architecture heterogeneity
+  \item Increasing heterogeneity
   \item Extracting performance on tighter power / energy budget
   \item Hardware component failures / faults
   \end{itemize}
@@ -40,16 +87,8 @@
 
 
 \begin{frame}[fragile]
-  \frametitle{Getting Performance from Parallelism: Challenges}
-  \framesubtitle{Strong Scaling will be increasingly important}
-  \begin{itemize}
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}[fragile]
-  \frametitle{Getting Performance from Parallelism: Challenges}
-  \framesubtitle{Application characteristics}
+\frametitle{Harnessing Parallelism}
+\framesubtitle{Application characteristics}
   \begin{itemize}
   \item Complex physics in multiple, interacting modules
   \item Adaptive, spatial and temporal resolutions
@@ -59,7 +98,7 @@
 
 
 \begin{frame}[fragile]
-\frametitle{Getting Performance from Parallelism: Challenges}
+\frametitle{Harnessing Parallelism}
 \framesubtitle{Programming Models: MPI}
   \begin{itemize}
     \item Highly successful
@@ -74,9 +113,10 @@
 
 
 \begin{frame}[fragile]
-\frametitle{Getting Performance from Parallelism: Challenges}
-\framesubtitle{Programming Models: MPI}
+\frametitle{Harnessing Parallelism}
+\framesubtitle{2D Jacobi Iterations}
   \begin{itemize}
+  \item foo
   \end{itemize}
 \end{frame}
 
