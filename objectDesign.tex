@@ -1,0 +1,44 @@
+\begin{frame}[fragile]
+\frametitle{Stuff you already know}
+\framesubtitle{Some issues with procedural code}
+
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \lstinputlisting[basicstyle=\tiny]{code/jacobi2D-mpi.c}
+    \end{column}
+    \begin{column}{0.6\textwidth}
+      \begin{itemize}
+      \item Very similar to sequential code
+      \item Tied to notion of communicating ranks
+      \item Explicitly states order of computation and communication
+      \item However no semantic connection between computation and its communication dependencies
+      \item Data is not well encapsulated.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+
+\begin{frame}[shrink]
+\frametitle{Stuff you already know}
+\framesubtitle{Benefits of Object-based code}
+    \begin{itemize}
+        \item Objects encapsulate data
+        \item Methods represent functionality relevant to that data
+        \item Method invocations can modify / update state of the object / data
+        \item Computation can be expressed in terms of objects interacting via method invocations
+    \end{itemize}
+    \begin{block}{}
+    \begin{itemize}
+        \item Methods are natural units of sequential computation on object data
+        \item Thoughtful design yields focused methods with single purpose
+        \item Naturally expresses an object's response to inputs (signals / data)
+    \end{itemize}
+    \end{block}
+    \begin{itemize}
+        \item Nothing new
+        \item Still quite uncommon in HPC code
+        \item Its not about language syntax. Its about program structure
+    \end{itemize}
+\end{frame}
