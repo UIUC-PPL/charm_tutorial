@@ -1,5 +1,5 @@
 \begin{frame}[t]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Trends in System Architecture}
     \begin{itemize}
         \item Data movement is increasingly expensive
@@ -29,7 +29,7 @@
 
 
 \begin{frame}[shrink]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Trends in System Architecture}
   \begin{columns}
     \begin{column}{0.60\textwidth}
@@ -76,7 +76,7 @@
 
 
 \begin{frame}[t]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Trends in System Architecture}
     \begin{itemize}
         \item Growing heterogeneity: Each thread of execution has different abilities
@@ -109,7 +109,7 @@
 
 
 \begin{frame}[t]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Trends in System Architecture}
   \begin{itemize}
   \item Extracting performance on tighter power / energy budget
@@ -119,7 +119,7 @@
 
 
 \begin{frame}[fragile]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Application characteristics}
   \begin{itemize}
   \item Complex physics in multiple, interacting modules
@@ -130,7 +130,7 @@
 
 
 \begin{frame}[t]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Programming Models: MPI}
   \begin{itemize}
     \item Highly successful
@@ -145,35 +145,35 @@
 
 
 \begin{frame}[fragile]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{2D Jacobi Iterations: 5-point Stencil}
    \begin{center} \includegraphics[width=0.6\textwidth]{figures/2DJacobi_NeighborComm.jpg} \end{center}
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{2D Jacobi Iterations: No Overlap}
     \lstinputlisting{code/jacobi2D-mpi.c}
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{2D Jacobi Iterations: Some Overlap}
     \lstinputlisting{code/jacobi2D-mpi-nonblocking.c}
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Composing Independent Parallel Modules}
     fig to show space division
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{Harnessing Parallelism}
+\frametitle{Harnessing Parallelism: Challenges}
 \framesubtitle{Composing Independent Parallel Modules}
     fig to show time division
 \end{frame}
