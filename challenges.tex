@@ -75,11 +75,43 @@
 \end{frame}
 
 
+\begin{frame}[t]
+\frametitle{Harnessing Parallelism}
+\framesubtitle{Trends in System Architecture}
+    \begin{itemize}
+        \item Growing heterogeneity: Each thread of execution has different abilities
+            \begin{itemize}
+                \item NUMA cores on each node
+                \item Secondary threads in SMT can be less capable (IBM Power 7)
+                \item Accelerators (NVIDIA / AMD GPUs, Intel MIC etc)
+                \item Some cores run system daemons
+                \item Combinations of above
+                    \begin{itemize}
+                        \item GPUs only on some nodes (BlueWaters: NCSA)
+                        \item MIC + SMT nodes (Stampede: TACC)
+                    \end{itemize}
+            \end{itemize}
+        \pause
+        \item Each architecture expects different treatment
+            \begin{itemize}
+                \item GPUs expect evenly divided pieces
+                \item SMT might expect uneven pieces (IBM Power7)
+            \end{itemize}
+    \end{itemize}
+    \pause
+    \begin{block}{Implications}
+        \begin{itemize}
+            \item Achieving load balance on such hardware is challenging
+            \item Minimizing idle time is extremely difficult
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
 \begin{frame}[fragile]
 \frametitle{Harnessing Parallelism}
 \framesubtitle{Trends in System Architecture}
   \begin{itemize}
-  \item Increasing heterogeneity
   \item Extracting performance on tighter power / energy budget
   \item Hardware component failures / faults
   \end{itemize}
