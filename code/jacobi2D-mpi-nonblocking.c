@@ -11,7 +11,6 @@ do {
 
     // Wait on boundary exchange
     MPI_Waitall();
-
     // Update boundary values
     compute_boundary();
 
@@ -19,4 +18,3 @@ do {
     compute_local_err();
     MPI_Allreduce();
 } while (not converged);
-
