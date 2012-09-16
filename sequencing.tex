@@ -63,7 +63,8 @@
 %if -> while -> for
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{when}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{when} construct}
   \begin{itemize}
     \item The \code{when} construct
       \begin{itemize}
@@ -75,7 +76,6 @@
         %\item A \code{when} is contextual: you may have different actions for
         %  the same entry method depending on context
       \end{itemize}
-    \item \code{when} semantics:
       \begin{lstlisting}[basicstyle=\tiny]
 entry void someMethod() {
   atomic { /* block1 */ }
@@ -100,7 +100,8 @@ entry void entryMethod2(parameters);
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{atomic}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{atomic} construct}
   \begin{itemize}
     \item The \code{atomic} construct
       \begin{itemize}
@@ -128,7 +129,8 @@ atomic {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{when}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{when} construct}
   \begin{itemize}
   \item Execute \code{/* further sdag */} when \code{myMethod} arrives
   \begin{lstlisting}[basicstyle=\scriptsize]
@@ -154,7 +156,8 @@ when myMethod1(int param1, int param2)
 \end{frame}
 
 \begin{frame}
-  \frametitle{Structured Dagger Boilerplate}
+  \frametitle{Structured Dagger}
+  \framesubtitle{Boilerplate}
   \begin{itemize}
     \item Structured Dagger can be used in any entry method (except for a constructor)
       \begin{itemize}
@@ -171,7 +174,8 @@ when myMethod1(int param1, int param2)
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Boilerplate}
+  \frametitle{Structured Dagger}
+  \framesubtitle{Boilerplate}
   The .ci file:
   \begin{lstlisting}
     [mainchare,chare,array] MyFoo {
@@ -206,7 +210,8 @@ when myMethod1(int param1, int param2)
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{when}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{when} construct}
 \begin{itemize}
   \item What is the sequence?
   \begin{lstlisting}[basicstyle=\scriptsize]
@@ -251,7 +256,8 @@ when myMethod1(int param1, int param2) {
 % \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{when}}
+  \frametitle{Structured Dagger Constructs}
+  \framesubtitle{The \code{when} construct}
   \begin{itemize}
     \item The \code{when} clause can wait on a certain reference number
     \item If a reference number is specified for a \code{when}, the first
@@ -271,7 +277,8 @@ when myMethod1(int param1, int param2) {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{if-then-else}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{if-then-else} construct}
   \begin{itemize}
   \item The \code{if-then-else} construct:
     \begin{itemize}
@@ -293,7 +300,8 @@ when myMethod1(int param1, int param2) {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{for}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{for} construct}
   \begin{itemize}
   \item The \code{for} construct:
     \begin{itemize}
@@ -321,7 +329,8 @@ when myMethod1(int param1, int param2) {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{while}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{while} construct}
   \begin{itemize}
   \item The \code{while} construct:
     \begin{itemize}
@@ -368,7 +377,8 @@ when myMethod1(int param1, int param2) {
 % \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{overlap}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{overlap} construct}
   \begin{itemize}
   \item The \code{overlap} construct:
     \begin{itemize}
@@ -415,7 +425,8 @@ when myMethod1(int param1, int param2) {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Structured Dagger Constructs: \code{forall}}
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{forall} construct}
   \begin{itemize}
   \item The \code{forall} construct:
     \begin{itemize}
