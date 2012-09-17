@@ -1,7 +1,35 @@
-%% Grainsize slides
 
 \begin{frame}
-  \frametitle{Amdahls’s Law and Grainsize}
+  \frametitle{Object-based Over-decomposition}
+  \begin{itemize} 
+    \item Let the programmer decompose computation into objects
+    \begin{itemize}
+       \item Work units, data-units, composites
+    \end{itemize}
+    \item Let an intelligent runtime system assign objects to processors
+    \begin{itemize}
+      \item RTS can change this assignment (mapping) during execution
+      \item Locality of data references is a critical attribute for performance 
+      \item A parallel object can access only its own data
+      \item Asynchronous method invocation for accessing other objects’ data
+      \item RTS can schedule work whose dependencies have been satisfied
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Object Boundaries}
+    \begin{itemize}
+      \item Parameters to methods of objects represent data dependencies
+      \item Programmer designs objects and methods with explicit dependencies
+      \item Flow of control is then the chain of dependencies
+      \item Overlap of independent computations happens automatically as dependencies are met via message delivery
+    \end{itemize}
+ \end{frame}
+
+%% Grainsize slides
+\begin{frame}
+  \frametitle{Amdahl’s Law and Grainsize}
   \begin{itemize}
     \item Original ``law'':
       \begin{itemize}
