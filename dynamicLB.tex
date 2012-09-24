@@ -45,16 +45,6 @@ The speed of any group is the speed of slowest member of that group.
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Grainsize and Load Balancing}
-\begin{itemize}
-\item[] How Much Balance Is Possible?
-\end{itemize}
-\begin{centering}
-\includegraphics[width=0.8\textwidth]{figures/histogramGrains}
-\end{centering}
-\end{frame}
-
-\begin{frame}[fragile]
 \frametitle{Automatic Dynamic Load Balancing}
 \begin{itemize}
 \item Measurement based load balancers
@@ -138,3 +128,246 @@ while (!converged) {
 \includegraphics[width=0.5\textwidth]{figures/afterLB}
 \end{centering}
 \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Grainsize and Load Balancing}
+\begin{itemize}
+\item[] How Much Balance Is Possible?
+\end{itemize}
+\begin{centering}
+\includegraphics[width=0.8\textwidth]{figures/histogramGrains}
+\end{centering}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Grainsize For Extreme Scaling}
+\begin{itemize}
+ \item Strong Scaling is limited by expressed parallelism
+ \begin{itemize}
+  \item Minimum iteration time limited lengthiest computation
+  \begin {itemize} 
+    \item Largest grains set lower bound
+  \end{itemize}
+ \end{itemize}
+ \item 1-away generalized to k-away provides fine granularity control
+\end{itemize}
+\begin{centering}
+\includegraphics[width=1.0\textwidth]{figures/1away2away}
+\end{centering}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{NAMD: 2-AwayX Example}
+\begin{centering}
+\includegraphics[width=1.0\textwidth]{figures/2awayDiagramPlusHistos}
+\end{centering}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Load Balancing Strategies}
+\begin{itemize}
+ \item Classified by when it is done:
+ \begin{itemize}
+  \item Initially
+  \item Dynamic: Periodically
+  \item Dynamic: Continuously
+ \end{itemize}
+ \item Classified by whether decisions are taken with global information
+ \begin{itemize}
+  \item Fully centralized
+  \begin{itemize}
+   \item Quite good a choice when load balancing period is high
+  \end{itemize}
+ \item Fully distributed
+ \begin{itemize}
+  \item Each processor knows only about a constant number of neighbors
+  \item Extreme case: totally local decision (send work to a random destination processor, with some probability).
+ \end{itemize}
+\item Use \emph{aggregated} global  information, and \emph{detailed} neighborhood info.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Dynamic Load Balancing Scenarios}
+\begin{itemize}
+ \item Examples representing typical classes of situations
+ \begin{itemize}
+  \item Particles distributed over simulation space
+  \begin{itemize}
+   \item Dynamic: because Particles move.
+   \begin{description}
+   \item Highly non-uniform distribution (cosmology)
+   \item Relatively Uniform distribution 
+   \end{description}
+  \end{itemize}
+ \end{itemize}
+\item Structured grids, with dynamic refinements/coarsening
+\item Unstructured grids with dynamic refinements/coarsening
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Example Case: Particles}
+ Orthogonal Recursive Bisection (ORB)
+ %should wrapfig the little diagram here
+ \begin{itemize} 
+  \item At each stage: divide Particles equally
+  \item Processor don’t need to be a power of 2:
+  \begin{itemize} 
+   \item Divide in proportion 
+   \begin{itemize} 
+    \item 2:3 with 5 processors
+   \end{itemize}
+  \end{itemize}
+ \item How to choose the dimension along which to cut?
+ \begin{itemize} 
+  \item Choose the longest one
+ \end{itemize}
+ \item How to draw the line?
+ \begin{itemize} 
+  \item All data on one processor? Sort along each dimension
+  \item Otherwise: run a distributed histogramming algorithm to find the line, recursively
+ \end{itemize}
+ \item Find the entire tree, and then do all data movement at once
+ \begin{itemize} 
+  \item Or do it in two-three steps.
+  \item But no reason to redistribute particles after drawing each line.
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Dynamic Load Balancing using Objects}
+
+Object based decomposition (I.e. virtualized decomposition) helps
+\begin{itemize}
+ \item Allows RTS to remap them to balance load
+ \item But how does the RTS decide where to map objects?
+ \item Just move objects away from overloaded processors to underloaded processors
+ \item How is load determined?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Measurement Based Load Balancing}
+\begin{itemize}
+ \item \emph{Principle of Persistence}
+ \begin{itemize}
+  \item Object communication patterns and computational loads tend to persist over time
+  \item In spite of dynamic behavior
+  \begin{itemize}
+   \item Abrupt but infrequent changes
+   \item Slow and small changes
+  \end{itemize}
+ \end{itemize}
+\item Runtime instrumentation
+\begin{itemize}
+ \item Measures communication volume and computation time
+\end{itemize}
+\item Measurement based load balancers
+\begin{itemize}
+ \item Use the instrumented data-base periodically to make new decisions
+ \item Many alternative strategies can use the database
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Periodic Load Balancing}
+
+Stop the computation?
+
+Centralized strategies:
+\begin{itemize}
+ \item Charm RTS collects data (on one processor) about:
+ \begin{itemize}
+  \item Computational Load and Communication for each pair
+ \end{itemize}
+ \item If you are not using AMPI/Charm, you can do the same instrumentation and data collection
+ \item Partition the graph of objects across processors
+ \begin{itemize}
+  \item Take communication into account
+  \begin{itemize}
+   \item Pt-to-pt, as well as multicast over a subset
+   \item As you map an object, add to the load on both sending and receiving processor
+  \end{itemize}
+  \item Multicasts to multiple co-located objects are effectively the cost of a single send
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typical Load Balancing Steps}
+\begin{centering}
+\includegraphics[width=1.0\textwidth]{figures/LBStepsDiagram}
+\end{centering}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Object Partitioning Strategies}
+\begin{itemize}
+ \item You can use graph partitioners like METIS, K-R
+ \begin{itemize}
+  \item BUT: graphs are smaller, and optimization criteria are different
+ \end{itemize}
+ \item Greedy strategies:
+ \begin{itemize}
+  \item If communication costs are low: use a simple greedy strategy
+  \begin{itemize}
+   \item Sort objects by decreasing load
+   \item Maintain processors in a heap (by assigned load)
+   \item In each step: 
+   \begin{description}
+    \item assign the heaviest remaining object to the least loaded processor
+   \end{description}
+  \end{itemize}
+  \item With small-to-moderate communication cost:
+  \begin{itemize}
+   \item Same strategy, but add communication costs as you add an object to a processor
+  \end{itemize}
+  \item Always add a refinement step at the end:
+  \begin{itemize}
+   \item Swap work from heaviest loaded processor to ``some other processor''
+   \item Repeat a few times or until no improvement 
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Object Partitioning Strategies 2}
+When communication cost is significant:
+\begin{itemize}
+ \item Still use greedy strategy, but:
+ \begin{itemize}
+  \item At each assignment step, choose between assigning O to least loaded processor and the processor that already has objects that communicate most with O.
+  \begin{itemize}
+   \item Based on the degree of difference in the two metrics
+   \item Two-stage assignments:
+   \begin{description}
+    \item In early stages,  consider communication costs as long as the processors are in the same (broad) load “class”,
+    \item In later stages, decide based on load
+   \end{description}
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+Branch-and-bound
+\begin{itemize}
+ \item Searches for optimal, but can be stopped after a fixed time
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Crack Propagation}
+\begin{centering}
+\includegraphics[width=0.4\textwidth]{figures/chunkGraph16}
+\includegraphics[width=0.4\textwidth]{figures/chunkGraph128}
+\end{centering}
+Decomposition into 16 chunks (left) and 128 chunks, 8 for each PE (right). The middle area contains cohesive elements. Both decompositions obtained using Metis. Pictures: S. Breitenfeld, and P. Geubelle
+
+As computation progresses, crack propagates, and new elements are added, leading to more complex computations in some chunks
+\end{frame}
+
+
