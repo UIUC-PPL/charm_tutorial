@@ -121,6 +121,8 @@ while (!converged) {
 \end{lstlisting}
 \end{frame}
 
+\input{migrationIntrospective}
+
 \begin{frame}
 \frametitle{Performance}
 \begin{centering}
@@ -370,4 +372,87 @@ Decomposition into 16 chunks (left) and 128 chunks, 8 for each PE (right). The m
 As computation progresses, crack propagates, and new elements are added, leading to more complex computations in some chunks
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Load Balancing Crack Propagation}
+\begin{centering}
+\includegraphics[width=1.0\textwidth]{figures/LButilizationCrackPropWithAnnotation}
+\end{centering}
+\end{frame}
 
+
+\begin{frame}[fragile]
+\frametitle{Distributed Load balancing}
+\begin{itemize}
+ \item Centralized strategies
+ \begin{itemize}
+  \item Still ok for 3000 processors for NAMD
+ \end{itemize}
+ \item Distributed balancing is needed when:
+ \begin{itemize}
+  \item Number of processors is large and/or 
+  \item load variation is rapid
+ \end{itemize}
+ \item Large machines: 
+ \begin{itemize}
+  \item Need to handle locality of communication
+  \begin{itemize}
+   \item Topology sensitive placement
+  \end{itemize}
+  \item Need to work with scant global information
+  \begin{itemize}
+   \item Approximate or aggregated global information (average/max load)
+   \item Incomplete global info (only “neighborhood”)
+   \item Work diffusion strategies (1980s work by Kale and others!)
+  \end{itemize}
+  \item Achieving global effects by local action…
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Load Balancing on Large Machines}
+\begin{itemize}
+ \item Existing load balancing strategies don’t scale on extremely large machines
+ \item Limitations of centralized strategies:
+ \begin{itemize}
+  \item Central node: memory/communication bottleneck
+  \item Decision-making algorithms tend to be very slow
+ \end{itemize}
+ \item Limitations of distributed strategies:
+ \begin{itemize}
+  \item Difficult to achieve well-informed load balancing decisions
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Simulation Study - Memory Overhead}
+lb\_test experiments performed with the performance simulator BigSim
+\includegraphics[width=1.0\textwidth]{figures/LButilizationCrackPropWithAnnotation}
+\begin{itemize}
+ \item lb\_test benchmark is a parameterized program that creates a 
+specified number of communicating objects in 2D-mesh.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Hierarchical Load Balancers}
+\begin{itemize}
+\item Partition processor allocation into processor groups
+\item Apply different strategies at each level
+\item Scalable to a large number of processors
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Our Hybrid Scheme}
+\includegraphics[width=1.0\textwidth]{figures/hybridLBScheme}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Hybrid Load Balancing Performance}
+\includegraphics[width=0.5\textwidth]{figures/hybridLBPerf}
+\includegraphics[width=0.5\textwidth]{figures/hybridLBquality}
+\end{frame}

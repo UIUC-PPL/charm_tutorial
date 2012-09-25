@@ -5,12 +5,41 @@
 \title[Load Balancing]{Optimizing Load Balance Using Parallel Migratable Objects}
 \institute[UIUC]{Parallel Programming Laboratory \\University of Illinois Urbana-Champaign}
 \author{Laxmikant V.~Kal\'e, Eric Bohm}
-\date{2012/9/24}
+\date{2012/9/25}
 
 \begin{document}
 
 \frame{\titlepage}
+
+\begin{frame}[fragile]
+\frametitle{Optimization Do's and Don'ts}
+\begin{itemize}
+ \item Correcting load imbalance is an optimization
+ \begin{itemize}
+  \item Like all optimizations, it is a cure to a performance ailment
+  \begin{itemize}
+   \item Diagnose the ailment before applying treatment
+  \end{itemize}
+  \item Use performance analysis tools to understand performance
+  \begin{itemize}
+   \item Ironically, we cover that material later...
+   \item But your process should be to use them early  
+  \end{itemize}
+  \item A sampling of tools of interest:
+  \begin{itemize}
+   \item Compiler reports for inlining, instruction level parallelism,
+   etc
+   \item Profiling tools (gprof, xprof, manual timing)
+   \item Hardware counters (PAPI, PCL, etc)
+   \item Valgrind memory tool suite
+   \item Parallel analysis tools: Projections, HPCToolkit, TAU,
+   JumpShot, etc.
+  \end{itemize}
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
 \input{dynamicLB}
-\input{migrationIntrospective}
+%\input{migrationIntrospective}
 \input{conclusion}
 \end{document}
