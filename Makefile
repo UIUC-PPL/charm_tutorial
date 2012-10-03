@@ -17,5 +17,5 @@ clean:
 	rm -f $(TARGET)
 
 web: $(TARGET)
-	if test -d "/www/users/ramv"; then cp $< /www/users/ramv/2012-09-charm-tutorial.pdf; fi
+	if test -d "/www/users/ramv"; then cp $< /www/users/ramv/2012-charm-tutorial.pdf; fi
 
