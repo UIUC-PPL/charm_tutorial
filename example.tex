@@ -28,7 +28,7 @@
   \begin{lstlisting}[basicstyle=\footnotesize]
     for (remoteCount = 0; remoteCount < 6; remoteCount++) {
         when updateGhosts[i](int i, int d, int w, int h, double b[w*h])
-        atomic { updateBoundary(d, w, h, b); }
+        serial { updateBoundary(d, w, h, b); }
     }
   \end{lstlisting}
 

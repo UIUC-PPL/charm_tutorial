@@ -95,7 +95,7 @@ The speed of any group is the speed of slowest member of that group.
 \frametitle{Example: Stencil}
 \begin{lstlisting}[basicstyle=\tiny]
 while (!converged) {
-  atomic {
+  serial {
     int x = thisIndex.x, y = thisIndex.y, z = thisIndex.z;
     copyToBoundaries();
     thisProxy(wrapX(x-1),y,z).updateGhosts(i, RIGHT, dimY, dimZ, right);
@@ -104,16 +104,16 @@ while (!converged) {
   }
   for (remoteCount = 0; remoteCount < 6; remoteCount++) {
     when updateGhosts[i](int i, int d, int w, int h, double b[w*h])
-    atomic { updateBoundary(d, w, h, b); }
+    serial { updateBoundary(d, w, h, b); }
   }
-  atomic {
+  serial {
     int c = computeKernel() < DELTA;
     CkCallback cb(CkReductionTarget(Jacobi, checkConverged), thisProxy);
     if (i%5 == 1) contribute(sizeof(int), \&c, CkReduction::logical_and, cb);
   }
-  if (i % lbPeriod == 0) { atomic { AtSync(); } when ResumeFromSync() {} }
+  if (i % lbPeriod == 0) { serial { AtSync(); } when ResumeFromSync() {} }
   if (++i % 5 == 0) {
-    when checkConverged(bool result) atomic {
+    when checkConverged(bool result) serial {
       if (result) { mainProxy.done(); converged = true; }
     }
   }
