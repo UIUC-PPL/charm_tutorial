@@ -13,8 +13,8 @@
       \end{itemize}
     \item Common Features:
 \begin{itemize}
-\item Easy checkpoint: 
-\item migrate-to-disk leverages object-migration capabilities
+\item Easy checkpoint 
+\item Migrate-to-disk leverages object-migration capabilities
 \item Based on dynamic runtime capabilities
 \item Can be used in concert with load-balancing schemes
      \end{itemize}
@@ -30,18 +30,15 @@
   allocation another day! 
 \end{itemize}
 
-\item The existing Charm++ infrastructure for chare migration helps:
+\item The existing Charm++ infrastructure for chare migration helps
 \item Just ``migrate'' chares to disk
-\item The call to checkpoint the application is made at a quiescent
-  point from one of the processor
-
-\item CHECK IF THIS IS TRUE
+\item The call to checkpoint the application is made in the main chare at a synchronization point
 \end{itemize}
 
  \begin{lstlisting}[basicstyle=\footnotesize]
 
-. . .  CkCallback cb(CkIndex_Hello::SayHi(),helloProxy);
-       CkStartCheckpoint(``log'',cb);
+      CkCallback cb(CkIndex_Hello::SayHi(),helloProxy);
+      CkStartCheckpoint(``log'',cb);
 
 > ./charmrun hello +p4 +restart log
 
@@ -50,7 +47,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{In-memory checkplinting with auto restart}
+  \frametitle{In-memory checkpointing with auto restart}
 \begin{itemize}
 
 \item Idea: checkpoint data in a buddy processor's memory, in addition
