@@ -1,3 +1,187 @@
-\begin{frame}
-\frametitle{import the pptx slides from executionModelandBenefits.pptx}
+\begin{frame}[t]
+\frametitle{Observations}
+\framesubtitle{Exascale Applications}
+  \begin{itemize}
+    \item Development of new models must be driven by the needs of exascale applications
+    \begin{itemize}
+      \item Multi-resolution
+      \item Multi-module (multi-physics)
+      \item Dynamic/adaptive: to handle application variation
+      \item Adapt to a volatile computational environment
+      \item Exploit heterogeneous architecture
+      \item Deal with thermal and energy considerations
+    \end{itemize}
+    \pause
+    \item So? Consequences:
+    \begin{itemize}
+      \item Must support automated resource management
+      \item Must support interoperability and parallel composition
+    \end{itemize}
+  \end{itemize}
 \end{frame}
+
+\begin{frame}[t]
+\frametitle{The Execution Model}
+  \begin{itemize}
+    \item Several objects live on a single ``processor”
+    \begin{itemize}
+      \item We will come back what we mean by a processor.
+      \begin{itemize}
+        \item For now, think of it as a core
+      \end{itemize}
+    \end{itemize}
+  \item As a result, 
+    \begin{itemize}
+      \item the method invocations directed at objects on that processor will have to be stored in a pool,
+      \item And a user-level scheduler will select one invocation from the Quque and and runs it completion
+    \end{itemize}
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.7\textwidth]{figures/scheduler} \end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Message-driven Execution}
+  \begin{itemize}
+    \item Execution is trigggered by availability of a ``message” (a method invocation)
+    \item When an entry method executes, 
+    \begin{itemize}
+      \item it may generate messages for other objects
+      \item the RTS deposits them in the message Q on the target processor
+    \end{itemize}
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.7\textwidth]{figures/scheduler} \end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Utility for Multi-cores, Many-cores, Accelerators}
+  \begin{itemize}
+    \item Objects connote and promote locality
+    \item Message-driven execution is
+    \begin{itemize}
+      \item A strong principle of prediction for data and code use
+      \item Much stronger than principle of locality
+      \begin{itemize}
+        \item Can use to scale memory wall
+        \item Prefetching of needed data, e.g, into scratch pad memories
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.7\textwidth]{figures/scheduler} \end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Impact on communication}
+  \begin{itemize}
+    \item Current use of communication network
+    \begin{itemize}
+      \item Compute-communicate cycles in typical MPI apps
+      \item So, the network is used for a fraction of time
+      \item and is on the critical path
+    \end{itemize}
+    \item So, current communication networks are over-engineered for by necessity
+    \item With overdecomposition
+    \begin{itemize}
+      \item Communication is spread over an iteration
+      \item Also, adaptive overlap of communication and computation
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Example: Stencil Computation}
+  \begin{itemize}
+    \item Consider a simple stencil computation
+    \begin{itemize}
+      \item With traditional design based on traditional methods (e.g.  MPI-based)
+      \begin{itemize}
+        \item Each processor has a chunk, which alternates between computing and communicating
+      \end{itemize}
+      \item With Charm++
+      \begin{itemize}
+        \item Multiple chinks on each processor
+        \item Wait time for each chunk overlapped with useful computation for the other
+        \item Communication spreads over time
+      \end{itemize}
+      \item \textcolor{red}{A Simple schematic timeline for both approaches?}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Example: Stencil Computation}
+  \begin{center} \includegraphics[width=\textwidth]{figures/stencil_timeline} \end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Example: Stencil Computation}
+Without message-driven execution (and virtualization), you get either: Space-division
+
+  \begin{center} \includegraphics[width=\textwidth]{figures/stencil_space} \end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Example: Stencil Computation}
+Sequentialization
+
+  \begin{center} \includegraphics[width=\textwidth]{figures/stencil_seq} \end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Example: Stencil Computation}
+Powerpoints defeats Latex - dont know how to recreate the catchy animation from
+original slides
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{MD Parallelization Using Charm++}
+The computation is decomposed into ``natural” objects of the application, which
+are assigned to processors by Charm++ RTS
+  \begin{center} \includegraphics[width=\textwidth]{figures/md_parallelize.pdf} \end{center}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Decomposition Independent of numCores}
+  \begin{columns}
+    \column{.7\textwidth}
+    \begin{itemize}
+      \item Rocket simulation under traditional MPI
+    \end{itemize}
+    \begin{center} \includegraphics[width=.6\textwidth]{figures/rocket_mpi} \end{center}
+    \pause
+    \begin{itemize}
+      \item Rocket simulation with migratable objects
+    \end{itemize}
+    \begin{center} \includegraphics[width=.6\textwidth]{figures/rocket_charm} \end{center}
+    \begin{itemize}
+      \item
+      \begin{itemize}
+      \item Benefit: load balance, communication optimizations, modularity
+      \end{itemize}
+    \end{itemize}
+    \column{.3\textwidth}
+    \vfill
+    \visible<1->{
+    \begin{center} \includegraphics<0->[width=\textwidth]{figures/rocket.png} \end{center}
+    }
+    \vfill
+  \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Migratability}
+  \begin{itemize}
+    \item Once the programmer has written the code without reference to processors
+      \begin{itemize}
+        \item With all the communication expressed as that between objects
+      \end{itemize}
+    \item The system is free to migrate the objects across processors as and when it pleases
+      \begin{itemize}
+        \item It must ensure it can deliver method invocations to the objects, whereever they go
+        \item This migratability turns out to be a key attribute for empowering an adaptive runtime system
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+
