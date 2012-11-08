@@ -117,6 +117,34 @@ are assigned to processors by Charm++ RTS
 \end{frame}
 
 \begin{frame}[t]
+\frametitle{Migratability}
+  \begin{itemize}
+    \item Once the programmer has written the code without reference to processors
+      \begin{itemize}
+        \item With all the communication expressed as that between objects
+      \end{itemize}
+    \item The system is free to migrate the objects across processors as and when it pleases
+      \begin{itemize}
+        \item It must ensure it can deliver method invocations to the objects, whereever they go
+        \item This migratability turns out to be a key attribute for empowering an adaptive runtime system
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% TODO: fill in these slides
+\begin{frame}[t]
+  \frametitle{Load Balancing}
+\end{frame}
+
+\begin{frame}[t]
+  \frametitle{Automatic Overlap of Communication and Computation}
+\end{frame}
+
+\begin{frame}[t]
+  \frametitle{Fault Tolerance}
+\end{frame}
+
+\begin{frame}[t]
 \frametitle{Decomposition Independent of numCores}
   \begin{columns}
     \column{.7\textwidth}
@@ -144,20 +172,6 @@ are assigned to processors by Charm++ RTS
   \end{columns}
 \end{frame}
 
-\begin{frame}[t]
-\frametitle{Migratability}
-  \begin{itemize}
-    \item Once the programmer has written the code without reference to processors
-      \begin{itemize}
-        \item With all the communication expressed as that between objects
-      \end{itemize}
-    \item The system is free to migrate the objects across processors as and when it pleases
-      \begin{itemize}
-        \item It must ensure it can deliver method invocations to the objects, whereever they go
-        \item This migratability turns out to be a key attribute for empowering an adaptive runtime system
-      \end{itemize}
-  \end{itemize}
-\end{frame}
 
 
 
