@@ -36,7 +36,7 @@
 \emph{Golden Rule: It is ok if a few processors idle, but avoid having processors that are overloaded with work}
 
 
-\emph{Finish time} = maxi(Time on processor i)
+\emph{Finish time} = $max_i$(Time on processor $i$)
 \begin{itemize}
 \item[] excepting data dependence and communication overhead issues
 \end{itemize}
@@ -134,9 +134,17 @@ while (!converged) {
 \begin{itemize}
 \item[] How Much Balance Is Possible?
 \end{itemize}
-\begin{centering}
-\includegraphics[width=0.8\textwidth]{figures/histogramGrains}
-\end{centering}
+\begin{columns}
+  \begin{column}[T]{2.8in}
+  \includegraphics[width=2.8in, height=2.0in]{figures/histogramGrains}
+  \end{column}
+
+  \begin{column}[T]{5cm}
+  Solution:\\ 
+  Split compute objects that may have too much work,
+  using a heuristic based on number of interacting atoms
+  \end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -144,7 +152,7 @@ while (!converged) {
 \begin{itemize}
  \item Strong Scaling is limited by expressed parallelism
  \begin{itemize}
-  \item Minimum iteration time limited lengthiest computation
+  \item Minimum iteration time limited by lengthiest computation
   \begin {itemize} 
     \item Largest grains set lower bound
   \end{itemize}
@@ -196,10 +204,13 @@ while (!converged) {
   \item Particles distributed over simulation space
   \begin{itemize}
    \item Dynamic: because Particles move.
-   \begin{description}
-   \item Highly non-uniform distribution (cosmology)
-   \item Relatively Uniform distribution 
-   \end{description}
+   \item Cases:\\
+   Highly non-uniform distribution (cosmology)\\
+   Relatively Uniform distribution 
+   %\begin{description}[parskip]
+   %\item Highly non-uniform distribution (cosmology)
+   %\item Relatively Uniform distribution 
+   %\end{description}
   \end{itemize}
  \end{itemize}
 \item Structured grids, with dynamic refinements/coarsening
@@ -317,10 +328,11 @@ Centralized strategies:
   \begin{itemize}
    \item Sort objects by decreasing load
    \item Maintain processors in a heap (by assigned load)
-   \item In each step: 
-   \begin{description}
-    \item assign the heaviest remaining object to the least loaded processor
-   \end{description}
+   \item In each step: \\
+   %\begin{description}
+   % \item 
+   assign the heaviest remaining object to the least loaded processor
+   %\end{description}
   \end{itemize}
   \item With small-to-moderate communication cost:
   \begin{itemize}
@@ -345,11 +357,10 @@ When communication cost is significant:
   \item At each assignment step, choose between assigning O to least loaded processor and the processor that already has objects that communicate most with O.
   \begin{itemize}
    \item Based on the degree of difference in the two metrics
-   \item Two-stage assignments:
-   \begin{description}
-    \item In early stages,  consider communication costs as long as the processors are in the same (broad) load “class”,
-    \item In later stages, decide based on load
-   \end{description}
+   \item Two-stage assignments:\\
+    In early stages,  consider communication costs as long as the processors are
+    in the same (broad) load “class”,\\
+    In later stages, decide based on load
   \end{itemize}
  \end{itemize}
 \end{itemize}
