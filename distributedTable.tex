@@ -1,0 +1,99 @@
+\begin{frame}[fragile]
+
+  \frametitle{Power of Asynchrony}
+  \framesubtitle{Example}
+
+  \begin{itemize}
+    \item Consider the following problem:
+    \begin{itemize}
+      \item A large number of key-value pairs are distributed on several (hundred) processors  (or chares)
+      \pause
+      \item Each chare needs to get some subset of these values before they can proceed to the next phase of the computation
+      \pause 
+      \item The set of keys needed are not known in advance: they are determined based on the input data
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structured dagger version}
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i=0,n {
+      keys[i] = compute i’th key;
+      KeyValues[keys[i]/B].requestValue( keys[i], thisProxy, i); 
+  }
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i= 0,n 
+      when response(i,value)
+          serial { values[i] = value;}
+
+  // next phase of computation that’s uses the keys and values.
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  KeyValueClass::requestValue(int key, Cproxy_Client c, int ref )
+  {  
+      ValueType v = localTable[key];
+      c.response(ref, v); 
+  }
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+
+  \frametitle{Threaded EP version}
+
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i=0,n {
+      keys[i] = compute i’th key;
+      futures[i] = CkCreateFuture();
+      KeyValues[keys[i]/B].requestViaFuture(futures[i], keys[i]); 
+  }
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i= 0,n {
+      ValueMsg * m = CkWaitFuture(futures[i]);
+      values[i] = m->value;
+  }
+  // next phase of computation that’s uses the keys and values.
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  KeyValueClass::requestViaFuture(CkFuture f , int key)
+  {  
+      ValueType v = localTable[key];
+      ValueMsg * m = new ValueMsg;
+      m->value = v;
+      CkSendToFuture(f,m);
+  }
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+
+  \frametitle{MPI version}
+  \framesubtitle{Can be hard and inefficient}
+
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i=0,n {
+      keys[i] = compute i’th key; 
+      MPI send request to processor keys[i]/B
+  }
+  for i= 0,n {
+      recv msg  containing the reference and value and store it
+  }
+  // next phase of computation that’s uses the keys and values.
+  \end{lstlisting}
+  \pause
+  \textcolor{red}{But this does not work because you have to process 
+  requests as well..And you don’t know how many requests there are.}
+  \pause
+  \\
+  \vspace{.2cm}
+  Other alternatives are possible, e.g. using 2 AllToAlls; but can be inefficient.
+\end{frame}
+
+
