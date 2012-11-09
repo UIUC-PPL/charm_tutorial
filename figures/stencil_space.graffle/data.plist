@@ -14,7 +14,7 @@
 	<key>BackgroundGraphic</key>
 	<dict>
 		<key>Bounds</key>
-		<string>{{0, 0}, {1151.9999504089355, 733}}</string>
+		<string>{{0, 0}, {575.99997520446777, 733}}</string>
 		<key>Class</key>
 		<string>SolidGraphic</string>
 		<key>ID</key>
@@ -42,7 +42,7 @@
 	<key>ColumnSpacing</key>
 	<real>36</real>
 	<key>CreationDate</key>
-	<string>2012-11-08 08:38:24 +0000</string>
+	<string>2012-11-09 08:26:11 +0000</string>
 	<key>Creator</key>
 	<string>Nikhil Jain</string>
 	<key>DisplayScale</key>
@@ -53,7 +53,7 @@
 	<array>
 		<dict>
 			<key>Bounds</key>
-			<string>{{0, 189}, {583, 249}}</string>
+			<string>{{0, 189}, {565, 249}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
@@ -89,7 +89,7 @@
 	<key>GuidesVisible</key>
 	<string>YES</string>
 	<key>HPages</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>ImageCounter</key>
 	<integer>2</integer>
 	<key>ImageLinkBack</key>
@@ -137,7 +137,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-11-08 08:38:26 +0000</string>
+	<string>2012-11-09 08:26:12 +0000</string>
 	<key>Modifier</key>
 	<string>Nikhil Jain</string>
 	<key>NotesVisible</key>
@@ -218,7 +218,7 @@
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{323, 0}, {710, 778}}</string>
+		<string>{{523, 0}, {710, 778}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
