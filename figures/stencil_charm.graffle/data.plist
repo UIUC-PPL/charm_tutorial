@@ -42,7 +42,7 @@
 	<key>ColumnSpacing</key>
 	<real>36</real>
 	<key>CreationDate</key>
-	<string>2012-11-09 08:27:05 +0000</string>
+	<string>2012-11-09 08:32:29 +0000</string>
 	<key>Creator</key>
 	<string>Nikhil Jain</string>
 	<key>DisplayScale</key>
@@ -137,7 +137,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-11-09 08:27:06 +0000</string>
+	<string>2012-11-09 08:32:29 +0000</string>
 	<key>Modifier</key>
 	<string>Nikhil Jain</string>
 	<key>NotesVisible</key>
@@ -218,7 +218,7 @@
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{543, 0}, {710, 778}}</string>
+		<string>{{563, 0}, {710, 778}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>

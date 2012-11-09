@@ -8,10 +8,12 @@
         \item For now, think of it as a core
       \end{itemize}
     \end{itemize}
+  \pause
   \item As a result, 
     \begin{itemize}
-      \item the method invocations directed at objects on that processor will have to be stored in a pool,
-      \item And a user-level scheduler will select one invocation from the Quque and and runs it completion
+      \item Method invocations directed at objects on that processor will have to be stored in a pool,
+      \pause
+      \item And a user-level scheduler will select one invocation from the queue and runs it to completion
     \end{itemize}
   \end{itemize}
   \begin{center} \includegraphics[width=0.7\textwidth]{figures/scheduler} \end{center}
@@ -20,7 +22,8 @@
 \begin{frame}[t]
 \frametitle{Message-driven Execution}
   \begin{itemize}
-    \item Execution is trigggered by availability of a ``message” (a method invocation)
+    \item Execution is trigggered by availability of a ``message'' (a method invocation)
+    \pause
     \item When an entry method executes, 
     \begin{itemize}
       \item it may generate messages for other objects
@@ -39,7 +42,7 @@
       \item A strong principle of prediction for data and code use
       \item Much stronger than principle of locality
       \begin{itemize}
-        \item Can use to scale memory wall
+        \item Can be used to scale memory wall
         \item Prefetching of needed data, e.g, into scratch pad memories
       \end{itemize}
     \end{itemize}
@@ -53,14 +56,16 @@
     \item Current use of communication network
     \begin{itemize}
       \item Compute-communicate cycles in typical MPI apps
-      \item So, the network is used for a fraction of time
-      \item and is on the critical path
+      \item Network is used for a fraction of time
+      \item And is on the critical path
     \end{itemize}
-    \item So, current communication networks are over-engineered for by necessity
+    \pause
+    \item Hence, current communication networks are over-engineered for by necessity
+    \pause
     \item With overdecomposition
     \begin{itemize}
       \item Communication is spread over an iteration
-      \item Also, adaptive overlap of communication and computation
+      \item Adaptive overlap of communication and computation
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -74,11 +79,12 @@
       \begin{itemize}
         \item Each processor has a chunk, which alternates between computing and communicating
       \end{itemize}
+      \pause
       \item With Charm++
       \begin{itemize}
-        \item Multiple chinks on each processor
-        \item Wait time for each chunk overlapped with useful computation for the other
-        \item Communication spreads over time
+        \item Multiple chunks on each processor
+        \item Wait time for each chunk overlapped with useful computation for others
+        \item Communication spread over time
       \end{itemize}
     \end{itemize}
   \end{itemize}
@@ -87,6 +93,12 @@
 \begin{frame}[t]
 \frametitle{Example: Stencil Computation}
   \begin{center} \includegraphics[width=\textwidth]{figures/stencil_timeline} \end{center}
+  \begin{center} Stencil in MPI: No overlap among computation and
+  communication\end{center}
+  \pause
+  \begin{center} \includegraphics[width=\textwidth]{figures/stencil_timeline2} \end{center}
+  \begin{center} Stencil in Charm: Communication of a chare overlaps with
+  computation of others \end{center}
 \end{frame}
 
 \begin{frame}[t]
@@ -105,13 +117,17 @@ Sequentialization
 
 \begin{frame}[t]
 \frametitle{Example: Stencil Computation}
-Powerpoints defeats Latex - dont know how to recreate the catchy animation from
-original slides
+Parallel Composition: A1; (B || C ); A2
+  \begin{center} \includegraphics[width=\textwidth]{figures/stencil_charm} \end{center}
+Recall: Different modules, written in different languages/paradigms, can overlap
+in time and on processors, without programmer having to worry about this
+explicitly
+
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{MD Parallelization Using Charm++}
-The computation is decomposed into ``natural” objects of the application, which
+The computation is decomposed into ``natural'' objects of the application, which
 are assigned to processors by Charm++ RTS
   \begin{center} \includegraphics[width=\textwidth]{figures/md_parallelize.pdf} \end{center}
 \end{frame}
@@ -121,7 +137,7 @@ are assigned to processors by Charm++ RTS
   \begin{itemize}
     \item Once the programmer has written the code without reference to processors
       \begin{itemize}
-        \item With all the communication expressed as that between objects
+        \item All the communication is expressed among objects
       \end{itemize}
     \item The system is free to migrate the objects across processors as and when it pleases
       \begin{itemize}
@@ -155,20 +171,17 @@ are assigned to processors by Charm++ RTS
     \pause
     \begin{itemize}
       \item Rocket simulation with migratable objects
-    \end{itemize}
-    \begin{center} \includegraphics[width=.6\textwidth]{figures/rocket_charm} \end{center}
-    \begin{itemize}
-      \item
+      \begin{center} \includegraphics[width=.6\textwidth]{figures/rocket_charm} \end{center}
       \begin{itemize}
-      \item Benefit: load balance, communication optimizations, modularity
+        \item Benefits: load balance, communication optimizations, modularity
       \end{itemize}
     \end{itemize}
+    \onslide<1-> {
     \column{.3\textwidth}
     \vfill
-    \visible<1->{
     \begin{center} \includegraphics<0->[width=\textwidth]{figures/rocket.png} \end{center}
-    }
     \vfill
+    }
   \end{columns}
 \end{frame}
 

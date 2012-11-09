@@ -8,6 +8,7 @@
       \item Newtonian mechanics
       \item Relatively small of atoms (100K – 10M)
     \end{itemize}
+    \pause
     \item Calculate forces on each atom 
     \begin{itemize}
       \item Bonds
@@ -18,9 +19,11 @@
         \item Multiple Time Stepping : PME every 4 timesteps 
       \end{itemize}
     \end{itemize}
+    \pause
     \item Calculate velocities and advance positions
     \item Challenge: femtosecond time-step, millions needed!
   \end{itemize}
+  \pause
   \textcolor{red}{Collaboration with K. Schulten, R. Skeel, and coworkers}
   \column{.2\textwidth}
   \vfill
@@ -37,19 +40,22 @@
   \column{.6\textwidth}
   \begin{itemize}
     \item Atoms distributed to cubes based on their location
-    \item  Size of each cube :
+    \pause
+    \item Size of each cube :
     \begin{itemize}
       \item Just a bit larger than cut-off radius
       \item Communicate only with neighbors
       \item Work: for each pair of nbr objects
     \end{itemize}
     \item C/C ratio: O(1)
+    \pause
     \item However: 
     \begin{itemize}
       \item Load imbalance
       \item Limited parallelism
     \end{itemize}
   \end{itemize}
+  \pause
   \textcolor{red}{Charm++ is useful to handle this case}
   \end{columns}
 \end{frame}
@@ -65,14 +71,16 @@
     \item Now, we have many objects to load balance:
     \begin{itemize}
       \item Each diamond can be  assigned to any proc.
-      \item Number of diamonds (3D): 14·Number of Patches
+      \item Number of diamonds (3D): 14*Number of Patches
     \end{itemize}
+    \pause
     \item 2-away variation:
     \begin{itemize}
       \item Half-size cubes
       \item Communicate only with neighbors
       \item 5 x 5 x 5 interactions
     \end{itemize}
+    \pause
     \item 3-away interactions: 7 x 7 x 7
   \end{itemize}
   \end{columns}
@@ -80,14 +88,14 @@
 
 \begin{frame}[t]
 \frametitle{NAMD Parallelization Using Charm++}
-The computation is decomposed into ``natural” objects of the application, which
+The computation is decomposed into ``natural'' objects of the application, which
 are assigned to processors by Charm++ RTS
   \begin{center} \includegraphics[width=\textwidth]{figures/md_parallelize.pdf} \end{center}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{NAMD Projections}
-  \begin{center} \includegraphics[width=\textwidth]{figures/namd_projection.pdf} \end{center}
+  \begin{center} \includegraphics[width=.9\textwidth]{figures/namd_projection.pdf} \end{center}
 \end{frame}
 
 \begin{frame}[t]
@@ -97,7 +105,7 @@ are assigned to processors by Charm++ RTS
 
 \begin{frame}[t]
 \frametitle{NAMD Performance on Titan}
-  \begin{center} \includegraphics[width=\textwidth]{figures/namd_titan.pdf} \end{center}
+  \begin{center} \includegraphics[width=.9\textwidth]{figures/namd_titan.pdf} \end{center}
 \end{frame}
 
 \begin{frame}[t]
@@ -107,8 +115,10 @@ are assigned to processors by Charm++ RTS
     \begin{itemize} 
         \item with Tom Quinn, Univ. of Washington
     \end{itemize}
+    \pause
     \item Evolution of Universe and Galaxy Formation
     \item Gravity, gas dynamics
+    \pause
     \item Barnes-Hut tree codes
     \begin{itemize} 
       \item Oct tree is natural decomposition
@@ -117,12 +127,13 @@ are assigned to processors by Charm++ RTS
       \item Assumption: one-to-one map between sub-trees and PEs
       \item Binary trees are considered better load balanced
     \end{itemize}
+    \pause
     \item With Charm++: Use Oct-Tree, and let Charm++ map subtrees to processors
   \end{itemize}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Changa: Control Flow}
+\frametitle{ChaNGa: Control Flow}
   \begin{center} \includegraphics[width=\textwidth]{figures/changa.pdf} \end{center}
 \end{frame}
 
@@ -135,11 +146,13 @@ are assigned to processors by Charm++ RTS
       \begin{itemize}
         \item Each electronic state is modeled with a large array
       \end{itemize}
-    \item Collaboration with:
+      \pause
+      \item Collaboration with:
       \begin{itemize}
         \item G. Martyna (IBM) 
         \item M. Tuckerman (NYU)
       \end{itemize}
+      \pause
     \item Using Charm++ virtualization, we can efficiently scale small (32 molecule) systems to thousands of processors
   \end{itemize}
   \column{.5\textwidth}
@@ -158,7 +171,7 @@ are assigned to processors by Charm++ RTS
 
 \begin{frame}[t]
 \frametitle{OpenAtom: Topology Aware Mapping of Objects}
-  \begin{center} \includegraphics[width=.5\textwidth]{figures/openatom_topo.pdf} \end{center}
+  \begin{center} \includegraphics[width=.45\textwidth]{figures/openatom_topo.pdf} \end{center}
   Object based decomposition provides new degrees of freeedom to easily try
   different mappings of objects to processors, to help minimize contention
 
