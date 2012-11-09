@@ -15,6 +15,27 @@
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Execution in SMP mode}
+    \begin{itemize}
+      \item To exploit SMP, add ++ppn or +ppn
+      \begin{itemize}
+        \item ./charmrun ++ppn 2 +p4 ./app $<$args$>$
+        \item This will spawn 2 UNIX processes with 2 worker threads and 1 communication thread per process
+      \end{itemize}
+      \item Set affinity automatically for processes (non-SMP) or threads (SMP)
+      \begin{itemize}
+        \item +setcpuaffinity
+        \item +pemap L[-U][:G],... maps worker threads to L,L+G,L+2G,...U
+        \begin{itemize}
+          \item +pemap 0-8:2,16,20-24 expands to 0, 2, 4, 6, 8, 16, 20, 21, 22, 23, 24
+        \end{itemize}
+        \item +commap p[,q]...[t] maps communication threads to p,q,...,t
+      \end{itemize}
+      \item +excludecore $<$core \#$>$ to exclude a core
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Intra-node communication}
   \begin{itemize}
     \item For objects sharing an address space, several mechanisms exist to reduce communication overhead
