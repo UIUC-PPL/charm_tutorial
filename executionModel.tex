@@ -1,7 +1,7 @@
 \begin{frame}[t]
 \frametitle{The Execution Model}
   \begin{itemize}
-    \item Several objects live on a single ``processor”
+    \item Several objects live on a single ``processor''
     \begin{itemize}
       \item We will come back what we mean by a processor.
       \begin{itemize}
@@ -60,7 +60,7 @@
       \item And is on the critical path
     \end{itemize}
     \pause
-    \item Hence, current communication networks are over-engineered for by necessity
+    \item Hence, current communication networks are over-engineered by necessity
     \pause
     \item With overdecomposition
     \begin{itemize}
@@ -135,10 +135,8 @@ are assigned to processors by Charm++ RTS
 \begin{frame}[t]
 \frametitle{Migratability}
   \begin{itemize}
-    \item Once the programmer has written the code without reference to processors
-      \begin{itemize}
-        \item All the communication is expressed among objects
-      \end{itemize}
+    \item Once the programmer has written the code without reference to
+        processors, all of the communication is expressed among objects
     \item The system is free to migrate the objects across processors as and when it pleases
       \begin{itemize}
         \item It must ensure it can deliver method invocations to the objects, whereever they go

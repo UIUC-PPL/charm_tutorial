@@ -4,7 +4,7 @@
     \includegraphics[width=\textwidth]{figures/objectGlobalAddress.pdf}
   \end{center}
   \begin{itemize}
-    \item Certain ``selected'' object \emph{instances} are:
+    \item Certain ``special'' object \emph{instances} are:
       \begin{itemize}
       \item autonomous,
       \item first-class citizens in the parallel address space,
@@ -23,9 +23,10 @@
   \begin{itemize}
     \item How can objects communicate across address spaces?
       \begin{itemize}
-      \item Just like a sequential object-oriented language, a object's
+      \item Just like a sequential object-oriented language, an object's
         reference is used to invoke a method
-      \item In the parallel space, this is a handle that is transparent of location
+      \item In the parallel space, this is a handle that is location
+          transparent
       \item A method invocation becomes an act of communication
       \end{itemize}
   \end{itemize}
