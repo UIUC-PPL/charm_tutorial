@@ -1,0 +1,25 @@
+\begin{frame}[fragile]
+\frametitle{How to write your own Load Balancer}
+\begin{itemize}
+\item Statistics collected by Charm
+\begin{lstlisting}[basicstyle=\tiny]
+struct LDStats { // load balancing database
+  ProcStats  *procs; //statistics of PEs
+  int count;
+
+  int   n_objs;
+  int   n_migrateobjs;
+  LDObjData* objData; //info regarding chares
+
+  int   n_comm;
+  LDCommData* commData; //communication information
+
+  int  *from_proc, *to_proc; //residence of
+  chares
+}
+\end{lstlisting}
+\item Use LDStats, ProcArray and ObjGraph for processor load and communication
+statistics
+\item \emph{work} is the function invoked by Charm RTS to perform load balancing
+\end{itemize}
+\end{frame}
