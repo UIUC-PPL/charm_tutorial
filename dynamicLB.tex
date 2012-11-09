@@ -465,3 +465,20 @@ specified number of communicating objects in 2D-mesh.
 \includegraphics[width=0.5\textwidth]{figures/hybridLBPerf}
 \includegraphics[width=0.5\textwidth]{figures/hybridLBquality}
 \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{MetaBalancer - When and how to load balance?}
+\begin{itemize}    
+    \item Difficult to find the optimum load balancing period
+    \begin{itemize}
+       \item Depends on the application characteristics
+       \item Depends on the machine the application is run on
+    \end{itemize}
+    \pause
+    
+    \item Monitors the application continuously and predicts behavior.
+    \item Decides when to invoke which load balancer.
+    \item Command line argument - \texttt{+MetaLB}
+\end{itemize}
+\end{frame}
+
