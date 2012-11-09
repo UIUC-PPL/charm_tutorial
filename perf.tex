@@ -9,7 +9,7 @@
   \end{itemize}
   \item Projections: visualization and analysis
   \begin{itemize}
-  \item Scalable tool to analyze up to 200,000 log files
+  \item Scalable tool to analyze up to 300,000 log files
   \item A rich set of tool features : time profile, time lines, usage profile, histogram, extrema tool
   \item Detect performance problems: load imbalance, grain size, communication bottleneck, etc 
   \end{itemize}
@@ -19,9 +19,28 @@
 \end{frame}
 
 \begin{frame}
+\frametitle{Using Projections }
+\begin{itemize}
+\item Example
+\begin{itemize}
+\item Trying to identify the next performance obstacle for NAMD
+\begin{itemize}
+\item Running on 8192 processors, with 92,000 atom simulation
+\item Test scenario: without PME
+\item Time is 3 ms per step, but lower bound is 1.6ms or so..
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
 
-\frametitle{Projections pictures in includedPDFs/projections.ppt}
+\begin{frame}{Usage Profile}
+ %\includegraphics<1>[width=0.9\textwidth]{figures/tree1.pdf}
+\end{frame}
 
- Yanhua can replace or add some more pictures
+\begin{frame}{Extrema Tool for Least Idle Processors}
+ %\includegraphics<1>[width=0.9\textwidth]{figures/tree1.pdf}
+\end{frame}
 
+\begin{frame}{Time Lines for Least Idle Processors}
+ %\includegraphics<1>[width=0.9\textwidth]{figures/tree1.pdf}
 \end{frame}
