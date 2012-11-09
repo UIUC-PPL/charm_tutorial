@@ -1,0 +1,222 @@
+\begin{frame}[fragile]
+\frametitle{Motivation for Sections}
+\begin{itemize}
+ \item It is often convenient to define subcollections of elements within a
+   chare array
+   \begin{itemize}
+   \item Example: rows or columns of a 2D chare array
+   \item One may wish to perform collective operations on the subcollection
+     (e.g. broadcast, reduction)
+   \end{itemize}
+ \item Sections are the standard subcollection construct in Charm++
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Section Creation}
+\begin{itemize}
+ \item Through explicit enumeration:
+\end{itemize}
+
+\begin{lstlisting}
+std::vector<CkArrayIndex3D> elems; // add array indices
+for (int i = 0; i < 10; i++)
+  for (int j = 0; j < 20; j++)
+    for (int k = 0; k < 30; k++)
+      elems.push_back(CkArrayIndex3D(i, j, k));
+
+CProxySection_Hello proxy =
+  CProxySection_Hello::ckNew(helloArrayID, &elems[0], elems.size());
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Section Creation}
+\begin{itemize}
+ \item Through index range specification:
+\end{itemize}
+
+\begin{lstlisting}
+CProxySection_Hello proxy =
+  CProxySection_Hello::ckNew(helloArrayID, 0, 9, 1, 0, 19, 2, 0, 29, 2);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Section Class Generation}
+\begin{itemize}
+ \item Section proxy classes are automatically generated for each chare and group defined in the ci file
+ \item Placed into decl.h and def.h files
+   \begin{itemize}
+   \item Take a look at the CProxySection classes and their member functions in
+     the decl.h and def.h for your MPs
+   \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Using Sections}
+\begin{lstlisting}
+CProxySection_Hello proxy;
+
+// section broadcast
+proxy.someEntry(...) 
+
+// send to the first element in the section
+proxy[0].someEntry(...) 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{CkMulticast}
+\begin{itemize}
+\item Charm++ library for high performance broadcasts and reductions over
+  sections
+\end{itemize}
+\begin{lstlisting}
+# compile and install the CkMulticast library
+cd charm/tmp
+make multicast
+# link CkMulticast library using -module
+charmc -o hello hello.o -module CkMulticast -language charm++
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Delegation}
+\begin{itemize}
+\item A way to customize Charm++ send and receive behavior
+\item \code{CkDelegateMgr}
+  \begin{itemize}
+  \item "interface" class with virtual functions for sending messages to
+    chares, groups, nodegroups, arrays, sections
+  \end{itemize}
+\item Delegation Manager
+  \begin{itemize}
+  \item Any group which inherits from \code{CkDelegateMgr}
+  \item Specifies communication behavior by overriding one or more of the
+    default communication functions
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Delegation}
+\begin{itemize}
+\item Achieved by associating a delegation manager to a proxy
+  \begin{itemize}
+  \item Different proxies for the same array or section may be associated with
+    different delegation managers with distinct implementations of
+    communication functions
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\code{CkMulticastMgr}}
+\begin{itemize}
+\item A delegation manager which implements section broadcasts and reductions
+  \begin{itemize}
+  \item Overrides \code{CkDelegateMgr::ArraySectionSend}
+  \end{itemize}
+\end{itemize}
+
+\begin{lstlisting}
+CProxySection_Hello sectProxy = CProxySection_Hello::ckNew(...);
+CkGroupID mCastGrpId = CProxy_CkMulticastMgr::ckNew();
+CkMulticastMgr *mCastGrp = CProxy_CkMulticastMgr(mCastGrpId).ckLocalBranch();
+// initialize section proxy
+sectProxy.ckSectionDelegate(mCastGrp);
+// multicast via delegation library as before
+sectProxy.someEntry(...); 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Spanning Trees}
+\begin{itemize}
+\item CkMulticast implements tree algorithms for multicasts and reductions
+  \begin{itemize}
+  \item Messages are routed over a spanning tree of the section elements
+  \end{itemize}
+\item Default branching factor is 2
+\item Modifying branching factor:
+\end{itemize}
+
+\begin{lstlisting}
+CkGroupID mCastGrpId = 
+  CProxy_CkMulticastMgr::ckNew(3); // factor is 3
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{CkMulticast Messages}
+\begin{itemize}
+\item To use CkMulticast library, all multicast messages must inherit from
+  \code{CkMcastBaseMsg}
+  \begin{itemize}
+  \item \code{CkMcastBaseMsg} must be inherited from first
+  \item No parameter marshalling is allowed in entry methods used as targets of
+    multicast
+  \end{itemize}
+\end{itemize}
+
+\begin{lstlisting}
+struct HiMsg : public CkMcastBaseMsg, public CMessage_HiMsg {
+  int *data;
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Reductions: \code{CkSectionInfo}}
+\begin{itemize}
+\item An array element can be a member of multiple array sections
+  \begin{itemize}
+  \item It is necessary to disambiguate which array section reduction it is
+    participating in each time it contributes to one
+  \end{itemize}
+\item A data structure called \code{CkSectionInfo} is created by CkMulticastMgr
+  for each array section that the array element belongs to
+  \begin{itemize}
+  \item During a section reduction, the array element must pass the
+    \code{CkSectionInfo} as a parameter in the \code{contribute()}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Reductions with CkMulticast}
+\begin{lstlisting}
+CkSectionInfo cookie;
+void SayHi(HiMsg *msg) {
+  // update section cookie every time
+  CkGetSectionInfo(cookie, msg);
+  int data = thisIndex;
+  mcastGrp->contribute(sizeof(int), &data,
+                       CkReduction::sum_int, cookie);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Callbacks}
+\begin{itemize}
+\item As with array reductions, a callback needs to be specified with each
+  contribute
+  \begin{itemize}
+  \item OR a default callback should be specified using setReductionClient
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Example: Matrix Multiplication}
+\begin{itemize}
+\item Inputs: 2D chare arrays A, B of matrix blocks
+\item Output: 2D chare array C of matrix blocks
+\item Elements of A and B multicast their blocks to a section comprising a row
+  or column of C
+\item Exercise: implement algorithm
+\end{itemize}
+\end{frame}
