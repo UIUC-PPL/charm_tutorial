@@ -25,22 +25,28 @@
 \begin{itemize}
 \item Trying to identify the next performance obstacle for NAMD
 \begin{itemize}
-\item Running on 8192 processors, with 92,000 atom simulation
-\item Test scenario: without PME
-\item Time is 3 ms per step, but lower bound is 1.6ms or so..
+\item Running on 8192 processors, with 1 million atom simulation
+\item Jaguar Cray XK6 
+\item Test scenario: with PME every step
 \end{itemize}
 \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Usage Profile}
- %\includegraphics<1>[width=0.9\textwidth]{figures/tree1.pdf}
+\begin{frame}{Time Profile}
+ \includegraphics<1>[width=0.9\textwidth]{figures/prj1M8KTimeprofile.png}
 \end{frame}
 
 \begin{frame}{Extrema Tool for Least Idle Processors}
- %\includegraphics<1>[width=0.9\textwidth]{figures/tree1.pdf}
+\includegraphics<1>[width=0.9\textwidth]{figures/prj1M8KExtrema.png}
 \end{frame}
 
-\begin{frame}{Time Lines for Least Idle Processors}
- %\includegraphics<1>[width=0.9\textwidth]{figures/tree1.pdf}
+\begin{frame}{Time Lines with Message Back Tracing}
+\centering
+\includegraphics<1>[width=0.9\textwidth]{figures/prj1M8KTimeline.png}
+\end{frame}
+
+
+\begin{frame}{Communication over Time for all Processors}
+ \includegraphics<1>[width=0.9\textwidth]{figures/prj1M8KCommtime.png}
 \end{frame}
