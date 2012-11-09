@@ -1,26 +1,4 @@
 \begin{frame}[t]
-\frametitle{Observations}
-\framesubtitle{Exascale Applications}
-  \begin{itemize}
-    \item Development of new models must be driven by the needs of exascale applications
-    \begin{itemize}
-      \item Multi-resolution
-      \item Multi-module (multi-physics)
-      \item Dynamic/adaptive: to handle application variation
-      \item Adapt to a volatile computational environment
-      \item Exploit heterogeneous architecture
-      \item Deal with thermal and energy considerations
-    \end{itemize}
-    \pause
-    \item So? Consequences:
-    \begin{itemize}
-      \item Must support automated resource management
-      \item Must support interoperability and parallel composition
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[t]
 \frametitle{The Execution Model}
   \begin{itemize}
     \item Several objects live on a single ``processor”
@@ -102,7 +80,6 @@
         \item Wait time for each chunk overlapped with useful computation for the other
         \item Communication spreads over time
       \end{itemize}
-      \item \textcolor{red}{A Simple schematic timeline for both approaches?}
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -140,6 +117,34 @@ are assigned to processors by Charm++ RTS
 \end{frame}
 
 \begin{frame}[t]
+\frametitle{Migratability}
+  \begin{itemize}
+    \item Once the programmer has written the code without reference to processors
+      \begin{itemize}
+        \item With all the communication expressed as that between objects
+      \end{itemize}
+    \item The system is free to migrate the objects across processors as and when it pleases
+      \begin{itemize}
+        \item It must ensure it can deliver method invocations to the objects, whereever they go
+        \item This migratability turns out to be a key attribute for empowering an adaptive runtime system
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% TODO: fill in these slides
+\begin{frame}[t]
+  \frametitle{Load Balancing}
+\end{frame}
+
+\begin{frame}[t]
+  \frametitle{Automatic Overlap of Communication and Computation}
+\end{frame}
+
+\begin{frame}[t]
+  \frametitle{Fault Tolerance}
+\end{frame}
+
+\begin{frame}[t]
 \frametitle{Decomposition Independent of numCores}
   \begin{columns}
     \column{.7\textwidth}
@@ -167,20 +172,6 @@ are assigned to processors by Charm++ RTS
   \end{columns}
 \end{frame}
 
-\begin{frame}[t]
-\frametitle{Migratability}
-  \begin{itemize}
-    \item Once the programmer has written the code without reference to processors
-      \begin{itemize}
-        \item With all the communication expressed as that between objects
-      \end{itemize}
-    \item The system is free to migrate the objects across processors as and when it pleases
-      \begin{itemize}
-        \item It must ensure it can deliver method invocations to the objects, whereever they go
-        \item This migratability turns out to be a key attribute for empowering an adaptive runtime system
-      \end{itemize}
-  \end{itemize}
-\end{frame}
 
 
 

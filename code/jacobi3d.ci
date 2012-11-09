@@ -21,7 +21,7 @@ mainmodule jacobi3d {
     entry [reductiontarget] void checkConverged(bool result);
     entry void run() {
       while (!converged) {
-        atomic {
+        serial {
           copyToBoundaries();
           int x = thisIndex.x, y = thisIndex.y, z = thisIndex.z;
           int bdX = blockDimX, bdY = blockDimY, bdZ = blockDimZ;
@@ -34,10 +34,10 @@ mainmodule jacobi3d {
           freeBoundaries();
         }
         for (remoteCount = 0; remoteCount < 6; remoteCount++)
-          when updateGhosts[iter](int ref, int dir, int w, int h, double buf[w*h]) atomic {
+          when updateGhosts[iter](int ref, int dir, int w, int h, double buf[w*h]) serial {
             updateBoundary(dir, w, h, buf);
           }
-        atomic {
+        serial {
           double error = computeKernel();
           int conv = error < DELTA;
           if (iter % 5 == 1)
@@ -45,7 +45,7 @@ mainmodule jacobi3d {
         }
         if (++iter % 5 == 0)
           when checkConverged(bool result)
-            if (result) atomic { mainProxy.done(iter); converged = true; }
+            if (result) serial { mainProxy.done(iter); converged = true; }
       }
     };
   };

@@ -78,10 +78,10 @@
       \end{itemize}
       \begin{lstlisting}[basicstyle=\tiny]
 entry void someMethod() {
-  atomic { /* block1 */ }
-  when entryMethod1(parameters) atomic { /* block2 */ }
-  when entryMethod2(parameters) atomic { /* block3 */ }
-  atomic { /* block4 */ }
+  serial { /* block1 */ }
+  when entryMethod1(parameters) serial { /* block2 */ }
+  when entryMethod2(parameters) serial { /* block3 */ }
+  serial { /* block4 */ }
 }
 
 entry void entryMethod1(parameters);
@@ -101,26 +101,26 @@ entry void entryMethod2(parameters);
 
 \begin{frame}[fragile]
   \frametitle{Structured Dagger}
-  \framesubtitle{The \code{atomic} construct}
+  \framesubtitle{The \code{serial} construct}
   \begin{itemize}
-    \item The \code{atomic} construct
+    \item The \code{serial} construct
       \begin{itemize}
         \item A sequential block of C++ code
-        \item The keyword \code{atomic} means that the code block will be
+        \item The keyword \code{serial} means that the code block will be
           executed without interruption/preemption, like an entry method
-        \item Syntax: \code{atomic <optionalString> \{ /* C++ code */ \}}
+        \item Syntax: \code{serial <optionalString> \{ /* C++ code */ \}}
         \item The \code{<optionalString>} is used for identifying the
-          \code{atomic} for performance analysis
+          \code{serial} for performance analysis
         \item Atomics can access all members of the class they belong to
       \end{itemize}
     \item Examples:
       \begin{lstlisting}
-atomic "setValue" {
+serial "setValue" {
   value = 10;
 }
       \end{lstlisting}
       \begin{lstlisting}
-atomic {
+serial {
   thisProxy.invokeMethod(10);
   callSomeFunction();
 }
@@ -269,7 +269,7 @@ when myMethod1(int param1, int param2) {
     when method1[100](short ref, bool param1)
       /* sdag block */
 
-    atomic {
+    serial {
       proxy.method1(200, false); /* will not be delivered to the when */
       proxy.method1(100, true);  /* will be delivered to the when */
     }
@@ -292,7 +292,7 @@ when myMethod1(int param1, int param2) {
         when method1[block](short ref, bool someVal) /* code block1 */
     }
   } else {
-    when method2(int payload) atomic {
+    when method2(int payload) serial {
       //... some C++ code
     }
   }
@@ -313,9 +313,9 @@ when myMethod1(int param1, int param2) {
   \begin{lstlisting}
     for (iter = 0; iter < maxIter; ++iter) {
       when recvLeft[iter](short num, int len, double data[len])
-        atomic { computeKernel(LEFT, data); }
+        serial { computeKernel(LEFT, data); }
       when recvRight[iter](short num, int len, double data[len])
-        atomic { computeKernel(RIGHT, data); }
+        serial { computeKernel(RIGHT, data); }
     }
   \end{lstlisting}
   \begin{itemize}
@@ -340,13 +340,13 @@ when myMethod1(int param1, int param2) {
   \begin{lstlisting}
     while (i < numNeighbors) {
       when recvData(int len, double data[len]) {
-        atomic {
+        serial {
           /* do something */
         }
         when method1() /* block1 */
         when method2() /* block2 */
       }
-      atomic { i++; }
+      serial { i++; }
     }
   \end{lstlisting}
 \end{frame}
@@ -361,7 +361,7 @@ when myMethod1(int param1, int param2) {
 %     chare MyChare {
 %       entry MyChare();
 %       entry void startWork() {
-%         atomic { myRef = 100; }
+%         serial { myRef = 100; }
 %         when method1[myRef1](short ref, bool param1) /*  block1 */
 %         when method2[myRef2](short ref, bool param1) /* block2 */
 %       };
@@ -393,13 +393,13 @@ when myMethod1(int param1, int param2) {
   \end{itemize}
   What are the possible execution sequences?
   \begin{lstlisting}
-    atomic { /* block1 */ }
+    serial { /* block1 */ }
     overlap {
-      atomic { /* block2 */ }
+      serial { /* block2 */ }
       when entryMethod1[100](short ref_num, bool param1) /* block3 */
       when entryMethod2(char myChar) /* block4 */
     }
-    atomic { /* block5 */ }
+    serial { /* block5 */ }
   \end{lstlisting}
 \end{frame}
 
