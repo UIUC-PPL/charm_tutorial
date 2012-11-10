@@ -108,12 +108,24 @@ entry void method2(parameters) {
       \begin{itemize}
         \item Declare the actions to perform when a message is received
         \item In sequence, it acts like a blocking receive
-        %\item A \code{when} must have a corresponding declaration of an entry
-         % method
-        %\item The actual body of the corresponding entry method is generated
-        %\item A \code{when} is contextual: you may have different actions for
-        %  the same entry method depending on context
       \end{itemize}
+      \begin{lstlisting}[basicstyle=\normalsize]
+entry void someMethod() {
+  serial { /* block1 */ }
+  when entryMethod1(parameters) serial { /* block2 */ }
+  when entryMethod2(parameters) serial { /* block3 */ }
+  serial { /* block4 */ }
+}
+
+entry void entryMethod1(parameters);
+entry void entryMethod2(parameters);
+      \end{lstlisting}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{when} construct}
       \begin{lstlisting}[basicstyle=\tiny]
 entry void someMethod() {
   serial { /* block1 */ }
@@ -125,16 +137,21 @@ entry void someMethod() {
 entry void entryMethod1(parameters);
 entry void entryMethod2(parameters);
       \end{lstlisting}
+  \begin{itemize}
     \item Sequence
+      \pause
       \begin{itemize}
         \item Sequentially execute \code{/* block1 */}
+          \pause
         \item Wait for \code{entryMethod1} to arrive, if it has not, return control
           back to the Charm++ scheduler, otherwise, execute \code{/* block2 */}
+          \pause
         \item Wait for \code{entryMethod2} to arrive, if it has not, return control
           back to the Charm++ scheduler, otherwise, execute \code{/* block3 */}
+          \pause
         \item Sequentially execute \code{/* block4 */}
       \end{itemize}
-  \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -144,21 +161,21 @@ entry void entryMethod2(parameters);
   \item Execute \code{/* further sdag */} when \code{myMethod} arrives
   \begin{lstlisting}[basicstyle=\scriptsize]
 when myMethod(int param1, int param2)
-  /* further sdag */
+  /* further code */
   \end{lstlisting}
 
   \item Execute \code{/* further sdag */} when \code{myMethod1} and \code{myMethod2} arrive
   \begin{lstlisting}[basicstyle=\scriptsize]
 when myMethod1(int param1, int param2),
       myMethod2(bool param3)
-  /* further sdag */
+  /* further code */
   \end{lstlisting}
 
 \item Syntactical sugar for:
   \begin{lstlisting}[basicstyle=\scriptsize]
 when myMethod1(int param1, int param2)
   when myMethod2(bool param3)
-    /* further sdag */
+    /* further code */
   \end{lstlisting}
 
   \end{itemize}
