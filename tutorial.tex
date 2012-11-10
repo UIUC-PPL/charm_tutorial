@@ -12,37 +12,57 @@
 \frame{\titlepage}
 
 \transition{Please check http://charm.cs.illinois.edu/tutorial/ for the latest material}
+%\tableofcontents
+
+\section[Concepts]{Introduction}
 \input{challenges}
+\subsection[Object Design]{Object Design}
 \transition{A proven approach: objects}\input{objectDesign}
 \transition{A proven approach: method-driven objects}\input{objectsMethods}
+\subsection[Execution Mode]{Execution Model}
 \input{executionModel}
+\subsection[Benefits]{Benefits of Charm++}
 \input{benefits}
+\subsection[Task Parallelism]{Task Parallelism}
 \transition{Task Parallelism with Objects}\input{taskParallelism}
+\subsection[Collections]{Object Collections}
 \input{objectCollections}
 \transition{Overdecomposing Your Application}\input{overdecomposition}
+\subsection[Application Design]{Application Design}
 \input{modularityComposability}
 \input{patterns}
+\subsection[Design Examples]{Design Examples}
 \transition{Designing Parallel Applications with Charm++}
 \input{caseStudies}
+\section[Charm++]{Charm++ Syntax}
 \transition{Charm++}\input{charmSyntax}
+\subsection[Charm++]{Structure Dagger}
 \transition{Sequencing and Coordination}\input{sequencing}
 \input{distributedTable}
+\section[PUP and Placement]{Migration and Placement}
 \input{migrationIntrospective}
+\section[LB]{Dynamic Load Balancing}
 \transition{Dynamic Load Balancing}
 \input{dynamicLB}
+\section[Fault Tol]{Checkpointing and Resilience}
 \transition{Resilience}
 \input{faultTolerance}
 \input{heterogeneity}
+\section[Messages, Groups, Shared Mem]{Further Optimization}
 \transition{Performance Enhancement Features} \input{messages}
 \input{advancedOpt}
+\subsection[Array Sections]{Array Sections}
+\input{sections}
+\subsection[Threaded]{Threaded Charm++}
+\input{threadedSync}
+\subsection{Shared Memory}
 \input{multicore}
+\section[AMPI & Interop]{Interoperability}
 \input{interoperability}
+\section[Custom LB]{Writing a Load Balancer}
 \input{writeLB}
+\section[Tuning]{Performance Tuning}
 \input{perf}
 \input{conclusion}
-
-% TODO: not sure where to put this, at the end for now
-\input{threadedSync}
-\input{sections}
 
 \end{document}
