@@ -61,6 +61,44 @@
 % \end{frame} 
 
 %if -> while -> for
+\begin{frame}[fragile]
+  \frametitle{Structured Dagger}
+  \framesubtitle{The \code{serial} construct}
+  \begin{itemize}
+    \item The \code{serial} construct
+      \begin{itemize}
+        \item A sequential block of C++ code
+        \item The keyword \code{serial} means that the code block will be
+          executed without interruption/preemption, like an entry method
+        \item Syntax: \code{serial <optionalString> \{ /* C++ code */ \}}
+        \item The \code{<optionalString>} is used for identifying the
+          \code{serial} for performance analysis
+        \item Serial blocks can access all members of the class they belong to
+      \end{itemize}
+    \item Examples:
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{lstlisting}[basicstyle=\tiny]
+entry void method1(parameters) {
+  serial {
+    thisProxy.invokeMethod(10);
+    callSomeFunction();
+  }
+};
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{lstlisting}[basicstyle=\tiny]
+entry void method2(parameters) {
+  serial "setValue" {
+    value = 10;
+  }
+};
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+  \end{itemize}
+\end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Structured Dagger}
@@ -96,35 +134,6 @@ entry void entryMethod2(parameters);
           back to the Charm++ scheduler, otherwise, execute \code{/* block3 */}
         \item Sequentially execute \code{/* block4 */}
       \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Structured Dagger}
-  \framesubtitle{The \code{serial} construct}
-  \begin{itemize}
-    \item The \code{serial} construct
-      \begin{itemize}
-        \item A sequential block of C++ code
-        \item The keyword \code{serial} means that the code block will be
-          executed without interruption/preemption, like an entry method
-        \item Syntax: \code{serial <optionalString> \{ /* C++ code */ \}}
-        \item The \code{<optionalString>} is used for identifying the
-          \code{serial} for performance analysis
-        \item Atomics can access all members of the class they belong to
-      \end{itemize}
-    \item Examples:
-      \begin{lstlisting}
-serial "setValue" {
-  value = 10;
-}
-      \end{lstlisting}
-      \begin{lstlisting}
-serial {
-  thisProxy.invokeMethod(10);
-  callSomeFunction();
-}
-      \end{lstlisting}
   \end{itemize}
 \end{frame}
 
