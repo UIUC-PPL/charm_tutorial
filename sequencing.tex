@@ -311,10 +311,7 @@ when myMethod1(int param1, int param2) {
   \end{itemize}
   \begin{lstlisting}
   if (thisIndex.x == 10) {
-    forall [block] (0 : numBlocks - 1, 1) {
-      if (isPrime(block))
-        when method1[block](short ref, bool someVal) /* code block1 */
-    }
+    when method1[block](short ref, bool someVal) /* code block1 */
   } else {
     when method2(int payload) serial {
       //... some C++ code
