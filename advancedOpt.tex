@@ -71,113 +71,68 @@
   \begin{itemize}
   \item Alternative:
     \begin{itemize}
-    \item Define {\em conditionally packed} data structure
-    \item Maintains pointer to data array
-    \item Has {\tt pup()} method, which is invoked by RTS only when data is crossing address space boundary
+    \item Define {\em packed} messages 
+    \item Data is in {\em unpacked} form normally
+    \item Charm++ {\em conditionally} packs (serializes) message when crossing address spaces
     \end{itemize}
-  \item Same can be done for non-linear data structures, as long as proper {\tt pup()} method exists
+  \item Applies to arrays and non-linear data structures 
+  \item Section 10.1.3 (Message Packing) describes how to specify packing/unpacking functions
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
+  \begin{itemize}
+    \item Chare C1 to send {\em conditionally packed} message to C2 and C3
+  \end{itemize}
   \frametitle{Conditional packing schematic}
   \includegraphics[width=\textwidth]{figures/advancedOpts/fig1}
 \end{frame}
 
 \begin{frame}[fragile]
+  \begin{itemize}
+    \item C1 creates a message that embeds pointer to data
+  \end{itemize}
   \frametitle{Conditional packing schematic}
   \includegraphics[width=\textwidth]{figures/advancedOpts/fig2}
 \end{frame}
 
 \begin{frame}[fragile]
+  \begin{itemize}
+    \item Message sent to C2 (same node) needs no packing (serialization)
+  \end{itemize}
   \frametitle{Conditional packing schematic}
   \includegraphics[width=\textwidth]{figures/advancedOpts/fig2_1}
 \end{frame}
 
 \begin{frame}[fragile]
+  \begin{itemize}
+    \item Message processed by C3; uses embedded pointer to access data
+  \end{itemize}
   \frametitle{Conditional packing schematic}
   \includegraphics[width=\textwidth]{figures/advancedOpts/fig2_2}
 \end{frame}
 
 \begin{frame}[fragile]
+  \begin{itemize}
+    \item Before sending across node, message is {\em packed}, data serialized
+  \end{itemize}
   \frametitle{Conditional packing schematic}
   \includegraphics[width=\textwidth]{figures/advancedOpts/fig3}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Conditional packing schematic}
+  \begin{itemize}
+    \item Message sent over network
+  \end{itemize}
   \includegraphics[width=\textwidth]{figures/advancedOpts/fig3_1}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Conditional packing schematic}
+  \begin{itemize}
+    \item Message {\em unpacked} by Charm++ (calls user-provided function) and processed by C3
+  \end{itemize}
   \includegraphics[width=\textwidth]{figures/advancedOpts/fig3_2}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Sharing data between chares}
-  \begin{itemize}
-  \item Often applications have exhibit data reuse across chares on a PE
-  \item Exploit this using Groups
-  \item Pattern:
-    \begin{itemize}
-    \item Group local branch “owns” data, not chares
-    \item Chares request group for data
-    \item Via (local entry) methods defined on group
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Sharing data between chares: an example}
-  \begin{itemize}
-    \item Barnes-Hut type long-range $N$-body simulation
-  \end{itemize}
-  \includegraphics[width=\textwidth]{figures/advancedOpts/fig4}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Sharing data between chares: an example}
-  \begin{itemize}
-    \item Barnes-Hut type long-range $N$-body simulation
-  \end{itemize}
-  \includegraphics[width=\textwidth]{figures/advancedOpts/fig5}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Sharing data between chares: an example}
-  \begin{itemize}
-    \item Barnes-Hut type long-range $N$-body simulation
-  \end{itemize}
-  \includegraphics[width=\textwidth]{figures/advancedOpts/fig6}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Sharing data between chares: an example}
-  \begin{itemize}
-    \item Barnes-Hut type long-range $N$-body simulation
-  \end{itemize}
-  \includegraphics[width=\textwidth]{figures/advancedOpts/fig7}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Sharing data between chares: an example}
-  \begin{itemize}
-    \item Barnes-Hut type long-range $N$-body simulation
-  \end{itemize}
-  \includegraphics[width=\textwidth]{figures/advancedOpts/fig8}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Sharing data between cores}
-  \begin{itemize}
-    \item In previous example, chares on same PE shared remotely fetched data
-    \item Same idea can be used to share data across PEs on same logical node
-    \item {\em Nodegroups}: one local branch per logical node
-    \item {\bf Caution:}
-    \begin{itemize}
-      \item Nodegroup methods {\em not thread-safe} by default! 
-      \item Use node-level locks for core synchronization
-    \end{itemize}
-  \end{itemize}
-\end{frame}

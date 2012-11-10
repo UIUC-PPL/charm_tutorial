@@ -233,11 +233,66 @@
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Sharing data between chares with Groups}
+  \begin{itemize}
+  \item Often applications exhibit data reuse across chares on a PE
+  \item Exploit this using Groups
+  \item Pattern:
+    \begin{itemize}
+    \item Group local branch ``owns'' data, not chares
+    \item Chares request group for data
+    \item Via (local entry) methods defined on group
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sharing data between chares: an example}
+  \begin{itemize}
+    \item Barnes-Hut type long-range $N$-body simulation
+    \item C1, C2, C3 request similar data from owner of some subvolume, C4
+  \end{itemize}
+  \includegraphics[width=\textwidth]{figures/advancedOpts/fig4}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sharing data between chares: an example}
+  \begin{itemize}
+    \item First-time requests forwarded to owner of data 
+  \end{itemize}
+  \includegraphics[width=\textwidth]{figures/advancedOpts/fig5}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sharing data between chares: an example}
+  \begin{itemize}
+    \item ``Duplicate'' requests do not result in messages, only local book-keeping
+  \end{itemize}
+  \includegraphics[width=\textwidth]{figures/advancedOpts/fig6}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sharing data between chares: an example}
+  \begin{itemize}
+    \item Data relayed to requestors when available on PE
+  \end{itemize}
+  \includegraphics[width=\textwidth]{figures/advancedOpts/fig7}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sharing data between chares: an example}
+  \begin{itemize}
+    \item If data has already been fetched, immediately provided to requestor
+  \end{itemize}
+  \includegraphics[width=\textwidth]{figures/advancedOpts/fig8}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Node Groups}
   \begin{itemize}
     \item A chare-array with one chare per node
     \begin{itemize}
-      \item In non-smp mode groups and node-groups are same
+      \item In non-smp mode groups and node groups are same
     \end{itemize}
     \item No difference in .h and .C
     \item Creation and usage same as others
@@ -245,6 +300,20 @@
     \item Concurrent execution of two entry methods of a node-group member may happen
     \begin{itemize}
       \item Use \code{[exclusive]} for entry methods which are unsuitable for reentrance safety
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sharing data between cores with Node Groups}
+  \begin{itemize}
+    \item In previous example, chares on {\em same PE} shared remotely fetched data
+    \item Same idea can be used to share data {\em across PEs} on same logical node
+    \item {\em Node Groups}: one local branch per logical node
+    \item {\bf Caution:}
+    \begin{itemize}
+      \item Nodegroup methods {\em not thread-safe} by default! 
+      \item Use node-level locks for core synchronization
     \end{itemize}
   \end{itemize}
 \end{frame}
