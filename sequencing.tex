@@ -67,7 +67,7 @@
   \begin{itemize}
     \item The \code{serial} construct
       \begin{itemize}
-        \item A sequential block of C++ code
+        \item A sequential block of C++ code in the .ci file
         \item The keyword \code{serial} means that the code block will be
           executed without interruption/preemption, like an entry method
         \item Syntax: \code{serial <optionalString> \{ /* C++ code */ \}}
@@ -75,7 +75,7 @@
           \code{serial} for performance analysis
         \item Serial blocks can access all members of the class they belong to
       \end{itemize}
-    \item Examples:
+    \item Examples (.ci file):
   \begin{columns}
     \begin{column}{0.5\textwidth}
       \begin{lstlisting}[basicstyle=\tiny]
