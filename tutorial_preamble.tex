@@ -12,7 +12,7 @@
 \usepackage{xspace}
 \usepackage{hyperref}
 \usepackage{subfigure}
-
+\usepackage{multicol}
 \definecolor{lightgray}{rgb}{0.9,0.9,0.9}
 
 \lstset{ %
@@ -67,4 +67,26 @@ belowcaptionskip=0pt,
 
 \usefonttheme{professionalfonts}
 \usetheme{Boadilla}
+%\usetheme{Warsaw}
 \usecolortheme{beaver}
+%\AtBeginSubsection[]
+%{
+%    \begin{frame}{Outline}
+%        \tableofcontents[currentsection,currentsubsection]
+%    \end{frame}
+%}
+
+\AtBeginSection[]{
+%  \setbeamercolor{section in toc shaded}{use=structure,fg=structure.fg}
+%  \setbeamercolor{section in toc}{fg=mycolor}
+%  \setbeamercolor{subsection in toc shaded}{fg=black}
+%  \setbeamercolor{subsection in toc}{fg=mycolor}
+  \frame<beamer>{\begin{multicols}{2}
+  \frametitle{Outline}
+  \setcounter{tocdepth}{2}  
+%  \tableofcontents[currentsection,subsections]
+  \tableofcontents[currentsection,currentsubsection]
+\end{multicols} 
+ }
+}
+
