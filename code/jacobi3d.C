@@ -120,8 +120,6 @@ public:
 
   // Constructor, initialize values
   Jacobi() {
-    __sdag_init();
-
     usesAtSync = CmiTrue;
     converged = false;
 
