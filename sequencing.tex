@@ -167,7 +167,7 @@ when myMethod1(int param1, int param2)
       calls:
        \begin{itemize}
          \item The Structured Dagger macro: \code{[ClassName]\_SDAG\_CODE}
-         \item Call the \code{\_\_sdag\_init()} initializer in the constructor
+%         \item Call the \code{\_\_sdag\_init()} initializer in the constructor
          \item For later: call the \code{\_\_sdag\_pup()} in the \code{pup} method
        \end{itemize}
   \end{itemize}
@@ -192,9 +192,7 @@ when myMethod1(int param1, int param2)
     class MyFoo : public CBase_MyFoo {
       MyFoo_SDAG_CODE /* insert SDAG macro */
     public:
-      MyFoo() {
-        __sdag_init(); /* call SDAG initialization in constructor */
-      }
+      MyFoo() { }
     };
   \end{lstlisting}
 \end{frame}
