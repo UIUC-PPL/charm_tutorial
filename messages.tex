@@ -139,8 +139,8 @@
       CkEntryOptions opts1, opts2;
       opts1.setQueueing(CK_QUEUEING_FIFO);
       opts2.setQueueing(CK_QUEUEING_LIFO);
-      chare.entry_name(arg1, arg2, opts1);
-      chare.entry_name(arg1, arg2, opts2);
+      chare1.entry_name(arg1, arg2, opts1);
+      chare2.entry_name(arg1, arg2, opts2);
     \end{lstlisting}
     \item \code{opts.setPriority(prio\_t integerPrio);} set integer priorities
     \item \code{opts.setPriority(int prioBits,const prio\_t *prioPtr)}  set bit vector priority using prioPtr
