@@ -48,96 +48,96 @@ MsgData * m = A[i].foo(.. parameters..);
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{A complete example}
-\begin{itemize}
-\item A chare array A of N elements, and each element holds a single number
-\item Check if the numbers are already in a sorted order? 
-\item Each chare checks with its right neighbor, in parallel, and combine there
-  results via a reduction
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{A complete example}
+% \begin{itemize}
+% \item A chare array A of N elements, and each element holds a single number
+% \item Check if the numbers are already in a sorted order? 
+% \item Each chare checks with its right neighbor, in parallel, and combine there
+%   results via a reduction
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Interface File}
-\begin{lstlisting}
-mainmodule arrayRing {
-  message MsgData;
-  readonly int numElements;
+% \begin{frame}[fragile]
+% \frametitle{Interface File}
+% \begin{lstlisting}
+% mainmodule arrayRing {
+%   message MsgData;
+%   readonly int numElements;
 
-  mainchare Main {
-    entry Main();
-    entry void allFinished(CkReductionMsg *m);
-  };
+%   mainchare Main {
+%     entry Main();
+%     entry void allFinished(CkReductionMsg *m);
+%   };
 
-  array [1D] SimpleArray {
-    entry SimpleArray();
-    entry [threaded] void run();
-    entry [sync] MsgData * blockingInvocation(int i);
-  };
-}
-\end{lstlisting}
-\end{frame}
+%   array [1D] SimpleArray {
+%     entry SimpleArray();
+%     entry [threaded] void run();
+%     entry [sync] MsgData * blockingInvocation(int i);
+%   };
+% }
+% \end{lstlisting}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Main class}
-\begin{lstlisting}[basicstyle=\scriptsize]
-class Main : public CBase_Main {
-public:
-  Main(CkMigrateMessage *msg) { }
-  Main(CkArgMsg* msg) {
-    numElements = 10;
-    if (msg->argc > 1) numElements = atoi(msg->argv[1]);
-    CProxy_SimpleArray elems = CProxy_SimpleArray::ckNew(numElements);
-    CkCallback *cb = new CkCallback(CkIndex_Main::allFinished(NULL), thisProxy);
-    elems.ckSetReductionClient(cb);
-    elems.run();
-  } 
-  void allFinished(CkReductionMsg *m) {
-    int *sorted = (int *) m->getData();
-    if (*sorted == numElements)
-      CkPrintf("Elements were sorted\n");
-    else
-      CkPrintf("Elements were not sorted\n");
-    CkExit(); 
-  }
-};
-\end{lstlisting}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Main class}
+% \begin{lstlisting}[basicstyle=\scriptsize]
+% class Main : public CBase_Main {
+% public:
+%   Main(CkMigrateMessage *msg) { }
+%   Main(CkArgMsg* msg) {
+%     numElements = 10;
+%     if (msg->argc > 1) numElements = atoi(msg->argv[1]);
+%     CProxy_SimpleArray elems = CProxy_SimpleArray::ckNew(numElements);
+%     CkCallback *cb = new CkCallback(CkIndex_Main::allFinished(NULL), thisProxy);
+%     elems.ckSetReductionClient(cb);
+%     elems.run();
+%   } 
+%   void allFinished(CkReductionMsg *m) {
+%     int *sorted = (int *) m->getData();
+%     if (*sorted == numElements)
+%       CkPrintf("Elements were sorted\n");
+%     else
+%       CkPrintf("Elements were not sorted\n");
+%     CkExit(); 
+%   }
+% };
+% \end{lstlisting}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{MsgData class}
-\begin{lstlisting}
-struct MsgData: public CMessage_MsgData { 
-  double value;
-}; 
-\end{lstlisting}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{MsgData class}
+% \begin{lstlisting}
+% struct MsgData: public CMessage_MsgData { 
+%   double value;
+% }; 
+% \end{lstlisting}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{SimpleArray class}
-\begin{lstlisting}[basicstyle=\scriptsize]
-class SimpleArray : public CBase_SimpleArray {
-private: double myValue;
-public:
-  SimpleArray(CkMigrateMessage *msg) { }
-  SimpleArray() {
-    myValue = drand48();
-  }
-  inline int nextI() { return ((thisIndex + 1) % numElements); }
-  void run() {
-    int contrib = 1;
-    if (thisIndex > nextI()) {
-      MsgData *m = thisProxy(nextI()).blockingInvocation(thisIndex);
-      if(myValue > m->value) contrib = 0;
-    }
-    contribute(sizeof(int), &contrib, CkReduction::sum_int);
-  }
-  MsgData* blockingInvocation(int i) {
-    MsgData * m = new MsgData();
-    m->value = myValue;
-    return m;
-  }
-};
-\end{lstlisting}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{SimpleArray class}
+% \begin{lstlisting}[basicstyle=\scriptsize]
+% class SimpleArray : public CBase_SimpleArray {
+% private: double myValue;
+% public:
+%   SimpleArray(CkMigrateMessage *msg) { }
+%   SimpleArray() {
+%     myValue = drand48();
+%   }
+%   inline int nextI() { return ((thisIndex + 1) % numElements); }
+%   void run() {
+%     int contrib = 1;
+%     if (thisIndex > nextI()) {
+%       MsgData *m = thisProxy(nextI()).blockingInvocation(thisIndex);
+%       if(myValue > m->value) contrib = 0;
+%     }
+%     contribute(sizeof(int), &contrib, CkReduction::sum_int);
+%   }
+%   MsgData* blockingInvocation(int i) {
+%     MsgData * m = new MsgData();
+%     m->value = myValue;
+%     return m;
+%   }
+% };
+% \end{lstlisting}
+% \end{frame}
