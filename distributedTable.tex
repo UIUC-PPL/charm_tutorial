@@ -18,26 +18,27 @@
 \begin{frame}[fragile]
   \frametitle{Structured dagger version}
   \begin{lstlisting}[basicstyle=\footnotesize]
-  for i=0,n {
-      keys[i] = compute i’th key;
-      KeyValues[keys[i]/B].requestValue( keys[i], thisProxy, i); 
+entry void retrieveValues {
+  for (i = 0; i < n; i++) serial {
+    keys[i] = // compute i'th key;
+    keyValueProxy[keys[i] / B].requestValue(keys[i], thisProxy, i);
   }
   \end{lstlisting}
   \pause
   \begin{lstlisting}[basicstyle=\footnotesize]
-  for i= 0,n 
-      when response(i,value)
-          serial { values[i] = value;}
+  for (i = 0; i < n; i++)
+    when response(int i, ValueType value)
+      serial { values[i] = value; }
+};
 
   // next phase of computation that’s uses the keys and values.
   \end{lstlisting}
   \pause
   \begin{lstlisting}[basicstyle=\footnotesize]
-  KeyValueClass::requestValue(int key, Cproxy_Client c, int ref )
-  {  
-      ValueType v = localTable[key];
-      c.response(ref, v); 
-  }
+KeyValueClass::requestValue(int key, CProxy_Client c, int ref) {
+  ValueType v = localTable[key];
+  c.response(ref, v);
+}
   \end{lstlisting}
 \end{frame}
 
