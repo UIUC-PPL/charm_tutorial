@@ -147,30 +147,30 @@ while (!converged) {
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Grainsize For Extreme Scaling}
-\begin{itemize}
- \item Strong Scaling is limited by expressed parallelism
- \begin{itemize}
-  \item Minimum iteration time limited by lengthiest computation
-  \begin {itemize} 
-    \item Largest grains set lower bound
-  \end{itemize}
- \end{itemize}
- \item 1-away generalized to k-away provides fine granularity control
-\end{itemize}
-\begin{centering}
-\includegraphics[width=1.0\textwidth]{figures/1away2away}
-\end{centering}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{NAMD: 2-AwayX Example}
-\begin{centering}
-\includegraphics[width=1.0\textwidth]{figures/2awayDiagramPlusHistos}
-\end{centering}
-\end{frame}
-
+%\begin{frame}[fragile]
+%\frametitle{Grainsize For Extreme Scaling}
+%\begin{itemize}
+% \item Strong Scaling is limited by expressed parallelism
+% \begin{itemize}
+%  \item Minimum iteration time limited by lengthiest computation
+%  \begin {itemize} 
+%    \item Largest grains set lower bound
+%  \end{itemize}
+% \end{itemize}
+% \item 1-away generalized to k-away provides fine granularity control
+%\end{itemize}
+%\begin{centering}
+%\includegraphics[width=1.0\textwidth]{figures/1away2away}
+%\end{centering}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{NAMD: 2-AwayX Example}
+%\begin{centering}
+%\includegraphics[width=1.0\textwidth]{figures/2awayDiagramPlusHistos}
+%\end{centering}
+%\end{frame}
+%
 \begin{frame}[fragile]
 \frametitle{Load Balancing Strategies}
 \begin{itemize}
@@ -218,35 +218,35 @@ while (!converged) {
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Example Case: Particles}
- Orthogonal Recursive Bisection (ORB)
- %should wrapfig the little diagram here
- \begin{itemize} 
-  \item At each stage: divide Particles equally
-  \item Processor don’t need to be a power of 2:
-  \begin{itemize} 
-   \item Divide in proportion 
-   \begin{itemize} 
-    \item 2:3 with 5 processors
-   \end{itemize}
-  \end{itemize}
- \item How to choose the dimension along which to cut?
- \begin{itemize} 
-  \item Choose the longest one
- \end{itemize}
- \item How to draw the line?
- \begin{itemize} 
-  \item All data on one processor? Sort along each dimension
-  \item Otherwise: run a distributed histogramming algorithm to find the line, recursively
- \end{itemize}
- \item Find the entire tree, and then do all data movement at once
- \begin{itemize} 
-  \item Or do it in two-three steps.
-  \item But no reason to redistribute particles after drawing each line.
- \end{itemize}
-\end{itemize}
-\end{frame}
+%\begin{frame}[fragile]
+%\frametitle{Example Case: Particles}
+% Orthogonal Recursive Bisection (ORB)
+% %should wrapfig the little diagram here
+% \begin{itemize} 
+%  \item At each stage: divide Particles equally
+%  \item Processor don’t need to be a power of 2:
+%  \begin{itemize} 
+%   \item Divide in proportion 
+%   \begin{itemize} 
+%    \item 2:3 with 5 processors
+%   \end{itemize}
+%  \end{itemize}
+% \item How to choose the dimension along which to cut?
+% \begin{itemize} 
+%  \item Choose the longest one
+% \end{itemize}
+% \item How to draw the line?
+% \begin{itemize} 
+%  \item All data on one processor? Sort along each dimension
+%  \item Otherwise: run a distributed histogramming algorithm to find the line, recursively
+% \end{itemize}
+% \item Find the entire tree, and then do all data movement at once
+% \begin{itemize} 
+%  \item Or do it in two-three steps.
+%  \item But no reason to redistribute particles after drawing each line.
+% \end{itemize}
+%\end{itemize}
+%\end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Dynamic Load Balancing using Objects}
@@ -421,7 +421,7 @@ As computation progresses, crack propagates, and new elements are added, leading
 \begin{frame}[fragile]
 \frametitle{Load Balancing on Large Machines}
 \begin{itemize}
- \item Existing load balancing strategies don’t scale on extremely large machines
+ \item Centralized load balancing strategies don’t scale on extremely large machines
  \item Limitations of centralized strategies:
  \begin{itemize}
   \item Central node: memory/communication bottleneck
