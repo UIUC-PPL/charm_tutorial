@@ -603,60 +603,60 @@ KeyValueClass::requestValue(int key, CProxy_Client c, int ref) {
   \end{lstlisting}
 \end{frame}
 
-% \begin{frame}[fragile]
+\begin{frame}[fragile]
 
-%   \frametitle{Threaded EP version}
+  \frametitle{Threaded EP version}
 
-%   \begin{lstlisting}[basicstyle=\footnotesize]
-%   for i=0,n {
-%       keys[i] = compute i’th key;
-%       futures[i] = CkCreateFuture();
-%       KeyValues[keys[i]/B].requestViaFuture(futures[i], keys[i]); 
-%   }
-%   \end{lstlisting}
-%   \pause
-%   \begin{lstlisting}[basicstyle=\footnotesize]
-%   for i= 0,n {
-%       ValueMsg * m = CkWaitFuture(futures[i]);
-%       values[i] = m->value;
-%   }
-%   // next phase of computation that’s uses the keys and values.
-%   \end{lstlisting}
-%   \pause
-%   \begin{lstlisting}[basicstyle=\footnotesize]
-%   KeyValueClass::requestViaFuture(CkFuture f , int key)
-%   {  
-%       ValueType v = localTable[key];
-%       ValueMsg * m = new ValueMsg;
-%       m->value = v;
-%       CkSendToFuture(f,m);
-%   }
-%   \end{lstlisting}
-% \end{frame}
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i=0,n {
+      keys[i] = compute i’th key;
+      futures[i] = CkCreateFuture();
+      KeyValues[keys[i]/B].requestViaFuture(futures[i], keys[i]); 
+  }
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i= 0,n {
+      ValueMsg * m = CkWaitFuture(futures[i]);
+      values[i] = m->value;
+  }
+  // next phase of computation that’s uses the keys and values.
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  KeyValueClass::requestViaFuture(CkFuture f , int key)
+  {  
+      ValueType v = localTable[key];
+      ValueMsg * m = new ValueMsg;
+      m->value = v;
+      CkSendToFuture(f,m);
+  }
+  \end{lstlisting}
+\end{frame}
 
-% \begin{frame}[fragile]
+\begin{frame}[fragile]
 
-%   \frametitle{MPI version}
-%   \framesubtitle{Can be hard and inefficient}
+  \frametitle{MPI version}
+  \framesubtitle{Can be hard and inefficient}
 
-%   \begin{lstlisting}[basicstyle=\footnotesize]
-%   for i=0,n {
-%       keys[i] = compute i’th key; 
-%       MPI send request to processor keys[i]/B
-%   }
-%   for i= 0,n {
-%       recv msg  containing the reference and value and store it
-%   }
-%   // next phase of computation that’s uses the keys and values.
-%   \end{lstlisting}
-%   \pause
-%   \textcolor{red}{But this does not work because you have to process 
-%   requests as well..And you don’t know how many requests there are.}
-%   \pause
-%   \\
-%   \vspace{.2cm}
-%   Other alternatives are possible, e.g. using 2 Alltoalls; but can be inefficient.
-% \end{frame}
+  \begin{lstlisting}[basicstyle=\footnotesize]
+  for i=0,n {
+      keys[i] = compute i’th key; 
+      MPI send request to processor keys[i]/B
+  }
+  for i= 0,n {
+      recv msg  containing the reference and value and store it
+  }
+  // next phase of computation that’s uses the keys and values.
+  \end{lstlisting}
+  \pause
+  \textcolor{red}{But this does not work because you have to process 
+  requests as well..And you don’t know how many requests there are.}
+  \pause
+  \\
+  \vspace{.2cm}
+  Other alternatives are possible, e.g. using 2 Alltoalls; but can be inefficient.
+\end{frame}
 
 
 \end{document}
