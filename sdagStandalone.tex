@@ -171,13 +171,13 @@ entry void entryMethod2(parameters);
   \frametitle{Structured Dagger}
   \framesubtitle{The \code{when} construct}
   \begin{itemize}
-  \item Execute \code{/* further sdag */} when \code{myMethod} arrives
+  \item Execute \code{/* further code */} when \code{myMethod} arrives
   \begin{lstlisting}[basicstyle=\scriptsize]
 when myMethod(int param1, int param2)
   /* further code */
   \end{lstlisting}
 
-  \item Execute \code{/* further sdag */} when \code{myMethod1} and \code{myMethod2} arrive
+  \item Execute \code{/* further code */} when \code{myMethod1} and \code{myMethod2} arrive
   \begin{lstlisting}[basicstyle=\scriptsize]
 when myMethod1(int param1, int param2),
       myMethod2(bool param3)
@@ -194,6 +194,7 @@ when myMethod1(int param1, int param2)
   \end{itemize}
 \end{frame}
 
+\comment{
 \begin{frame}
   \frametitle{Structured Dagger}
   \framesubtitle{Boilerplate}
@@ -235,6 +236,8 @@ when myMethod1(int param1, int param2)
     };
   \end{lstlisting}
 \end{frame}
+
+} 
 
 \begin{frame}[fragile]
   \frametitle{Fibonacci with Structured Dagger}
@@ -292,6 +295,8 @@ when myMethod1(int param1, int param2) {
 
 % \end{frame}
 
+\comment{
+
 \begin{frame}[fragile]
   \frametitle{Structured Dagger Constructs}
   \framesubtitle{The \code{when} construct}
@@ -312,6 +317,7 @@ when myMethod1(int param1, int param2) {
     }
   \end{lstlisting}
 \end{frame}
+}
 
 \begin{frame}[fragile]
   \frametitle{Structured Dagger}
@@ -534,6 +540,7 @@ when myMethod1(int param1, int param2) {
   \lstinputlisting[basicstyle=\tiny,linerange={22-50}]{code/jacobi3d.ci}
 \end{frame}
 
+\comment{
 \begin{frame}[fragile]
   \frametitle{Jacobi: .cpp file}
   \lstinputlisting[basicstyle=\tiny,linerange={40-46,89-103}]{code/jacobi3d.C}
@@ -558,9 +565,9 @@ when myMethod1(int param1, int param2) {
   \frametitle{Jacobi: .cpp file}
   \lstinputlisting[basicstyle=\tiny,linerange={201-230}]{code/jacobi3d.C}
 \end{frame}
+}
 
 \begin{frame}[fragile]
-
   \frametitle{Power of Asynchrony}
   \framesubtitle{Example}
 
