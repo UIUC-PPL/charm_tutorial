@@ -4,7 +4,7 @@ TARGET = tutorial.pdf
 
 .PHONY: all web
 
-all: clean $(TARGET) web
+all: clean $(TARGET) 
 
 %.pdf: %.tex
 	pdflatex $<
