@@ -1,3 +1,4 @@
+\comment{
 \begin{frame}[fragile]
 \frametitle{How to Diagnose Load Imbalance}
 \begin{itemize}
@@ -43,7 +44,7 @@
 
 The speed of any group is the speed of slowest member of that group.
 \end{frame}
-
+}
 \begin{frame}[fragile]
 \frametitle{Automatic Dynamic Load Balancing}
 \begin{itemize}
@@ -171,6 +172,7 @@ while (!converged) {
 %\end{centering}
 %\end{frame}
 %
+\comment{
 \begin{frame}[fragile]
 \frametitle{Load Balancing Strategies}
 \begin{itemize}
@@ -195,7 +197,6 @@ while (!converged) {
 \end{itemize}
 \end{itemize}
 \end{frame}
-
 \begin{frame}[fragile]
 \frametitle{Dynamic Load Balancing Scenarios}
 \begin{itemize}
@@ -314,6 +315,7 @@ Centralized strategies:
 \includegraphics[width=1.0\textwidth]{figures/LBStepsDiagram}
 \end{centering}
 \end{frame}
+}
 
 \begin{frame}[fragile]
 \frametitle{Object Partitioning Strategies}
@@ -417,7 +419,7 @@ As computation progresses, crack propagates, and new elements are added, leading
  \end{itemize}
 \end{itemize}
 \end{frame}
-
+\comment{
 \begin{frame}[fragile]
 \frametitle{Load Balancing on Large Machines}
 \begin{itemize}
@@ -444,7 +446,7 @@ lb\_test experiments performed with the performance simulator BigSim
 specified number of communicating objects in 2D-mesh.
 \end{itemize}
 \end{frame}
-
+}
 
 \begin{frame}[fragile]
 \frametitle{Hierarchical Load Balancers}
@@ -460,12 +462,13 @@ specified number of communicating objects in 2D-mesh.
 \includegraphics[width=1.0\textwidth]{figures/hybridLBScheme}
 \end{frame}
 
+\comment{
 \begin{frame}[fragile]
 \frametitle{Hybrid Load Balancing Performance}
 \includegraphics[width=0.5\textwidth]{figures/hybridLBPerf}
 \includegraphics[width=0.5\textwidth]{figures/hybridLBquality}
 \end{frame}
-
+}
 \begin{frame}[fragile]
 \frametitle{MetaBalancer - When and how to load balance?}
 \begin{itemize}    
@@ -481,7 +484,9 @@ specified number of communicating objects in 2D-mesh.
 \end{itemize}
 \end{frame}
 
+\comment{
 \begin{frame}[fragile]
 \frametitle{Metabalancer Performance for LeanMD mini-App}
 \includegraphics{figures/bgp-metabalancer-leanmd}
 \end{frame}
+}
