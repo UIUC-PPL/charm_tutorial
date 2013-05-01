@@ -63,6 +63,24 @@
 %if -> while -> for
 \begin{frame}[fragile]
   \frametitle{Structured Dagger}
+  \framesubtitle{The \code{when} construct}
+  \begin{itemize}
+    \item The \code{when} construct
+      \begin{itemize}
+        \item Declare the actions to perform when a message is received
+        \item In sequence, it acts like a blocking receive
+      \end{itemize}
+      \begin{lstlisting}[basicstyle=\normalsize]
+entry void someMethod() {
+  when entryMethod1(parameters) { /* block2 */ }
+  when entryMethod2(parameters) { /* block3 */ }
+};
+      \end{lstlisting}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structured Dagger}
   \framesubtitle{The \code{serial} construct}
   \begin{itemize}
     \item The \code{serial} construct
@@ -100,28 +118,6 @@ entry void method2(parameters) {
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Structured Dagger}
-  \framesubtitle{The \code{when} construct}
-  \begin{itemize}
-    \item The \code{when} construct
-      \begin{itemize}
-        \item Declare the actions to perform when a message is received
-        \item In sequence, it acts like a blocking receive
-      \end{itemize}
-      \begin{lstlisting}[basicstyle=\normalsize]
-entry void someMethod() {
-  serial { /* block1 */ }
-  when entryMethod1(parameters) serial { /* block2 */ }
-  when entryMethod2(parameters) serial { /* block3 */ }
-  serial { /* block4 */ }
-}
-
-entry void entryMethod1(parameters);
-entry void entryMethod2(parameters);
-      \end{lstlisting}
-    \end{itemize}
-\end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Structured Dagger}
@@ -131,11 +127,7 @@ entry void someMethod() {
   serial { /* block1 */ }
   when entryMethod1(parameters) serial { /* block2 */ }
   when entryMethod2(parameters) serial { /* block3 */ }
-  serial { /* block4 */ }
-}
-
-entry void entryMethod1(parameters);
-entry void entryMethod2(parameters);
+};
       \end{lstlisting}
   \begin{itemize}
     \item Sequence
@@ -148,8 +140,6 @@ entry void entryMethod2(parameters);
           \pause
         \item Wait for \code{entryMethod2} to arrive, if it has not, return control
           back to the Charm++ scheduler, otherwise, execute \code{/* block3 */}
-          \pause
-        \item Sequentially execute \code{/* block4 */}
       \end{itemize}
     \end{itemize}
 \end{frame}
@@ -290,7 +280,7 @@ when myMethod1(int param1, int param2) {
       that reference number
   \end{itemize}
   \begin{lstlisting}
-    when method1[100](short ref, bool param1)
+    when method1[100](int ref, bool param1)
       /* sdag block */
 
     serial {
@@ -311,7 +301,7 @@ when myMethod1(int param1, int param2) {
   \end{itemize}
   \begin{lstlisting}
   if (thisIndex.x == 10) {
-    when method1[block](short ref, bool someVal) /* code block1 */
+    when method1[block](int ref, bool someVal) /* code block1 */
   } else {
     when method2(int payload) serial {
       //... some C++ code
@@ -333,9 +323,9 @@ when myMethod1(int param1, int param2) {
   \end{itemize}
   \begin{lstlisting}
     for (iter = 0; iter < maxIter; ++iter) {
-      when recvLeft[iter](short num, int len, double data[len])
+      when recvLeft[iter](int num, int len, double data[len])
         serial { computeKernel(LEFT, data); }
-      when recvRight[iter](short num, int len, double data[len])
+      when recvRight[iter](int num, int len, double data[len])
         serial { computeKernel(RIGHT, data); }
     }
   \end{lstlisting}
@@ -383,8 +373,8 @@ when myMethod1(int param1, int param2) {
 %       entry MyChare();
 %       entry void startWork() {
 %         serial { myRef = 100; }
-%         when method1[myRef1](short ref, bool param1) /*  block1 */
-%         when method2[myRef2](short ref, bool param1) /* block2 */
+%         when method1[myRef1](int ref, bool param1) /*  block1 */
+%         when method2[myRef2](int ref, bool param1) /* block2 */
 %       };
 %     }
 %   \end{lstlisting}
@@ -417,7 +407,7 @@ when myMethod1(int param1, int param2) {
     serial { /* block1 */ }
     overlap {
       serial { /* block2 */ }
-      when entryMethod1[100](short ref_num, bool param1) /* block3 */
+      when entryMethod1[100](int ref_num, bool param1) /* block3 */
       when entryMethod2(char myChar) /* block4 */
     }
     serial { /* block5 */ }
@@ -458,11 +448,11 @@ when myMethod1(int param1, int param2) {
   \end{itemize}
   \begin{lstlisting}
     forall [block] (0 : numBlocks - 1, 1) {
-      when method1[block](short ref, bool someVal) /* code block1 */
+      when method1[block](int ref, bool someVal) /* code block1 */
     }
   \end{lstlisting}
   \begin{itemize}
-    \item Assume \code{block} is declared in the class as \code{public: short block;}
+    \item Assume \code{block} is declared in the class as \code{public: int block;}
   \end{itemize}
 \end{frame}
 
@@ -508,7 +498,7 @@ when myMethod1(int param1, int param2) {
 
 \begin{frame}[fragile]
   \frametitle{Jacobi: .ci file}
-  \lstinputlisting[basicstyle=\tiny]{code/jacobi3dELL.ci}
+  \lstinputlisting[basicstyle=\footnotesize]{code/jacobi3dELL.ci}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -521,27 +511,27 @@ when myMethod1(int param1, int param2) {
   \lstinputlisting[basicstyle=\tiny,linerange={22-50}]{code/jacobi3d.ci}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Jacobi: .cpp file}
-  \lstinputlisting[basicstyle=\tiny,linerange={40-46,89-103}]{code/jacobi3d.C}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Jacobi: .cpp file}
+%   \lstinputlisting[basicstyle=\tiny,linerange={40-46,89-103}]{code/jacobi3d.C}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Jacobi: .cpp file}
-  \lstinputlisting[basicstyle=\tiny,linerange={109-139}]{code/jacobi3d.C}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Jacobi: .cpp file}
+%   \lstinputlisting[basicstyle=\tiny,linerange={109-139}]{code/jacobi3d.C}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Jacobi: .cpp file}
-  \lstinputlisting[basicstyle=\tiny,linerange={109-138}]{code/jacobi3d.C}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Jacobi: .cpp file}
+%   \lstinputlisting[basicstyle=\tiny,linerange={109-138}]{code/jacobi3d.C}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Jacobi: .cpp file}
-  \lstinputlisting[basicstyle=\tiny,linerange={164-190}]{code/jacobi3d.C}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Jacobi: .cpp file}
+%   \lstinputlisting[basicstyle=\tiny,linerange={164-190}]{code/jacobi3d.C}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Jacobi: .cpp file}
-  \lstinputlisting[basicstyle=\tiny,linerange={201-230}]{code/jacobi3d.C}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Jacobi: .cpp file}
+%   \lstinputlisting[basicstyle=\tiny,linerange={201-230}]{code/jacobi3d.C}
+% \end{frame}
