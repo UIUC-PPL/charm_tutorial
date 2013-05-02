@@ -10,8 +10,8 @@
       \item first-class citizens in the parallel address space,
       \item with unique location-independent names
       \end{itemize}
-    \item Under the hood, the runtime handles locality and provides the
-      mechanisms to promote objects to the parallel space
+    \item Under the hood, the runtime keeps track of where each object
+      is
   \end{itemize}
 \end{frame}
 
@@ -86,6 +86,7 @@
       \item Method sequencing is what changes from sequential computation
       \end{itemize}
     \end{column}
+\pause
     \begin{column}{0.45\textwidth}
       \includegraphics[width=1\textwidth]{figures/sequencing.pdf}
     \end{column}
