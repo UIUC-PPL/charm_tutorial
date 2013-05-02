@@ -81,17 +81,13 @@ entry void someMethod() {
 
 \begin{frame}[fragile]
   \frametitle{Structured Dagger}
-  \framesubtitle{The \code{serial} construct}
+  \framesubtitle{A \code{serial} block}
   \begin{itemize}
     \item The \code{serial} construct
       \begin{itemize}
         \item A sequential block of C++ code in the .ci file
         \item The keyword \code{serial} means that the code block will be
           executed without interruption/preemption, like an entry method
-        \item Syntax: \code{serial <optionalString> \{ /* C++ code */ \}}
-        \item The \code{<optionalString>} is used for identifying the
-          \code{serial} for performance analysis
-        \item Serial blocks can access all members of the class they belong to
       \end{itemize}
     \item Examples (.ci file):
   \begin{columns}
@@ -122,7 +118,7 @@ entry void method2(parameters) {
 \begin{frame}[fragile]
   \frametitle{Structured Dagger}
   \framesubtitle{The \code{when} construct}
-      \begin{lstlisting}[basicstyle=\tiny]
+      \begin{lstlisting}[basicstyle=\footnotesize]
 entry void someMethod() {
   serial { /* block1 */ }
   when entryMethod1(parameters) serial { /* block2 */ }
