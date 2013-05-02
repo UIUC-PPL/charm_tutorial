@@ -374,13 +374,17 @@ Branch-and-bound
 
 \begin{frame}[fragile]
 \frametitle{Crack Propagation}
-\begin{centering}
-\includegraphics[width=0.4\textwidth]{figures/chunkGraph16}
-\includegraphics[width=0.4\textwidth]{figures/chunkGraph128}
-\end{centering}
-Decomposition into 16 chunks (left) and 128 chunks, 8 for each PE (right). The middle area contains cohesive elements. Both decompositions obtained using Metis. Pictures: S. Breitenfeld, and P. Geubelle
-
-As computation progresses, crack propagates, and new elements are added, leading to more complex computations in some chunks
+\begin{center}
+\includegraphics[width=0.35\textwidth]{figures/chunkGraph16}
+\includegraphics[width=0.35\textwidth]{figures/chunkGraph128}
+\end{center}
+\begin{itemize}
+\item Decomposition into 16 chunks (left) and 128 chunks, 8 for each PE
+  (right). Both decompositions obtained using Metis. Pictures: S. Breitenfeld,
+  and P. Geubelle
+\item As computation progresses, crack propagates, and new elements are
+  added, leading to more complex computations in some chunks
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
