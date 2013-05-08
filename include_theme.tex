@@ -1,0 +1,25 @@
+\usefonttheme{professionalfonts}
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+
+%\AtBeginSubsection[]
+%{
+%    \begin{frame}{Outline}
+%        \tableofcontents[currentsection,currentsubsection]
+%    \end{frame}
+%}
+
+\AtBeginSection[]{
+%  \setbeamercolor{section in toc shaded}{use=structure,fg=structure.fg}
+%  \setbeamercolor{section in toc}{fg=mycolor}
+%  \setbeamercolor{subsection in toc shaded}{fg=black}
+%  \setbeamercolor{subsection in toc}{fg=mycolor}
+  \frame<beamer>{\begin{multicols}{2}
+  \frametitle{Outline}
+  \setcounter{tocdepth}{2}  
+%  \tableofcontents[currentsection,subsections]
+  \tableofcontents[currentsection,currentsubsection]
+\end{multicols} 
+ }
+}
+
