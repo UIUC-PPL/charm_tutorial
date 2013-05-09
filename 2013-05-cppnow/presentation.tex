@@ -9,6 +9,13 @@
 \usetheme{Boadilla}
 \usecolortheme{beaver}
 
+\AtBeginSection[]{
+  \frame<beamer>{
+  \frametitle{Outline}
+  \tableofcontents[currentsection]
+ }
+}
+
 \title[Parallelism with Charm++]{Parallel Programming with \charm}
 \institute[PPL, UIUC]{\includegraphics[scale=0.8]{../figures/illinois_logo-crop.pdf}\\Parallel Programming Lab\\ University of Illinois}
 \author[Phil and Ram]{Laxmikant Kal\'e, Phil Miller, Ramprasad Venkataraman}
