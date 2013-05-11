@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActiveLayerIndex</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle</string>
@@ -2694,6 +2694,71 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
+			<string>{{150.33333333333334, 364.33333333333331}, {38.147514401140739, 28.775194122495037}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>FontInfo</key>
+			<dict>
+				<key>Color</key>
+				<dict>
+					<key>b</key>
+					<string>1</string>
+					<key>g</key>
+					<string>1</string>
+					<key>r</key>
+					<string>1</string>
+				</dict>
+				<key>Font</key>
+				<string>Helvetica</string>
+				<key>Size</key>
+				<real>10</real>
+			</dict>
+			<key>ID</key>
+			<integer>261</integer>
+			<key>Layer</key>
+			<integer>6</integer>
+			<key>Shape</key>
+			<string>Circle</string>
+			<key>Style</key>
+			<dict>
+				<key>fill</key>
+				<dict>
+					<key>Color</key>
+					<dict>
+						<key>b</key>
+						<string>0.626328</string>
+						<key>g</key>
+						<string>0.295398</string>
+						<key>r</key>
+						<string>0.630435</string>
+					</dict>
+					<key>FillType</key>
+					<integer>3</integer>
+					<key>GradientColor</key>
+					<dict>
+						<key>w</key>
+						<string>0.666667</string>
+					</dict>
+				</dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+			</dict>
+			<key>Text</key>
+			<dict>
+				<key>Text</key>
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc
+
+\f0\fs20 \cf1 N}</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Bounds</key>
 			<string>{{375.03833814033828, 338.98021443684843}, {38.147514401140739, 28.775194122495037}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
@@ -5140,7 +5205,7 @@ service}</string>
 		</dict>
 		<dict>
 			<key>Lock</key>
-			<string>YES</string>
+			<string>NO</string>
 			<key>Name</key>
 			<string>rts</string>
 			<key>Print</key>
@@ -5181,7 +5246,7 @@ service}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-05-10 23:41:31 +0000</string>
+	<string>2013-05-11 01:20:42 +0000</string>
 	<key>Modifier</key>
 	<string>Ramprasad Venkataraman</string>
 	<key>NotesVisible</key>
