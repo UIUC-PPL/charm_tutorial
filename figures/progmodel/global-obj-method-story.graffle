@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActiveLayerIndex</key>
-	<integer>9</integer>
+	<integer>0</integer>
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle</string>
@@ -3191,10 +3191,10 @@
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{630.02233306776236, 438.58330600084884}</string>
-				<string>{629.91666666666674, 461}</string>
-				<string>{556.80707755092908, 461.25022292862474}</string>
-				<string>{555.58308986098052, 438.83256940037171}</string>
+				<string>{711.40861358937718, 438.58330301042042}</string>
+				<string>{711.39702097574877, 459.25}</string>
+				<string>{558.80707755092908, 458.91688959529137}</string>
+				<string>{556.60284505514664, 438.83032939513299}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -3226,7 +3226,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>224</integer>
+				<integer>216</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -3249,8 +3249,8 @@
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{161.25861233832106, 438.58323521603165}</string>
-				<string>{161.82016118573853, 461}</string>
+				<string>{158.92225250923528, 438.58099896977785}</string>
+				<string>{155.81588805166399, 461.25}</string>
 				<string>{65.258403301239014, 461.25022292862474}</string>
 				<string>{65.411012861425561, 438.83330141469202}</string>
 			</array>
@@ -3307,8 +3307,8 @@
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{367.13835065681798, 438.58331397410262}</string>
-				<string>{367, 460.5}</string>
+				<string>{367.23749185965471, 438.58331890063215}</string>
+				<string>{367.25, 460.75}</string>
 				<string>{312.5000114440918, 461}</string>
 				<string>{312.36105122865109, 438.83330314319909}</string>
 			</array>
@@ -4242,7 +4242,7 @@ service}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{653.7875951131183, 432.99999649613085}, {63.000000000000057, 21.99999968917216}}</string>
+			<string>{{648.39702097574866, 432.99999649613085}, {63.000000000000057, 21.99999968917216}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -5854,7 +5854,7 @@ service}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-05-11 13:39:27 +0000</string>
+	<string>2013-05-11 13:45:04 +0000</string>
 	<key>Modifier</key>
 	<string>Ramprasad Venkataraman</string>
 	<key>NotesVisible</key>
@@ -5957,7 +5957,7 @@ service}</string>
 			<array>
 				<string>Charm Model</string>
 				<real>1.5</real>
-				<real>2</real>
+				<real>4</real>
 			</array>
 		</array>
 	</dict>
