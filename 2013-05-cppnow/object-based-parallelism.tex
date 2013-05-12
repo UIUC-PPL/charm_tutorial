@@ -48,6 +48,39 @@ say 2 matrices
 
 
 \begin{frame}
+% same fig
+so far we only spoke abt units of state in the app
+and expressing the app in terms of units natural to the domain
+so we've done that.
+we have this impressive decomposition of data and functionality across collections of objects
+there's one key ingredient that i've avoided mentioning up to this point
+and those are interactions.
+how do you stitch all these objects into a cohesive fabric that makes the app do what its supposed
+to do
+these obj have to interact with each other
+% fig wit just obj collection
+% above fig with methods
+in a sequential environment, which all of us are familiar with
+app state is in objects, and app logic is via interactions. ie method invocations
+% charm retains this same modality
+% above fig with PEs
+we enable method invocations across process or addr space boundaries
+however we do NOT encourage a notion of a global address space, where it magically appears that
+all app entities are in the same address space
+instead, we strive to keep the locality information visible to the app
+% above fig with addr space
+and that is again achieved by only elevating some of the objects into the global name space
+\end{frame}
+
+
+\begin{frame}
+subset of methods elevated into global namespace
+programmer annotates which methods are globally visible
+only globally visible methods can be invoked across proc boundaries
+\end{frame}
+
+
+\begin{frame}
     class / object - fundamental unit of state natural to parallel algo\\
     method - fundamental unit of execution in parallel algo\\
     express parallel algo interactions via methods or function calls
