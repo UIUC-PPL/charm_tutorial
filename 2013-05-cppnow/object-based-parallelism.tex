@@ -48,24 +48,29 @@ say 2 matrices
 
 
 \begin{frame}
-% same fig
+  \frametitle{}
+  \begin{figure}
+	\includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/07-obj-programmer-view.pdf}
+	\includegraphics<2>[width=0.9\textwidth]{../figures/progmodel/05-parallelism-via-obj-collections.pdf}
+	\includegraphics<3>[width=0.9\textwidth]{../figures/progmodel/08-seq-obj-methods.pdf}
+	\includegraphics<4>[width=0.9\textwidth]{../figures/progmodel/09-rmi-synchronous.pdf}
+  \end{figure}
 so far we only spoke abt units of state in the app
 and expressing the app in terms of units natural to the domain
 so we've done that.
-lets briefly go back to the application's view of the decompositions
-% fig wit just obj collection
 we have this impressive decomposition of data and functionality across collections of objects
 there's one key ingredient that i've avoided mentioning up to this point
 and those are interactions.
 how do you stitch all these objects into a cohesive fabric that makes the app do what its supposed
 to do
 these obj have to interact with each other
+% 
 in a sequential environment, which all of us are familiar with
 app state is in objects, and app logic is via interactions. ie method invocations
-% above fig with methods (with two-headed arrows. or no arrowheads at all)
+%
 charm retains this same modality
 we enable method invocations across process or addr space boundaries
-% above fig with PEs
+%
 however with minor modifications from the sequential semantic
 \end{frame}
 
@@ -75,7 +80,7 @@ however with minor modifications from the sequential semantic
 all app entities are in the same address space, and any object can call / interact with anyone else
 instead, we strive to keep the locality information visible to the app
 the first step to that is to permit RMI only on globally visible objects
-% above fig with addr space
+  \begin{figure}\includegraphics[width=0.9\textwidth]{../figures/progmodel/10-rmi-notgas.pdf}\end{figure}
 \end{frame}
 
 
@@ -84,6 +89,7 @@ the first step to that is to permit RMI only on globally visible objects
 programmer annotates which methods are globally visible
 only globally visible methods can be invoked across proc boundaries
 intro term entry methods. will explain why later.
+  \begin{figure}\includegraphics[width=0.9\textwidth]{../figures/progmodel/11-global-methods.pdf}\end{figure}
 \end{frame}
 
 
