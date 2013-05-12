@@ -1,27 +1,57 @@
 \begin{frame}
 \frametitle{\charm}
 \framesubtitle{}
-	\begin{block}{What is it?}
-	\begin{columns}
-	\begin{column}{0.5\textwidth}
-		\begin{itemize}
-		\item Programming model
-		\item Programming framework
-		\item Runtime system software
+	\begin{block}{Parallel ...}
+		\begin{itemize}[<+->]
+		\item \alert<4->{... programming model}
+		\item ... programming framework
+		\item ... runtime system
 	\end{itemize}
-	\end{column}
-	\begin{column}{0.3\textwidth}
-		{\Large designed for parallelism}
-	\end{column}
-	\end{columns}
 	\end{block}
-    \begin{itemize}
-        \item General-purpose C++ parallel programming framework
-        \item Abstracts parallel algorithm design from concrete hardware
-        \item Shared-nothing by default, explicit sharing for optimization
-        \item Abstracts domain logic from parallel tuning
-        \item Rich ecosystem of runtime and tool support to address domain-independent
-          concerns
+    \begin{itemize}[<+->]
+        \item General-purpose
+        \item Dataflow
+        \item Unified data and task parallelism
+        \item Unified handling of shared and distributed memory
+        \item Parallel algorithm independent of available processors
+        \item Separation of roles and concerns
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\charm}
+\framesubtitle{}
+	\begin{block}{Parallel ...}
+		\begin{itemize}
+		\item ... programming model
+		\item \alert{... programming framework}
+		\item ... runtime system
+	\end{itemize}
+	\end{block}
+    \begin{itemize}[<+->]
+        \item Code generation, Base classes, utility functions and other API
+        \item Multi-paradigm parallel code (procedural, object oriented, generic)
+        \item Rich ecosystem of tools
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\charm}
+\framesubtitle{}
+	\begin{block}{Parallel ...}
+		\begin{itemize}
+		\item ... programming model
+		\item ... programming framework
+		\item \alert{... runtime system}
+	\end{itemize}
+	\end{block}
+    \begin{itemize}[<+->]
+        \item Managed parallel execution
+        %\item Shared-nothing by default, explicit sharing for optimization
+        \item Measurement-based performance introspection
+        \item Adaptive response for better performance
     \end{itemize}
 \end{frame}
 
@@ -30,6 +60,7 @@
 \frametitle{\charm: Some Capabilities}
 \framesubtitle{Transparent to application code!}
     \begin{itemize}
+        \item Abstracts domain logic from parallel tuning
         \item Seamless parallel composability of modular components
         \item Fault tolerance
         \item Dynamic load balancing
@@ -40,51 +71,90 @@
 
 \begin{frame}
 \frametitle{\charm: Portability}
-\only<1>{
-\framesubtitle{Environments}
-    \begin{itemize}
-        \item Embedded ARM: cell phones, CARMA dev boards
-        \item Commodity x86: servers, desktops, laptops, tablets
-        \item Clusters: commodity, with a network
-        \item Supercomputers: IBM Blue Gene and POWER, Cray
-    \end{itemize}
-\includegraphics[scale=0.07]{../figures/titan.jpg}
-\includegraphics[scale=0.5]{../figures/mira.jpg}
+{\scriptsize
+\onslide<1->{
+\begin{block}{\small Environments}
+    \begin{columns}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item Embedded ARM: CARMA dev boards, cell phones
+            \item Commodity x86: servers, desktops, laptops, tablets
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item Clusters: commodity, with a network
+            \item Supercomputers: IBM Blue Gene and POWER, Cray
+        \end{itemize}
+    \end{column}
+    \end{columns}
+\end{block}
 }
-\only<2>{
-  \framesubtitle{Operating Systems}
-  \begin{itemize}
-  \item Linux
-  \item Mac OS X
-  \item Windows
-  \item Proprietary Cray \& IBM
-  \end{itemize}
+%\only<1>{ \includegraphics[width=0.48\textwidth]{../figures/mira.jpg} }
+\onslide<2->{
+\begin{block}{\small Operating Systems}
+    \begin{columns}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item Linux
+            \item Mac OS X
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item Windows
+            \item Proprietary Cray \& IBM
+        \end{itemize}
+    \end{column}
+    \end{columns}
+\end{block}
 }
-\only<3>{
-  \framesubtitle{Network Interfaces}
-  \begin{itemize}
-    \item TCP, UDP
-    \item Shared memory
-    \item MPI
-    \item Infiniband Verbs
-    \item Native Blue Gene P (DCMF), Blue Gene Q (PAMI)
-    \item Native Cray Gemini and Aries (uGNI)
-  \end{itemize}
+\onslide<3->{
+\begin{block}{\small Network Interfaces}
+    \begin{columns}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item TCP, UDP
+            \item Shared memory
+            \item MPI
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item Infiniband Verbs
+            \item IBM BlueGene P,Q (DCMF, PAMI)
+            \item Cray Gemini and Aries (uGNI)
+        \end{itemize}
+    \end{column}
+    \end{columns}
+\end{block}
 }
-\only<4>{
-\framesubtitle{Compilers}
-\begin{itemize}
-\item GCC
-\item Clang
-\item Microsoft VC++
-\item IBM XL
-\item Intel
-\item Portland Group (PGI)
-\item Cray
-\item Fujitsu
-\end{itemize}
+%\only<1>{ \includegraphics[width=0.48\textwidth]{../figures/titan.jpg} }
+\onslide<4->{
+\begin{block}{\small Compilers}
+    \begin{columns}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item GCC
+            \item Clang
+            \item Microsoft VC++
+            \item IBM XL
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item Intel
+            \item Portland Group (PGI)
+            \item Cray
+            \item Fujitsu
+        \end{itemize}
+    \end{column}
+    \end{columns}
+\end{block}
+}
 }
 \end{frame}
+
 
 \begin{frame}
 \frametitle{\charm: Pedigree}
