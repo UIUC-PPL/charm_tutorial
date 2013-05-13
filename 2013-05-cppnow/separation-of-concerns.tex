@@ -56,7 +56,7 @@ Application worries about \emph{what}, runtime system worries about \emph{how}
 \begin{itemize}[<+->]
 \item Possible solutions to ``Where does object X live?''
 \begin{itemize}[<+->]
-\item Name includes location
+\item Name is location-specific
 \item Creator specifies location, passes along with name
 \item Fixed mapping from names to locations
 \item \textbf{Dynamic lookup}
@@ -64,7 +64,7 @@ Application worries about \emph{what}, runtime system worries about \emph{how}
 \item \charm approach
 \begin{itemize}
 \item \emph{Mapping scheme} defines \emph{home location} -- default location, and responsible for knowing current location
-\item Cache of last know locations on each processor
+\item Cache of last known locations on each processor
 \item Messages sent to cached location, or home if none known
 \end{itemize}
 \end{itemize}
