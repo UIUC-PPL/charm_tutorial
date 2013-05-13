@@ -73,3 +73,25 @@ Application worries about \emph{what}, runtime system worries about \emph{how}
 Fire off message, runtime delivers
 \end{block}
 \end{frame}
+
+\begin{frame}
+\frametitle{Separation of Concerns: Object Migration}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{block}{Why migrate?}
+\begin{itemize}
+\item Fault tolerance
+\item Communication locality
+\item Load balance
+\item Power, Energy, and Heat management
+\end{itemize}
+\end{block}
+\pause
+Application provides serialization routines, runtime can do the rest!
+\end{column}
+\pause
+\begin{column}{0.5\textwidth}
+PUP example code goes here. Class declaration with fields shown and corresponding PUP method
+\end{column}
+\end{columns}
+\end{frame}
