@@ -19,23 +19,33 @@ Relevant pieces of code should be easy to divide
 
 
 \begin{frame}
-\frametitle{Separation of Concerns}
+\frametitle{Different expertise, different focus}
 \framesubtitle{Mapping Example: Quantum Chemistry with {\sc OpenAtom}}
 Replace with illustration of OpenAtom arrays
 \end{frame}
 
 \begin{frame}
-\frametitle{Separation of Concerns}
+\frametitle{Different expertise, different focus}
 \framesubtitle{Mapping Example: Quantum Chemistry with {\sc OpenAtom}}
 \includegraphics[width=0.9\textheight]{../figures/openatom/mapping.pdf}
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Quantum Chemistry: OpenAtom}
+\frametitle{Different expertise, different focus}
+\framesubtitle{Mapping Example: Quantum Chemistry with {\sc OpenAtom}}
 \includegraphics[width=0.9\textwidth]{../figures/openatom/map.pdf}
 \begin{block}{40\% improvement, application only changed in initialization!}\end{block}
 \end{frame}
 
 
-
+\begin{frame}
+\frametitle{Separation of Concerns}
+\begin{block}{Layered responsibility}
+Application worries about \emph{what}, runtime system worries about \emph{how}
+\end{block}
+\begin{itemize}
+\item What data to send, vs. message allocation and packing
+\item Who to talk to, vs. where they live
+\end{itemize}
+\end{frame}
