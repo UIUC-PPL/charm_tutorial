@@ -1,14 +1,21 @@
 
+
+
 \begin{frame}
-\frametitle{Adaptive Mesh Refinement for solving PDEs}
-\includegraphics[width=0.9\textwidth]{../figures/amr_scaling_distlb.pdf}
+\frametitle{Load Imbalance}
+\begin{itemize}
+\item Performance limited by difference between most-loaded processor and overall average.\\
+\only<1>{\includegraphics[width=0.8\textwidth]{../figures/changa_imbalance.png}}
+\pause
+\item Causes vary in severity, time scale, nature
+\pause
+\item Response must suit causes, other application concerns, system scale
+\end{itemize}
 \end{frame}
 
 
-
-
 \begin{frame}[fragile]
-\frametitle{Crack Propagation}
+\frametitle{Load Imbalance: Crack Propagation}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \includegraphics[width=\textwidth]{../figures/chunkGraph16}
@@ -29,4 +36,13 @@ Picture: S. Breitenfeld and P. Geubelle
 \includegraphics[width=1.0\textwidth]{../figures/LButilizationCrackPropWithAnnotation}
 \end{centering}
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Adaptive Mesh Refinement for solving PDEs}
+\includegraphics[width=0.9\textwidth]{../figures/amr_scaling_distlb.pdf}
+\end{frame}
+
+
+
 
