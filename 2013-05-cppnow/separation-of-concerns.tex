@@ -76,8 +76,6 @@ Fire off message, runtime delivers
 
 \begin{frame}
 \frametitle{Separation of Concerns: Object Migration}
-\begin{columns}
-\begin{column}{0.5\textwidth}
 \begin{block}{Why migrate?}
 \begin{itemize}
 \item Fault tolerance
@@ -88,10 +86,44 @@ Fire off message, runtime delivers
 \end{block}
 \pause
 Application provides serialization routines, runtime can do the rest!
-\end{column}
-\pause
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Object Serialization}
+\begin{columns}
 \begin{column}{0.5\textwidth}
-PUP example code goes here. Class declaration with fields shown and corresponding PUP method
+\begin{lstlisting}
+class MyChare : public CBase_MyChare {
+  int a;   float b;   char c;
+  float localArray[LOCAL_SIZE];
+  int heapArraySize;
+  float* heapArray;
+  MyClass *pointer;
+  // . . . 
+};
+\end{lstlisting}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{lstlisting}
+void MyChare::pup(PUP::er &p) {
+   CBase_MyChare::pup(p);
+   p | a;  p | b; p | c;
+   p(localArray, LOCAL_SIZE);
+   p | heapArraySize;
+   if (p.isUnpacking()) {
+     heapArray =
+       new float[heapArraySize];
+   }
+   p(heapArray, heapArraySize);
+   bool isNull = pointer==NULL;
+   p | isNull;
+   if (!isNull) {
+     if (p.isUnpacking())
+       pointer = new MyClass();
+     p | *pointer;
+   }
+}
+\end{lstlisting}
 \end{column}
 \end{columns}
 \end{frame}
