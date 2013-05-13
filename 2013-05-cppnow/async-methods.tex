@@ -76,11 +76,11 @@
 
 
 \begin{frame}
-\frametitle{3. Remote methods are of void return type}
-	\onslide<2>{ Asynchronous, non-blocking remote method invocations }
+\frametitle{\only<3-> {Entry Methods}}
+	\onslide<2->{ Asynchronous, non-blocking remote method invocations on chares}
 	\begin{center}
         \includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/11-global-methods.pdf}
-        \includegraphics<2>[width=0.9\textwidth]{../figures/progmodel/12-async-nonblock-rmi.pdf}
+        \includegraphics<2->[width=0.9\textwidth]{../figures/progmodel/12-async-nonblock-rmi.pdf}
 	\end{center}
 \end{frame}
 
@@ -102,12 +102,44 @@
 
 
 \begin{frame}
-\frametitle{RMI expresses parallel dependencies}
-	\begin{center}
-        lu DAG?
-        \includegraphics[width=0.9\textwidth]{../figures/progmodel/11-global-methods.pdf}
-	\end{center}
+\frametitle{Entry methods and Dataflow}
+    \begin{itemize}[<+->]
+        \item void return types imply a one-way information transfer
+        \item signal application intent to perform remote task
+        \item carry required input data for remote task
+        \item express parallel dependencies
+    \end{itemize}
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Biomolecular Physics: NAMD}
+\framesubtitle{Parallel decomposition and dependencies}
+\includegraphics[width=\textwidth]{../figures/md_parallelize.pdf}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Biomolecular Physics: NAMD}
+\framesubtitle{Chromatophore vesicle in purple bacteria}
+\includegraphics[width=0.9\textwidth]{../figures/namd/chromatophore-vesicle-2012-01.jpg}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Biomolecular Physics: NAMD}
+\framesubtitle{ApoA1 on IBM BlueGene P/Q (Intrepid/Mira)}
+\onslide<2>{794 us / step}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{../figures/apoa1-pme4-PQ.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Biomolecular Physics: NAMD}
+\framesubtitle{100M atom STMV on Cray XK6 (Titan)}
+\includegraphics[width=0.9\textwidth]{../figures/namd_titan.pdf}
+\end{frame}
 
 
