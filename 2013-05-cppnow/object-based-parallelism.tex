@@ -88,6 +88,7 @@ however with minor modifications from the sequential semantic
 
 
 \begin{frame}
+\frametitle{1. Not every object is remotely invocable}
 (1) we do NOT encourage a notion of a global address space, where it magically appears that
 all app entities are in the same address space, and any object can call / interact with anyone else
 instead, we strive to keep the locality information visible to the app
@@ -97,7 +98,8 @@ the first step to that is to permit RMI only on globally visible objects
 
 
 \begin{frame}
-(2) only subset of methods elevated into global namespace
+\frametitle{2. Not every method is remotely invocable}
+only subset of methods elevated into global namespace
 programmer annotates which methods are globally visible
 only globally visible methods can be invoked across proc boundaries
 intro term entry methods. will explain why later.
@@ -106,10 +108,38 @@ intro term entry methods. will explain why later.
 
 
 \begin{frame}
-(2) we require that RMI be of void return type. lets see why
-tut:19
-tut:20
+\frametitle{3. Remote methods are of void return type}
+  What happens if an object waits for a return value from a method invocation?
+  \pause
+  \begin{center}
+    \includegraphics[width=\textwidth]{../figures/objectSequence.pdf}
+  \end{center}
+  \pause
+  \begin{itemize}
+    \item Performance
+    \item Latency
+    \item Reasoning about correctness
+  \end{itemize}
 \end{frame}
+
+
+\begin{frame}
+\frametitle{3. Remote methods are of void return type}
+  \begin{center}
+    \includegraphics[width=\textwidth]{../figures/objectSequenceAsync.pdf}
+  \end{center}
+  \begin{itemize}
+  \item Hence, method invocations should be asynchronous
+    \begin{itemize}
+    \item No return values
+    \end{itemize}
+  \item Computations are driven by the incoming data
+    \begin{itemize}
+    \item Initiated by the sender or method caller
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
 
 
 \begin{frame}
