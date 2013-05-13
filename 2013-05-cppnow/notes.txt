@@ -1,0 +1,7 @@
+quinlan keynote
+- anecdote of how lanl reverted to fortran because of too early, too aggressive
+- also context for amr. so cite for context
+- high cost of software. hence portability is important
+- mention origins up front
+- defly show power plots
+- resilience also explained
