@@ -34,14 +34,14 @@ Picture: S. Breitenfeld and P. Geubelle
 \frametitle{Load Balancing Crack Propagation}
 \begin{centering}
 \includegraphics[width=0.8\textwidth]{../figures/LButilizationCrackPropWithAnnotation}
-\end{centering}
+\end{centering}\\
 Sudden, severe shift in load suggests comprehensive rebalancing
 \end{frame}
 
 
 \begin{frame}
 \frametitle{Load Balancing Adaptive Mesh Refinement for solving PDEs}
-\includegraphics[width=0.9\textwidth]{../figures/amr_mapping.pdf}
+\includegraphics[width=0.9\textwidth]{../figures/amr_mapping.pdf}\\
 Load changes gradually and incrementally, suggesting localized strategies
 \end{frame}
 
@@ -51,6 +51,24 @@ Load changes gradually and incrementally, suggesting localized strategies
 \includegraphics[width=0.9\textwidth]{../figures/amr_scaling_distlb.pdf}
 \end{frame}
 
+\begin{frame}
+\frametitle{Load Imbalance: Adaptive Response}
+\begin{itemize}
+\item When to run load balancer? \pause When imbalance hurts (worse than the cost)!
+\end{itemize}
+\only<2>{
+\includegraphics[width=0.5\textwidth]{../figures/figs_frac_titan_lb300_vp4k_64_proj.pdf}
+\includegraphics[width=0.5\textwidth]{../figures/figs_frac_titan_meta_vp4k_64_proj.pdf}
+}
+\end{frame}
 
-
-
+\begin{frame}
+\frametitle{Load Imbalance: Adaptive Response}
+\begin{itemize}
+\item When to run load balancer? When imbalance hurts (worse than the cost)!
+\item When to allow migration? \pause When imbalance hurts (worse than the cost)!
+\end{itemize}
+\only<2>{
+\includegraphics[width=0.9\textwidth]{../figures/bramsVisual.png}
+}
+\end{frame}
