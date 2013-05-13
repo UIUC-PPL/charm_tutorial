@@ -94,9 +94,10 @@
 
 
 \begin{frame}
-\frametitle{Collective addressing of object collections}
+\frametitle{Method invocation on object collections}
 	\begin{center}
-        \includegraphics[width=0.9\textwidth]{../figures/progmodel/14-rmi-collective.pdf}
+        \includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/13-rmi-return-values.pdf}
+        \includegraphics<2>[width=0.9\textwidth]{../figures/progmodel/14-rmi-collective.pdf}
 	\end{center}
 \end{frame}
 
@@ -104,8 +105,8 @@
 \begin{frame}
 \frametitle{Entry methods and Dataflow}
     \begin{itemize}[<+->]
-        \item void return types imply a one-way information transfer
-        \item signal application intent to perform remote task
+        \item void return types imply one-way information transfer
+        \item signal application's intent to perform (possibly) remote task
         \item carry required input data for remote task
         \item express parallel dependencies
     \end{itemize}
@@ -119,11 +120,13 @@
 \end{frame}
 
 
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../figures/namd/chromatophore-vesicle-2012-01.jpg}}
 \begin{frame}
 \frametitle{Biomolecular Physics: NAMD}
 \framesubtitle{Chromatophore vesicle in purple bacteria}
-\includegraphics[width=0.9\textwidth]{../figures/namd/chromatophore-vesicle-2012-01.jpg}
 \end{frame}
+}
 
 
 \begin{frame}
