@@ -129,8 +129,17 @@ module foo_module {
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Indexing into Object Collections}
+\begin{block}{In \texttt{foo.ci}}
+\begin{lstlisting}
+module foo_module {
+  array [2D] Foo {
+    // . . .
+  };
+}
+\end{lstlisting}
+\end{block}
     \begin{itemize}
        \item multidimensional, integer (1D .. 6D)
         \begin{itemize}
