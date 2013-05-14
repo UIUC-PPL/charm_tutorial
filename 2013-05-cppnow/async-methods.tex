@@ -1,22 +1,29 @@
 \begin{frame}
-  \frametitle{Object Interactions \only<4>{ ... via remote method invocations}}
+  \frametitle{Object collections maketh not a parallel program}
   \begin{figure}
 %so far we only spoke abt units of state in the app
 %and expressing the app in terms of units natural to the domain
 %so we've done that.
-	\includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/07-obj-programmer-view.pdf}
+	\includegraphics[width=0.9\textwidth]{../figures/progmodel/07-obj-programmer-view.pdf}
 %we have this impressive decomposition of data and functionality across collections of objects
 %how do you stitch all these objects into a cohesive fabric that makes the app do what its supposed to do
 %there's one ingredient that i've avoided mentioning up to this point and those are interactions.
 %these obj have to interact with each other
-	\includegraphics<2>[width=0.9\textwidth]{../figures/progmodel/05-parallelism-via-obj-collections.pdf}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Object interactions \only<3>{ ... via remote method invocations}}
+  \begin{figure}
+	\includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/05-parallelism-via-obj-collections.pdf}
 %in a sequential environment, which all of us are familiar with
 %app state is in objects, and app logic / interactions is via method invocations
-	\includegraphics<3>[width=0.9\textwidth]{../figures/progmodel/08-seq-obj-methods.pdf}
+	\includegraphics<2>[width=0.9\textwidth]{../figures/progmodel/08-seq-obj-methods.pdf}
 %charm retains this same modality
 %we enable method invocations across process or addr space boundaries
 %however with minor modifications from the sequential semantic
-	\includegraphics<4>[width=0.9\textwidth]{../figures/progmodel/09-rmi-synchronous.pdf}
+	\includegraphics<3>[width=0.9\textwidth]{../figures/progmodel/09-rmi-synchronous.pdf}
   \end{figure}
 \end{frame}
 
@@ -42,7 +49,7 @@
 
 
 \begin{frame}[fragile,t]
-\frametitle{Globally Visible \emph{Entry Methods}}
+\frametitle{Globally visible \alert{entry methods}}
 In \texttt{foo.ci}
 \begin{lstlisting}
 array [2D] Foo {
