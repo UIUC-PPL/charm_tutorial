@@ -48,24 +48,42 @@ say 2 matrices
 \end{frame}
 
 
-\begin{frame}
-  \frametitle{Annotating classes to enable global visibility}
-  ci file declaration (just the array keyword along with dimensionality)
-  class needs to inherit from generated base class
-  mention code gen and promise to discuss soon
-\end{frame}
+\begin{frame}[fragile,t]
+\frametitle{Annotating classes to enable global visibility}
+\begin{columns}[t]
+\begin{column}{0.4\textwidth}
+\begin{block}{In \texttt{foo.ci}}
+\begin{lstlisting}
+module foo_module {
+  array [2D] Foo {
+    // . . .
+  };
+}
+\end{lstlisting}
+\end{block}
+\end{column}
+%\hspace{0.1\textwidth}
+\begin{column}{0.5\textwidth}
+\begin{block}{In \texttt{foo.h}}
+\begin{lstlisting}
+#include "foo_module.decl.h"
 
+class Foo : public CBase_Foo {
+  // . . . 
+];
+\end{lstlisting}
+\end{block}
+\begin{block}{In \texttt{foo.C}}
+\begin{lstlisting}
+#include "foo.h"
 
-\begin{frame}
-  \frametitle{Addressing objects is independent of location}
-  proxies. what they are. what they do. generated code.\\
-  typical proxy patterns will hide the very existence of a proxy
-  in that sense, this is not aptly named.
-  here, it is a conscious design decision to make the user code very aware of
-  the existence of the proxy. provides locality info to app programmer.
-  any interaction with a proxy is a possible remote interaction.
-  u can have a local instance of a chare array and access it via pointer. then local object
-  but only if local. if its remote, then u have to interact via proxy
+// . . . 
+
+#include "foo_module.def.h"
+\end{lstlisting}
+\end{block}
+\end{column}
+\end{columns}
 \end{frame}
 
 
