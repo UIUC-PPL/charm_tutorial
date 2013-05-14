@@ -75,18 +75,17 @@ module foo_module {
 }
 \end{lstlisting}
 \end{block}
-\end{column}
-%\hspace{0.1\textwidth}
-\begin{column}{0.5\textwidth}
 \begin{block}{In \texttt{foo.h}}
 \begin{lstlisting}
 #include "foo_module.decl.h"
 
 class Foo : public CBase_Foo {
   // . . . 
-];
+};
 \end{lstlisting}
 \end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
 \begin{block}{In \texttt{foo.C}}
 \begin{lstlisting}
 #include "foo.h"
@@ -98,6 +97,35 @@ class Foo : public CBase_Foo {
 \end{block}
 \end{column}
 \end{columns}
+\end{frame}
+
+\begin{frame}[fragile,t]
+\frametitle{Annotating classes to enable global visibility}
+\begin{columns}[t]
+\begin{column}{0.4\textwidth}
+\begin{block}{In \texttt{foo.ci}}
+\begin{lstlisting}
+module foo_module {
+  array [2D] Foo {
+    // . . .
+  };
+}
+\end{lstlisting}
+\end{block}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}{In \texttt{foo.C}}
+\begin{lstlisting}
+#include "foo.h"
+
+// . . . 
+
+#include "foo_module.def.h"
+\end{lstlisting}
+\end{block}
+\end{column}
+\end{columns}
+\includegraphics[width=\textwidth]{../figures/charmCompile.jpg}
 \end{frame}
 
 
