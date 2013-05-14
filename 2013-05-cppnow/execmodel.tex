@@ -28,24 +28,21 @@
 
 \begin{frame}
 \frametitle{
-    \only<1>{ RMI $\rightarrow$ Messages }
-    \only<2>{ Message queues }
-    \only<3>{ Scheduler }
+    \only<1>{ Message queues }
+    \only<2>{ Scheduler }
 }
 	\begin{center}
-        % so how do we achieve RMI. method invocations are transmitted to remote locations as messages
-        \includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/14-rmi-collective.pdf}
         % the natural way to handle this is to use a msg q
         % so this introduces the first component at the runtime layer. above line is app. below line is rts
         % charm maintains a msg queue under the hood to handle all the msgs that comprise parallel execution
-        \includegraphics<2>[width=0.9\textwidth]{../figures/progmodel/15-msg-queues.pdf}
+        \includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/15-msg-queues.pdf}
         % how is parallel execution actually orchestrated?
         % remember that all methods are completely one-way info flows. once an RMI is packaged into a msg,
         % it has everything thats needed from the sender. this means, it can basically be invoked anytime.
         % so msgs can be picked out of this queue, the receiving object identified
         % and the method invocation can be executed
         % This is performed by the runtime scheduler. which is the engine that drives the whole parallel execution
-        \includegraphics<3>[width=0.9\textwidth]{../figures/progmodel/16-scheduler.pdf}
+        \includegraphics<2>[width=0.9\textwidth]{../figures/progmodel/16-scheduler.pdf}
 	\end{center}
 \end{frame}
 
