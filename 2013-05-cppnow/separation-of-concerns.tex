@@ -1,20 +1,21 @@
 \begin{frame}
 \frametitle{Separation of Roles and Concerns}
-\begin{block}{Different expertise, different focus}
-Relevant pieces of code should be easy to divide
+\begin{block}{Different layers / components, different focus}
+    \begin{itemize}
+        \item Application logic
+        \item Parallel Algorithm
+        \item Performance related application code
+        \item Parallel runtime infrastructure
+    \end{itemize}
 \end{block}
-\begin{itemize}
-\item Much like any library -- clients control behavior by passing
-  arguments, not modifying implementation
-\item Can be very flexible -- arguments with behavior of their own
-  (e.g., functors)
-\item Several examples: initial mapping schemes, dynamic load
-  balancing strategies
-\item CS-specialist logic doesn't pollute application code, can be
-  swapped out with minimal effort
-\item Location-independent algorithm expression and runtime-mediated
-  execution are essential enabling features
-\end{itemize}
+\pause
+\begin{block}{Different expertise, different focus}
+    \begin{itemize}
+        \item Domain specialists write domain logic
+        \item Performance experts specify tuning and optimizations
+        \item HPC and CS experts develop and deploy runtime services
+    \end{itemize}
+\end{block}
 \end{frame}
 
 
