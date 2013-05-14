@@ -683,8 +683,8 @@
 			<integer>1</integer>
 			<key>Points</key>
 			<array>
-				<string>{311.46940458522664, 290.90808337276076}</string>
-				<string>{345.79054191913701, 319.70335276952096}</string>
+				<string>{311.46940458410825, 290.908083373686}</string>
+				<string>{345.79054191463541, 319.70335277260347}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1239,8 +1239,8 @@
 			<integer>1</integer>
 			<key>Points</key>
 			<array>
-				<string>{630.88245557848859, 319.13761515672434}</string>
-				<string>{645.03317746430537, 291.61134764958547}</string>
+				<string>{630.88245557847642, 319.13761515672104}</string>
+				<string>{645.03317746426421, 291.6113476495849}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -3207,10 +3207,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>265</integer>
+				<integer>282</integer>
 			</dict>
 			<key>ID</key>
-			<integer>267</integer>
+			<integer>283</integer>
 			<key>Layer</key>
 			<integer>8</integer>
 			<key>OrthogonalBarAutomatic</key>
@@ -3265,10 +3265,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>264</integer>
+				<integer>286</integer>
 			</dict>
 			<key>ID</key>
-			<integer>266</integer>
+			<integer>287</integer>
 			<key>Layer</key>
 			<integer>8</integer>
 			<key>OrthogonalBarAutomatic</key>
@@ -3323,10 +3323,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>20</integer>
+				<integer>284</integer>
 			</dict>
 			<key>ID</key>
-			<integer>262</integer>
+			<integer>285</integer>
 			<key>Layer</key>
 			<integer>8</integer>
 			<key>OrthogonalBarAutomatic</key>
@@ -3495,7 +3495,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>271</integer>
+			<integer>288</integer>
 			<key>Layer</key>
 			<integer>9</integer>
 			<key>Shape</key>
@@ -3555,7 +3555,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>270</integer>
+			<integer>289</integer>
 			<key>Layer</key>
 			<integer>9</integer>
 			<key>Shape</key>
@@ -3650,7 +3650,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>265</integer>
+			<integer>282</integer>
 			<key>Layer</key>
 			<integer>9</integer>
 			<key>Shape</key>
@@ -3691,7 +3691,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>264</integer>
+			<integer>286</integer>
 			<key>Layer</key>
 			<integer>9</integer>
 			<key>Shape</key>
@@ -3732,7 +3732,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>20</integer>
+			<integer>284</integer>
 			<key>Layer</key>
 			<integer>9</integer>
 			<key>Shape</key>
@@ -3773,7 +3773,7 @@
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>269</integer>
+			<integer>290</integer>
 			<key>Layer</key>
 			<integer>9</integer>
 			<key>Shape</key>
@@ -5896,7 +5896,7 @@
 	<array>
 		<dict>
 			<key>Lock</key>
-			<string>NO</string>
+			<string>YES</string>
 			<key>Name</key>
 			<string>msg2way</string>
 			<key>Print</key>
@@ -5992,7 +5992,7 @@
 			<key>Print</key>
 			<string>YES</string>
 			<key>View</key>
-			<string>NO</string>
+			<string>YES</string>
 		</dict>
 		<dict>
 			<key>Lock</key>
@@ -6027,7 +6027,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-05-13 18:33:55 +0000</string>
+	<string>2013-05-14 02:17:03 +0000</string>
 	<key>Modifier</key>
 	<string>Ramprasad Venkataraman</string>
 	<key>NotesVisible</key>

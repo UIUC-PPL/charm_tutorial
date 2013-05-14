@@ -5,3 +5,4 @@ quinlan keynote
 - mention origins up front
 - defly show power plots
 - resilience also explained
+
