@@ -41,6 +41,60 @@
 \end{frame}
 
 
+\begin{frame}[fragile,t]
+\frametitle{Globally Visible \emph{Entry Methods}}
+In \texttt{foo.ci}
+\begin{lstlisting}
+array [2D] Foo {
+  entry Foo(int c, double d);
+  entry void compute(int count, double[count] data);
+};
+\end{lstlisting}
+In \texttt{foo.h}
+\begin{lstlisting}
+class Foo : public CBase_Foo {
+  int c_; double d_;
+public:
+  Foo(int c, double d);
+  void compute(int count, double * data);
+};
+\end{lstlisting}
+In \texttt{foo.C}
+\begin{lstlisting}
+Foo::Foo(int c, double d) : c_(c), d_(d) { }
+void Foo::compute(int count, double * data)
+{ /* . . . */ }
+\end{lstlisting}
+%
+%- ci file entry method syntax
+%- proxy call syntax
+%
+  %\frametitle{Addressing objects is independent of location}
+%  proxies. what they are. what they do. generated code.\\
+%  typical proxy patterns will hide the very existence of a proxy
+%  in that sense, this is not aptly named.
+%  here, it is a conscious design decision to make the user code very aware of
+%  the existence of the proxy. provides locality info to app programmer.
+%  any interaction with a proxy is a possible remote interaction.
+%  u can have a local instance of a chare array and access it via pointer. then local object
+% but only if local. if its remote, then u have to interact via proxy
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Calling Entry Methods: Proxy Objects}
+\begin{lstlisting}
+// Construct a 10*10 array of Foo chares, each initialized with {42, 2.7}
+CProxy_Foo f = CProxy_Foo::ckNew(10, 10, 42, 2.7);
+
+double d[7] = {0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
+
+// Call Foo::compute(7, d) on the object at (1, 2) in the collection
+f(1, 2).compute(7, d);
+\end{lstlisting}
+Many RMI proxy implementations try to hide remote-ness. Ours draws attention to potential expense of non-local operations.
+\end{frame}
+
+
 \begin{frame}
 \frametitle{3. Remote methods are of void return type}
   What happens if an object waits for a return value from a method invocation?
@@ -84,12 +138,6 @@
 	\end{center}
 \end{frame}
 
-
-\begin{frame}
-\frametitle{Annotating methods for global visibility}
-- ci file entry method syntax
-- proxy call syntax
-\end{frame}
 
 
 \begin{frame}
