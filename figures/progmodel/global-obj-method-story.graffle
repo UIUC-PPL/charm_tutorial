@@ -5982,7 +5982,7 @@
 			<key>Print</key>
 			<string>YES</string>
 			<key>View</key>
-			<string>NO</string>
+			<string>YES</string>
 		</dict>
 		<dict>
 			<key>Lock</key>
@@ -6027,7 +6027,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-05-14 02:17:03 +0000</string>
+	<string>2013-05-14 02:24:01 +0000</string>
 	<key>Modifier</key>
 	<string>Ramprasad Venkataraman</string>
 	<key>NotesVisible</key>
