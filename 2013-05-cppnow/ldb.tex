@@ -48,21 +48,21 @@ Load changes gradually and incrementally, suggesting localized strategies
 \includegraphics[width=\textwidth]{../figures/chunkGraph16}
 \end{column}
 \begin{column}{0.5\textwidth}
-Decomposition into 16 chunks using Metis. The middle area contains cohesive elements.
-
+%Decomposition into 16 chunks using Metis. The middle area contains cohesive elements.
 As computation progresses, crack propagates, and new elements are added, leading to more complex computations in some chunks
 
-Picture: S. Breitenfeld and P. Geubelle
+{\tiny Picture: S. Breitenfeld and P. Geubelle}
 \end{column}
 \end{columns}
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{Load Balancing Crack Propagation}
+\frametitle{Load Imbalance: Crack Propagation}
 \begin{centering}
-\includegraphics[width=0.8\textwidth]{../figures/LButilizationCrackPropWithAnnotation}
+\includegraphics[width=0.9\textwidth]{../figures/LButilizationCrackPropWithAnnotation}
 \end{centering}
+\pause
 \begin{block}{Sudden, severe shift in load suggests comprehensive rebalancing}
 Link-time: \texttt{-balancer GreedyLB} or \texttt{-balancer MetisLB} \\
 Run-time: \texttt{+balancer FooLB}
@@ -70,18 +70,16 @@ Run-time: \texttt{+balancer FooLB}
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[t]
 \frametitle{Load Imbalance: Adaptive Response}
 \begin{itemize}
 \item When to run load balancer? \pause When imbalance hurts (worse than the cost)!
 \end{itemize}
-\only<2>{
-\includegraphics[width=0.5\textwidth]{../figures/figs_frac_titan_lb300_vp4k_64_proj.pdf}
-\includegraphics[width=0.5\textwidth]{../figures/figs_frac_titan_meta_vp4k_64_proj.pdf}
+\includegraphics<2>[width=0.9\textwidth]{../figures/figs_frac_titan_lb300_vp4k_64_proj.pdf}
+\includegraphics<3>[width=0.9\textwidth]{../figures/figs_frac_titan_meta_vp4k_64_proj.pdf}
 \begin{block}{How to activate?}
 \texttt{./pgm argsA argsB argsC +MetaLB}
 \end{block}
-}
 \end{frame}
 
 \begin{frame}
