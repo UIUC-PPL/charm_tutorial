@@ -19,6 +19,27 @@
 \end{frame}
 
 
+\begin{frame}[fragile]
+\frametitle{Different expertise, different focus: Object Mapping Code}
+\begin{lstlisting}
+/// Implement a mapping that tiles a 2D processor tile
+///  in the 2D chare array
+class LUMap : public CBase_LUMap {
+  // . . . 
+  int procNum(int arrayHdl, const CkArrayIndex &idx) {
+    const int *coor = idx.data();
+    int tileYIndex = coor[1]  / peCols;
+    int XwithinPEtile = (coor[0] + tileYIndex * peRotate) % peRows;
+    int YwithinPEtile = coor[1] % (peCols / peStride);
+    int subtileY = (coor[1] % peCols) / (peCols / peStride);
+    int peNum = XwithinPEtile * peStride +
+                YwithinPEtile * peStride * peRows + subtileY;
+    return peNum;
+  }
+};
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}
 \frametitle{Different expertise, different focus}
 \framesubtitle{Mapping Example: Quantum Chemistry with {\sc OpenAtom}}
