@@ -1,24 +1,38 @@
-\begin{frame}
-  \frametitle{Express Parallel Algo independent of processors}
-  \begin{figure}\includegraphics[width=0.9\textwidth]{../figures/progmodel/01-objects-for-algo.pdf}\end{figure}
+{
+\usebackgroundtemplate{  \includegraphics[width=\paperwidth]{../figures/progmodel/01-objects-for-algo.pdf} }
+\begin{frame}[t]
+  \frametitle{Express parallel algo independent of processors}
+  Use units natural to domain
+  \begin{itemize}
+    \item matrix block
+    \item tile of an image
+    \item chunk of a mesh
+    \item volume of simulation space
+    \item partition of a graph, tree or other data structures
+  \end{itemize}
 \end{frame}
-
+}
 
 \begin{frame}
-  \frametitle{Data parallelism: via an Object Collection}
+  \frametitle{Data decomposition: via an object collection}
   \begin{figure}\includegraphics[width=0.9\textwidth]{../figures/progmodel/02-data-decomp-via-arrays.pdf}\end{figure}
 \end{frame}
 
 
 \begin{frame}
   \frametitle{Multiple data parallel collections}
-say 2 matrices
   \begin{figure}\includegraphics[width=0.9\textwidth]{../figures/progmodel/03-many-data-parallel-arrays.pdf}\end{figure}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Functional parallelism: via multiple classes}
+    \frametitle{Work decomposition: also via objects / collections}
+  \begin{figure}\includegraphics[width=0.9\textwidth]{../figures/tree-threshold.pdf}\end{figure}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Functional decomposition: via multiple classes}
   \begin{figure}\includegraphics[width=0.9\textwidth]{../figures/progmodel/04-func-decomp-via-classes.pdf}\end{figure}
 \end{frame}
 
