@@ -14,7 +14,7 @@
         \item Unified data and task parallelism
         \item Unified handling of shared and distributed memory
         \item Parallel algorithm independent of available processors
-        \item Separation of roles and concerns
+        \item Seamless parallel composability of modular components
     \end{itemize}
 \end{frame}
 
@@ -33,6 +33,8 @@
         \item Code generation, Base classes, utility functions and other API
         \item Multi-paradigm parallel code (procedural, object oriented, generic)
         \item Rich ecosystem of tools
+        \item Separation of roles and concerns
+        %\item Abstracts domain logic from parallel tuning
     \end{itemize}
 \end{frame}
 
@@ -52,19 +54,11 @@
         %\item Shared-nothing by default, explicit sharing for optimization
         \item Measurement-based performance introspection
         \item Adaptive response for better performance
-    \end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{\charm: Some Capabilities}
-\framesubtitle{Transparent to application code!}
-    \begin{itemize}
-        \item Abstracts domain logic from parallel tuning
-        \item Seamless parallel composability of modular components
-        \item Fault tolerance
-        \item Dynamic load balancing
-        \item Energy management
+        \begin{itemize}
+            \item Fault tolerance
+            \item Dynamic load balancing
+            \item Energy management
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -109,27 +103,27 @@
     \end{columns}
 \end{block}
 }
-%\onslide<3->{
-%\begin{block}{\small Network Interfaces}
-%    \begin{columns}
-%    \begin{column}{0.45\textwidth}
-%        \begin{itemize}
-%            \item TCP, UDP
-%            \item Shared memory
-%            \item MPI
-%        \end{itemize}
-%    \end{column}
-%    \begin{column}{0.45\textwidth}
-%        \begin{itemize}
-%            \item Infiniband Verbs
-%            \item IBM BlueGene P,Q (DCMF, PAMI)
-%            \item Cray Gemini and Aries (uGNI)
-%        \end{itemize}
-%    \end{column}
-%    \end{columns}
-%\end{block}
-%}
-%\only<1>{ \includegraphics[width=0.48\textwidth]{../figures/titan.jpg} }
+\only<3->{
+\begin{block}{\small Network Interfaces}
+    \begin{columns}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item TCP, UDP
+            \item Shared memory
+            \item MPI
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+        \begin{itemize}
+            \item Infiniband Verbs
+            \item IBM BlueGene P,Q (DCMF, PAMI)
+            \item Cray Gemini and Aries (uGNI)
+        \end{itemize}
+    \end{column}
+    \end{columns}
+\end{block}
+}
+\only<1>{ \includegraphics[width=0.48\textwidth]{../figures/titan.jpg} }
 \onslide<3->{
 \begin{block}{\small Compilers}
     \begin{columns}
