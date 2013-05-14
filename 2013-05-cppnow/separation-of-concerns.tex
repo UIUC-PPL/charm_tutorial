@@ -1,5 +1,5 @@
 \begin{frame}
-\frametitle{Separation of Concerns}
+\frametitle{Separation of Roles and Concerns}
 \begin{block}{Different expertise, different focus}
 Relevant pieces of code should be easy to divide
 \end{block}
@@ -27,7 +27,7 @@ Relevant pieces of code should be easy to divide
 \begin{frame}
 \frametitle{Different expertise, different focus}
 \framesubtitle{Mapping Example: Quantum Chemistry with {\sc OpenAtom}}
-\includegraphics[width=0.9\textheight]{../figures/openatom/mapping.pdf}
+\includegraphics[width=0.9\textwidth]{../figures/openatom/mapping.pdf}
 \end{frame}
 
 
@@ -53,20 +53,21 @@ Application worries about \emph{what}, runtime system worries about \emph{how}
 \begin{frame}[t]
 \frametitle{Separation of Concerns}
 \framesubtitle{Example: Object location services}
-\begin{itemize}[<+->]
-\item Possible solutions to ``Where does object X live?''
-\begin{itemize}[<+->]
-\item Name is location-specific
-\item Object creator specifies location, passes along with name
-\item Fixed mapping from names to locations
-\item \textbf{Dynamic lookup}
-\end{itemize}
-\item \charm approach
 \begin{itemize}
-\item \emph{Mapping scheme} defines \emph{home location} -- default location, and responsible for knowing current location
-\item Cache of last known locations on each processor
-\item Messages sent to cached location, or home if none known
-\end{itemize}
+\item Possible solutions to ``Where does object X live?''
+    \begin{itemize}
+        \item Name is location-specific
+        \item Object creator specifies location, passes along with name
+        \item Fixed mapping from names to locations
+        \item \textbf{Dynamic lookup}
+    \end{itemize}
+\pause
+\item \charm approach
+    \begin{itemize}
+        \item \emph{Mapping scheme} defines \emph{home location} -- default location, and responsible for knowing current location
+        \item Cache of last known locations on each processor
+        \item Messages sent to cached location, or home if none known
+    \end{itemize}
 \end{itemize}
 \pause
 \begin{block}{Application is mostly oblivioous}
