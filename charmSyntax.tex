@@ -309,9 +309,12 @@ struct Simple : public CBase_Simple {
     \texttt{char}, \texttt{bool}, etc.)
   \item C++ STL data structures can be passed by including \texttt{pup\_stl.h}
   \item Arrays of basic data types can also be passed like this:\\
+  \item \texttt{.ci} file:
 \begin{lstlisting}
 entry void foobar(int length, int data[length]);
-
+\end{lstlisting}
+  \item \texttt{.cpp} file:
+\begin{lstlisting}
 <charename>::foobar(int length, int* data) {
  // ... foobar code ...
 }
@@ -328,9 +331,12 @@ entry void foobar(int length, int data[length]);
   \item In this snippet, \code{<charename>} learns about a chare instance
     \code{main}, and then invokes a method on it:
   \end{itemize}
+\texttt{.ci} file
 \begin{lstlisting}
 entry void foobar2(CProxy_Main main);
-
+\end{lstlisting}
+\texttt{.cpp} file
+\begin{lstlisting}
 <charename>::foobar2(CProxy_Main main) {
   main.foo();
 }
