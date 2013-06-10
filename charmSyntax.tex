@@ -63,11 +63,14 @@
   \item Entry methods are C++ methods that can be remotely and asynchronously
     invoked by another chare
   \end{itemize}
+  \texttt{.ci} file:
   \begin{lstlisting}
     entry <charename>(); /* constructor entry method */
     entry void foo();
     entry void bar(int param);
-
+  \end{lstlisting}
+  \texttt{.cpp} file:
+  \begin{lstlisting}
     <charename>::<charename>() { /*... constructor code ...*/ }
 
     <charename>::foo() { /*... code to execute ...*/ }
