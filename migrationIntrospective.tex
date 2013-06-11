@@ -147,7 +147,7 @@ void pup(PUP::er &p) {
 \item If variables are added to an object, update the PUP routine
 \item If the object allocates data on the heap, copy it recursively, not just the pointer
 \item Remember to allocate memory while unpacking
-\item Sizing, Packing, and Unpacking must scan the same variables in the same order
+\item Sizing, Packing, and Unpacking must scan the variables in the same order
 \item Test PUP routines with “+balancer RotateLB”
 \end{itemize}
 \end{frame}

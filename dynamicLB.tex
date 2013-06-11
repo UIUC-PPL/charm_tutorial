@@ -287,15 +287,13 @@ Object based decomposition (I.e. virtualized decomposition) helps
 \begin{frame}[fragile]
 \frametitle{Periodic Load Balancing}
 
-Stop the computation?
-
 Centralized strategies:
 \begin{itemize}
  \item Charm RTS collects data (on one processor) about:
  \begin{itemize}
   \item Computational Load and Communication for each pair
  \end{itemize}
- \item If you are not using AMPI/Charm, you can do the same instrumentation and data collection
+ %\item If you are not using AMPI/Charm, you can do the same instrumentation and data collection
  \item Partition the graph of objects across processors
  \begin{itemize}
   \item Take communication into account
@@ -315,60 +313,60 @@ Centralized strategies:
 \end{centering}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Object Partitioning Strategies}
-\begin{itemize}
- \item You can use graph partitioners like METIS, K-R
- \begin{itemize}
-  \item BUT: graphs are smaller, and optimization criteria are different
- \end{itemize}
- \item Greedy strategies:
- \begin{itemize}
-  \item If communication costs are low: use a simple greedy strategy
-  \begin{itemize}
-   \item Sort objects by decreasing load
-   \item Maintain processors in a heap (by assigned load)
-   \item In each step: \\
-   %\begin{description}
-   % \item 
-   assign the heaviest remaining object to the least loaded processor
-   %\end{description}
-  \end{itemize}
-  \item With small-to-moderate communication cost:
-  \begin{itemize}
-   \item Same strategy, but add communication costs as you add an object to a processor
-  \end{itemize}
-  \item Always add a refinement step at the end:
-  \begin{itemize}
-   \item Swap work from heaviest loaded processor to ``some other processor''
-   \item Repeat a few times or until no improvement 
-  \end{itemize}
- \end{itemize}
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Object Partitioning Strategies}
+% \begin{itemize}
+%  \item You can use graph partitioners like METIS, K-R
+%  \begin{itemize}
+%   \item BUT: graphs are smaller, and optimization criteria are different
+%  \end{itemize}
+%  \item Greedy strategies:
+%  \begin{itemize}
+%   \item If communication costs are low: use a simple greedy strategy
+%   \begin{itemize}
+%    \item Sort objects by decreasing load
+%    \item Maintain processors in a heap (by assigned load)
+%    \item In each step: \\
+%    %\begin{description}
+%    % \item 
+%    assign the heaviest remaining object to the least loaded processor
+%    %\end{description}
+%   \end{itemize}
+%   \item With small-to-moderate communication cost:
+%   \begin{itemize}
+%    \item Same strategy, but add communication costs as you add an object to a processor
+%   \end{itemize}
+%   \item Always add a refinement step at the end:
+%   \begin{itemize}
+%    \item Swap work from heaviest loaded processor to ``some other processor''
+%    \item Repeat a few times or until no improvement 
+%   \end{itemize}
+%  \end{itemize}
+% \end{itemize}
+% \end{frame}
 
 
-\begin{frame}[fragile]
-\frametitle{Object Partitioning Strategies 2}
-When communication cost is significant:
-\begin{itemize}
- \item Still use greedy strategy, but:
- \begin{itemize}
-  \item At each assignment step, choose between assigning O to least loaded processor and the processor that already has objects that communicate most with O.
-  \begin{itemize}
-   \item Based on the degree of difference in the two metrics
-   \item Two-stage assignments:\\
-    In early stages,  consider communication costs as long as the processors are
-    in the same (broad) load “class”,\\
-    In later stages, decide based on load
-  \end{itemize}
- \end{itemize}
-\end{itemize}
-Branch-and-bound
-\begin{itemize}
- \item Searches for optimal, but can be stopped after a fixed time
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Object Partitioning Strategies 2}
+% When communication cost is significant:
+% \begin{itemize}
+%  \item Still use greedy strategy, but:
+%  \begin{itemize}
+%   \item At each assignment step, choose between assigning O to least loaded processor and the processor that already has objects that communicate most with O.
+%   \begin{itemize}
+%    \item Based on the degree of difference in the two metrics
+%    \item Two-stage assignments:\\
+%     In early stages,  consider communication costs as long as the processors are
+%     in the same (broad) load “class”,\\
+%     In later stages, decide based on load
+%   \end{itemize}
+%  \end{itemize}
+% \end{itemize}
+% Branch-and-bound
+% \begin{itemize}
+%  \item Searches for optimal, but can be stopped after a fixed time
+% \end{itemize}
+% \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Crack Propagation}

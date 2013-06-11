@@ -17,15 +17,15 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}
- \frametitle{Object Boundaries}
-    \begin{itemize}
-      \item Parameters to methods of objects represent data dependencies
-      \item Programmer designs objects and methods with explicit dependencies
-      \item Flow of control is then the chain of dependencies
-      \item Overlap of independent computations happens automatically as dependencies are met via message delivery
-    \end{itemize}
- \end{frame}
+% \begin{frame}
+%  \frametitle{Object Boundaries}
+%     \begin{itemize}
+%       \item Parameters to methods of objects represent data dependencies
+%       \item Programmer designs objects and methods with explicit dependencies
+%       \item Flow of control is then the chain of dependencies
+%       \item Overlap of independent computations happens automatically as dependencies are met via message delivery
+%     \end{itemize}
+%  \end{frame}
 
 %% Grainsize slides
 \begin{frame}
@@ -125,17 +125,17 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Performance of Fibonacci Example}
-  \begin{itemize}
-  \item How much work/computation does each object do in this example?
-  \item What are some of the overheads of this approach?
-  \item Is there way we can reduce/amortize the overhead?
-  \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Performance of Fibonacci Example}
+%   \begin{itemize}
+%   \item How much work/computation does each object do in this example?
+%   \item What are some of the overheads of this approach?
+%   \item Is there way we can reduce/amortize the overhead?
+%   \end{itemize}
+% \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Possible Solution}
+  \frametitle{Grain size for Fibonacci Example}
   \begin{itemize}
   \item Set a sequential threshold in the computational tree
     \begin{itemize}
@@ -150,7 +150,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Fibonacci w/Threshold Example}
-  \lstinputlisting[basicstyle=\tiny]{code/fib2.C}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Fibonacci w/Threshold Example}
+%   \lstinputlisting[basicstyle=\tiny]{code/fib2.C}
+% \end{frame}

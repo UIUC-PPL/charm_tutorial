@@ -191,7 +191,7 @@
 \begin{frame}[fragile]
   \frametitle{Groups}
   \begin{itemize}
-    \item PE bound chare-array with one chare per PE
+    \item Like a chare-array with one chare per PE
     \item In .ci file, 
     \begin{lstlisting}
       group ExampleGroup  {
@@ -233,7 +233,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Sharing data between chares with Groups}
+  \frametitle{Sharing data between chares using groups}
   \begin{itemize}
   \item Often applications exhibit data reuse across chares on a PE
   \item Exploit this using Groups
@@ -324,11 +324,11 @@
   \begin{itemize}
     \item \code{threaded} – executed using separate thread
     \begin{itemize}
-      \item each thread has a stack, and may be suspended
+      \item each thread has a stack, and may be suspended, for sync methods or futures
       \item to set stack’s size use +stacksize $<$ size in bytes $>$
     \end{itemize}
-    \item \code{inline} – entry method invoked immediately if destination chare on same PE
     \item \code{sync} - returns a value
+    \item \code{inline} – entry method invoked immediately if destination chare on same PE
     \begin{itemize}
       \item blocking call
     \end{itemize}

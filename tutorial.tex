@@ -20,8 +20,10 @@
 \section[Concepts]{Introduction}
 \input{challenges}
 \subsection[Object Design]{Object Design}
-\transition{A proven approach: objects}\input{objectDesign}
-\transition{A proven approach: method-driven objects}\input{objectsMethods}
+\transition{A proven approach: objects}
+\input{objectDesign}
+%\transition{A proven approach: method-driven objects}
+\input{objectsMethods}
 \subsection[Execution Mode]{Execution Model}
 \input{executionModel}
 \subsection[Benefits]{Benefits of Charm++}
@@ -42,17 +44,24 @@
 \subsection[Charm++]{Structured Dagger}
 \transition{Sequencing and Coordination}\input{sequencing}
 \input{distributedTable}
-\section[PUP and Placement]{Migration and Placement}
-\input{migrationIntrospective}
-\section[LB]{Dynamic Load Balancing}
+\section[LB]{Using Dynamic Load Balancing}
 \transition{Dynamic Load Balancing}
 \input{dynamicLB}
 \section[Fault Tol]{Checkpointing and Resilience}
 \transition{Resilience}
 \input{faultTolerance}
+\section[AMPI & Interop]{Interoperability}
+\input{interoperability}
+\section[Tuning]{Performance Tuning}
+\input{perf}
+\section[Debugging]{Debugging}
+\input{debug}
 \input{heterogeneity}
 \section[Messages, Groups, Shared Mem]{Further Optimization}
-\transition{Performance Enhancement Features} \input{messages}
+\transition{Performance Enhancement Features} 
+\subsection[PUP and Placement]{Migration and Placement}
+\input{migrationIntrospective}
+\input{messages}
 \input{advancedOpt}
 \subsection[Array Sections]{Array Sections}
 \input{sections}
@@ -60,14 +69,11 @@
 \input{threadedSync}
 \subsection{Shared Memory}
 \input{multicore}
-\section[AMPI & Interop]{Interoperability}
-\input{interoperability}
-\section[Custom LB]{Writing a Load Balancer}
+\section[Custom LB]{Advanced Load Balancing}
 \input{writeLB}
-\section[Tuning]{Performance Tuning}
-\input{perf}
-\section[Debugging]{Debugging}
-\input{debug}
 \input{conclusion}
 
 \end{document}
+
+
+

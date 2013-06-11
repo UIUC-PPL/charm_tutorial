@@ -1,12 +1,11 @@
 \begin{frame}[fragile]
   \frametitle{Globally-Visible Objects}
   \begin{center}
-    \includegraphics[width=\textwidth]{figures/objectGlobalAddress.pdf}
+    \includegraphics[width=0.8\textwidth]{figures/objectGlobalAddress.pdf}
   \end{center}
   \begin{itemize}
     \item Certain ``special'' object \emph{instances} are:
       \begin{itemize}
-      \item autonomous,
       \item first-class citizens in the parallel address space,
       \item with unique location-independent names
       \end{itemize}
@@ -92,21 +91,23 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Dependencies and Dataflow}
-    \begin{columns}
-    \begin{column}{0.55\textwidth}
-      \begin{itemize}
-      \item A method invocation expresses a dependency in the computation
-      \item For example, we can now express a LU decomposition in its natural
-        form
-        \begin{itemize}
-        \item A directed acyclic graph
-        \end{itemize}
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.45\textwidth}
-      \includegraphics[width=0.7\textwidth]{figures/ludag.png}
-    \end{column}
-  \end{columns}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Dependencies and Dataflow}
+%     \begin{columns}
+%     \begin{column}{0.55\textwidth}
+%       \begin{itemize}
+%       \item A method invocation expresses a dependency in the computation
+%       \item For example, we can now express a LU decomposition in its natural
+%         form
+%         % \begin{itemize}
+%         % \item A directed acyclic graph
+%         % \end{itemize}
+%       \item More sophisticated dependencies can be expressed with a scripting
+%         language in Charm++
+%       \end{itemize}
+%     \end{column}
+%     \begin{column}{0.45\textwidth}
+%       \includegraphics[width=0.7\textwidth]{figures/ludag.png}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
