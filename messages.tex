@@ -211,24 +211,9 @@ group ExampleGroup {
   \frametitle{Groups}
   \framesubtitle{Example use}
   \begin{itemize}
-    \item  One can obtain pointer to the local group member using groupProxy.ckLocalBranch()
+    \item  One can obtain pointer to the local group member using \code{groupProxy.ckLocalBranch()}
     \begin{itemize}
       \item Access the local member as a regular C++ object
-    \end{itemize}
-   \item Consider a case:
-   \begin{itemize}
-      \item each chare on a processor performs a task and wants to pass some information to the mainchare
-      \begin{itemize}
-         \item Assume reduction is not feasible
-      \end{itemize}
-      \item One way is to directly send this information to mainchare from every chare (too many messages)
-      \item Alternatively, each chare may deposit the information to the local branch of a group
-      \begin{itemize}
-        \item How to obtain a pointer to local branch? Manual 8.1.3
-        \item \code {Gclass * g = grpProxy.ckLocalBranch();}
-        \item \code{g} is a regular pointer to a C++ object
-        \item Group member can pass this information to the mainchare after optional pre-processing when all chares have deposited 
-      \end{itemize}
     \end{itemize}
   \end{itemize}
 \end{frame}
