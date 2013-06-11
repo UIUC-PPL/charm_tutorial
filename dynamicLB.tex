@@ -61,7 +61,9 @@
  \begin{column}{0.5\textwidth}
    \begin{lstlisting}
 class MyChare : public CBase_MyChare {
-  int a;   float b;   char c;
+  int a;
+  float b;
+  char c;
   float localArray[LOCAL_SIZE];
 };
  \end{lstlisting}
@@ -70,7 +72,10 @@ class MyChare : public CBase_MyChare {
   \begin{lstlisting}
 void pup(PUP::er &p) {
    CBase_MyChare::pup(p);
-   p | a;  p | b; p | c;
+   p | a;
+   p | b;
+   p | c;
+   p(localArray, LOCAL_SIZE);
 }
   \end{lstlisting}
   \end{column}
@@ -83,20 +88,9 @@ void pup(PUP::er &p) {
  \begin{column}{0.5\textwidth}
    \begin{lstlisting}
 class MyChare : public CBase_MyChare {
-  int a;   float b;   char c;
-  float localArray[LOCAL_SIZE];
   int heapArraySize;
   float* heapArray;
   MyClass *pointer;
- 
-  public:
-   MyChare();
-   MyChare(CkMigrateMessage *msg) {};
-   ~MyChare() {
-     if (heapArray != NULL) {
-       delete [] heapArray;
-       heapArray = NULL;
-     }
 };
  \end{lstlisting}
  \end{column}
@@ -104,14 +98,12 @@ class MyChare : public CBase_MyChare {
   \begin{lstlisting}
 void pup(PUP::er &p) {
    CBase_MyChare::pup(p);
-   p | a;  p | b; p | c;
-   p(localArray, LOCAL_SIZE);
    p | heapArraySize;
    if (p.isUnpacking()) {
      heapArray = new float[heapArraySize];
    }
    p(heapArray, heapArraySize);
-   int isNull = (pointer==NULL) ? 1 : 0;
+   bool isNull = !pointer;
    p | isNull;
    if (!isNull) {
      if (p.isUnpacking()) pointer = new MyClass();
