@@ -161,10 +161,11 @@ when myMethod1(int param1, int param2),
   /* further code */
   \end{lstlisting}
 
-\item Syntactical sugar for:
+\item Which is almost the same as this:
   \begin{lstlisting}[basicstyle=\scriptsize]
-when myMethod1(int param1, int param2)
-  when myMethod2(bool param3)
+when myMethod1(int param1, int param2) {
+  when myMethod2(bool param3) { }
+}
     /* further code */
   \end{lstlisting}
 
