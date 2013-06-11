@@ -20,10 +20,11 @@
 \end{itemize}
 
 \begin{lstlisting}
+int k = 7;
+
 std::vector<CkArrayIndex3D> elems; // add array indices
-for (int i = 0; i < 10; i++)
-  for (int j = 0; j < 20; j++)
-    for (int k = 0; k < 30; k++)
+for (int i = 5; i < 10; i++)
+  for (int j = 10; j < 20; j++)
       elems.push_back(CkArrayIndex3D(i, j, k));
 
 CProxySection_Hello proxy =
