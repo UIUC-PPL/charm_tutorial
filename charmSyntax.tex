@@ -51,7 +51,7 @@
       //... entry method definitions ...
     };
 
-    class MyChare : public CBase_<charename> {
+    class <charename> : public CBase_<charename> {
       //... entry method implementations ...
     };
   \end{lstlisting}
@@ -540,7 +540,7 @@ entry void foobar2(CProxy_Main main);
 CProxy_Hello helloArray = CProxy_Hello::ckNew(helloArraySize);
 helloArray.foo();
     \end{lstlisting}
-    \item From a chare array element:
+    \item From a chare array element that is a member of the same array:
      \begin{lstlisting}
  thisProxy.foo()
     \end{lstlisting}
