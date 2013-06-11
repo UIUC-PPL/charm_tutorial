@@ -7,6 +7,17 @@
 
 \begin{frame}[fragile]
   \frametitle{Messages}
+  \framesubtitle{Motivation Summary}
+  \begin{itemize}
+    \item Avoids extra copy
+    \item Can be custom packed
+    \item Reusable
+    \item Useful for transfer of complex data structures
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Messages}
   \begin{itemize}
     \item A message is a struct | class that inherits from a system-defined class
     \item It provides explicit control for the application over allocation, reuse, and scope
@@ -177,16 +188,6 @@ chare2.entry_name(arg1, arg2, opts2);
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Messages}
-  \framesubtitle{Motivation Summary}
-  \begin{itemize}
-    \item Avoids extra copy
-    \item Can be custom packed
-    \item Reusable
-    \item Useful for transfer of complex data structures
-  \end{itemize}
-\end{frame}
 \subsection[Groups]{Groups and NodeGroups}
 \begin{frame}[fragile]
   \frametitle{Groups}
