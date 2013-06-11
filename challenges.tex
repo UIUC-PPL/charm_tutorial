@@ -108,25 +108,37 @@
 %   \end{itemize}
 % \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Harnessing Parallelism: Challenges}
-\framesubtitle{Application characteristics}
-  \begin{itemize}
-  \item Complex physics in multiple, interacting modules
-  \item Adaptive, spatial and temporal resolutions
-  \item Need for faster solutions (not just larger problems)
-  \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Harnessing Parallelism: Challenges}
+% \framesubtitle{Application characteristics}
+%   \begin{itemize}
+%   \item Complex physics in multiple, interacting modules
+%   \item Adaptive, spatial and temporal resolutions
+%   \item Need for faster solutions (not just larger problems)
+%   \end{itemize}
+% \end{frame}
 
 \begin{frame}[t]
-\frametitle{Observations}
+\frametitle{Harnessing Parallelism: Challenges}
+%\frametitle{Observations}
 \framesubtitle{Next-generation Applications}
   \begin{itemize}
-    \item Development of new models must be driven by the needs of next-generation applications
+    \item Need for strong scaling
+      \begin{itemize}
+      \item faster solutions (not just larger problems)
+      \end{itemize}
+    \item Application Characteristics
     \begin{itemize}
       \item Multi-resolution
+        \begin{itemize}
+      \item Adaptive, spatial and temporal resolutions
+      \item Dynamic/adaptive refinements: to handle application
+        variation
+        \end{itemize}
       \item Multi-module (multi-physics)
-      \item Dynamic/adaptive: to handle application variation
+        \begin{itemize}
+        \item Complex physics in multiple, interacting modules
+        \end{itemize}
       \item Adapt to a volatile computational environment
       \item Exploit heterogeneous architecture
       \item Deal with thermal and energy considerations
