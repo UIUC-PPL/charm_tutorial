@@ -17,16 +17,16 @@
     \item In the ``.ci'' file:
       \begin{itemize}
          \begin{lstlisting}
-          message MyMsgType;
+message MyMsgType;
          \end{lstlisting}
          \item The interface translator produces code for a class named
          \begin{lstlisting}
-          CMessage_MyMsgType
+CMessage_MyMsgType
          \end{lstlisting}
       \end{itemize} 
-      \item In the “.h” or “.C” file, define
+      \item In the ``.h'' or ``.C'' file, define
       \begin{lstlisting}
-       MsgTypeName  class
+class MyMsgType : public CMessage_MyMsgType {...};
       \end{lstlisting}
   \end{itemize}
 \end{frame}
@@ -37,18 +37,18 @@
   \begin{itemize}
     \item In the “.ci” file, declare the name and type of variable length arrays
     \begin{lstlisting}
-      message MyVarsizeMsg {
-        int arr1[];
-        MyStruct arr2[];
-      };
+message MyVarsizeMsg {
+  int arr1[];
+  MyStruct arr2[];
+};
     \end{lstlisting}
     \item Corresponding definition in .h file
     \begin{lstlisting}
-     class MyVarsizeMsg : public CMessage_MyVarsizeMsg {
-       // variable-length arrays
-       int *arr1;
-       MyStruct *arr2;
-     };
+class MyVarsizeMsg : public CMessage_MyVarsizeMsg {
+  // variable-length arrays
+  int *arr1;
+  MyStruct *arr2;
+};
     \end{lstlisting}
   \end{itemize}
 \end{frame}
@@ -61,11 +61,11 @@
     \item Sizes used in-order to allocate arrays
   \end{itemize}
   \begin{lstlisting}
-     MessageType *msgptr = new (int sz1, int sz2, ... ) 
-                                MessageType(constructor arguments);
+MessageType *msgptr = new (int sz1, int sz2, ... ) 
+                      MessageType(constructor arguments);
 
-     MyVarsizeMsg *msg = new (10,  7)        
-                                      MyVarsizeMsg(<constructor args>);
+MyVarsizeMsg *msg = new (10,  7)        
+                    MyVarsizeMsg(<constructor args>);
   \end{lstlisting}
   \begin{itemize}
     \item This defines arr1 to be an integer array of length 10, and arr2 to be MyStruct array of length 7
@@ -79,10 +79,10 @@
   \begin{itemize}
     \item Alternatively, one can use an array of integers to specify size of variable arrays
     \begin{lstlisting}
-      int sizes[2]; 
-      sizes[0] = 10; sizes[1] = 7
-      MyVarsizeMsg *msg = new (sizes)        
-                                      MyVarsizeMsg(<constructor args>);
+int sizes[2];
+sizes[0] = 10; sizes[1] = 7
+MyVarsizeMsg *msg = new (sizes)        
+                    MyVarsizeMsg(<constructor args>);
     \end{lstlisting}
     \item Messages passed to Charm belong to Charm – deleted or reused by Charm after sending
     \item Message delivered by Charm belongs to user – can be reused or deleted
@@ -119,12 +119,12 @@
        \item Last size argument (in bits) in brackets to new
      \end{itemize}
     \begin{lstlisting}
-      MyVarsizeMsg *msg = new (10,7, 8*sizeof(int))         
-                                      MyVarsizeMsg(<constructor args>);
+MyVarsizeMsg *msg = new (10,7, 8*sizeof(int))         
+                    MyVarsizeMsg(<constructor args>);
 
-      *(int*)CkPriorityPtr(msg) = prio; //set priority
+*(int*)CkPriorityPtr(msg) = prio; // set priority
 
-      int * prioMsg = CkPriorityPtr(msg)  //get priority
+int* prioMsg = CkPriorityPtr(msg);  // get priority
     \end{lstlisting}
     \item LIFO/FIFO used to break ties if multiple messages have same priority
   \end{itemize}
@@ -136,11 +136,11 @@
   \begin{itemize}
     \item queueingtype can be set for CkEntryOptions , which is passed to an entry method invocation as the optional last parameter
     \begin{lstlisting}
-      CkEntryOptions opts1, opts2;
-      opts1.setQueueing(CK_QUEUEING_FIFO);
-      opts2.setQueueing(CK_QUEUEING_LIFO);
-      chare1.entry_name(arg1, arg2, opts1);
-      chare2.entry_name(arg1, arg2, opts2);
+CkEntryOptions opts1, opts2;
+opts1.setQueueing(CK_QUEUEING_FIFO);
+opts2.setQueueing(CK_QUEUEING_LIFO);
+chare1.entry_name(arg1, arg2, opts1);
+chare2.entry_name(arg1, arg2, opts2);
     \end{lstlisting}
     \item \code{opts.setPriority(prio\_t integerPrio);} set integer priorities
     \item \code{opts.setPriority(int prioBits,const prio\_t *prioPtr)}  set bit vector priority using prioPtr
@@ -194,13 +194,13 @@
     \item Like a chare-array with one chare per PE
     \item In .ci file, 
     \begin{lstlisting}
-      group ExampleGroup  {
-       // Interface specifications as for normal chares
-       // For instance, the constructor ...
-       entry ExampleGroup(parameters1);
-       // ... and an entry method
-       entry void someEntryMethod(parameters2);
-       };
+group ExampleGroup {
+  // Interface specifications as for normal chares
+  // For instance, the constructor ...
+  entry ExampleGroup(parameters1);
+  // ... and an entry method
+  entry void someEntryMethod(parameters2);
+};
     \end{lstlisting}
     \item No difference in .h and .C file definitions
   \end{itemize}

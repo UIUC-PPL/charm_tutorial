@@ -65,9 +65,9 @@
       \item Whenever a chare array is created, one can pass an optional parameter of type CkArrayOptions
     \end{itemize}
     \item \code{CkArrayOptions opts(numElements);}
-    \item Set properties in opts (e.g. opts.setAnytimeMigration(false); )
-    \item \code{P = Cproxy\_A::CkNew(parameters, opts);}
-    \item Many propperties of arrays can be set using this method.
+    \item Set properties in opts (e.g. \code{opts.setAnytimeMigration(false);} )
+    \item \code{P = CProxy\_A::ckNew(parameters, opts);}
+    \item Many properties of arrays can be set using this method.
     \item In particular, we can specify a map object
   \end{itemize}
 \end{frame}
@@ -76,19 +76,18 @@
   \frametitle{Static Mapping}
   \framesubtitle{CkArrayMap Syntax}
   \begin{lstlisting}
-    class CkArrayMap : public Group
-     {
-     public:
-       //…
-       //Return an ``arrayHdl'', given some information about the array
-       virtual int registerArray(CkArrayIndex& numElements,CkArrayID aid);
-       //Return the home processor number for this element of this array
-       virtual int procNum(int arrayHdl,const CkArrayIndex &element);
-     }
+class CkArrayMap : public Group {
+public:
+  // Return an ``arrayHdl'', given some information about the array
+  virtual int registerArray(CkArrayIndex& numElements,CkArrayID aid);
+
+  // Return the home processor number for this element of this array
+  virtual int procNum(int arrayHdl,const CkArrayIndex &element);
+}
   \end{lstlisting}
   \begin{itemize}
     \item If you want to specify a map for a chare array you are about to create, you must first define a subclass of CkArrayMap
-    \item It is a “Group”.. More on that much later
+    \item It is a ``Group''.. More on that much later
     \begin{itemize}
       \item You don’t need to know any more than inheriting from it for now
     \end{itemize}
@@ -99,18 +98,18 @@
   \frametitle{Static Mapping}
   \framesubtitle{Customized CkArrayMap Syntax}
   \begin{lstlisting}
-class BlockMap : public CkArrayMap
-     { public:
-       BlockMap(void) {}
-       BlockMap(CkMigrateMessage *m){}
-       int registerArray(CkArrayIndex& numElements,CkArrayID aid) { return 0;}
-       int procNum(int /*arrayHdl*/,const CkArrayIndex &idx) {
-         int elem=*(int *)idx.data();
-         int penum =  (elem/(32/CkNumPes()));
-         return penum;
-       }
-     };
-    \end{lstlisting}
+class BlockMap : public CkArrayMap {
+public:
+  BlockMap(void) {}
+  BlockMap(CkMigrateMessage *m){}
+  int registerArray(CkArrayIndex& numElements,CkArrayID aid) { return 0;}
+  int procNum(int /*arrayHdl*/,const CkArrayIndex &idx) {
+    int elem=*(int *)idx.data();
+    int penum =  (elem/(32/CkNumPes()));
+    return penum;
+  }
+};
+  \end{lstlisting}
   \begin{itemize}
     \item CkArrayIdx is a datatye that’s normally used by the system. You can peek into it to extract indices. The example works for 1D array
   \end{itemize}
@@ -120,12 +119,12 @@ class BlockMap : public CkArrayMap
   \frametitle{Static Mapping}
   \framesubtitle{Using A Custom Map}
   \begin{lstlisting}
-     //Create the map group
-       CProxy\_BlockMap myMap=CProxy\_BlockMap::ckNew();
-     //Make a new array using that map
-       CkArrayOptions opts(nElements);
-       opts.setMap(myMap);
-       a1=CProxy\_A1::ckNew( parameters,opts);
+// Create the map group
+CProxy_BlockMap myMap = CProxy_BlockMap::ckNew();
+// Make a new array using that map
+CkArrayOptions opts(nElements);
+opts.setMap(myMap);
+a1 = CProxy_A1::ckNew(parameters, opts);
   \end{lstlisting}
   \begin{itemize}
     \item Create a map object, 
