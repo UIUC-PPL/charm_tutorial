@@ -1,19 +1,21 @@
 \begin{frame}[t]
 \frametitle{The Execution Model}
   \begin{itemize}
-    \item Several objects live on a single ``processor''
-    \begin{itemize}
-      \item We will come back what we mean by a processor.
+    \item Several objects live on a single {\em PE} ``processor''
+%     \begin{itemize}
+%       \item We will come back what we mean by a PE
       \begin{itemize}
-        \item For now, think of it as a core
+        \item For now, think of it as a core (or just ``processor'')
       \end{itemize}
-    \end{itemize}
+%     \end{itemize}
   \pause
   \item As a result, 
     \begin{itemize}
       \item Method invocations directed at objects on that processor will have to be stored in a pool,
       \pause
       \item And a user-level scheduler will select one invocation from the queue and runs it to completion
+      \item A PE is the entity that has one scheduler instance
+           associated with it
     \end{itemize}
   \end{itemize}
   \begin{center} \includegraphics[width=0.7\textwidth]{figures/scheduler} \end{center}
