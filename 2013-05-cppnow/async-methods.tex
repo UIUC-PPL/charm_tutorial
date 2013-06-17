@@ -142,7 +142,12 @@ double d[7] = {0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
 // Call Foo::compute(7, d) on the object at (1, 2) in the collection
 f(1, 2).compute(7, d);
 \end{lstlisting}
-Many RMI proxy implementations try to hide remote-ness. Ours draws attention to potential expense of non-local operations.
+\begin{block}{Tenet: Do not hide locality information from developer}
+Many RMI implementations try to hide remote-ness.\\
+Ours draws attention to potential expense of non-local operations.\\
+Proxy objects are explicitly visible to client code. Any invocations via
+proxies are potentially remote.
+\end{block}
 \end{frame}
 
 
