@@ -48,6 +48,50 @@
 \end{frame}
 
 
+\begin{frame}
+\frametitle{3. Remote methods are of void return type}
+  What happens if an object waits for a return value from a method invocation?
+  \pause
+  \begin{center}
+    \includegraphics[width=\textwidth]{../figures/objectSequence.pdf}
+  \end{center}
+  \pause
+  \begin{itemize}
+    \item Performance
+    \item Latency
+    \item Reasoning about correctness
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{3. Remote methods are of void return type}
+  \begin{center}
+    \includegraphics[width=\textwidth]{../figures/objectSequenceAsync.pdf}
+  \end{center}
+  \begin{itemize}
+  \item Hence, method invocations should be asynchronous
+    \begin{itemize}
+    \item No return values
+    \end{itemize}
+  \item Computations are driven by the incoming data
+    \begin{itemize}
+    \item Initiated by the sender or method caller
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\only<3-> {Entry Methods}}
+	\onslide<2->{ Asynchronous, non-blocking remote method invocations on chares}
+	\begin{center}
+        \includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/11-global-methods.pdf}
+        \includegraphics<2->[width=0.9\textwidth]{../figures/progmodel/12-async-nonblock-rmi.pdf}
+	\end{center}
+\end{frame}
+
+
 \begin{frame}[fragile,t]
 \frametitle{Globally visible \alert{entry methods}}
 In \texttt{foo.ci}
@@ -100,51 +144,6 @@ f(1, 2).compute(7, d);
 \end{lstlisting}
 Many RMI proxy implementations try to hide remote-ness. Ours draws attention to potential expense of non-local operations.
 \end{frame}
-
-
-\begin{frame}
-\frametitle{3. Remote methods are of void return type}
-  What happens if an object waits for a return value from a method invocation?
-  \pause
-  \begin{center}
-    \includegraphics[width=\textwidth]{../figures/objectSequence.pdf}
-  \end{center}
-  \pause
-  \begin{itemize}
-    \item Performance
-    \item Latency
-    \item Reasoning about correctness
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{3. Remote methods are of void return type}
-  \begin{center}
-    \includegraphics[width=\textwidth]{../figures/objectSequenceAsync.pdf}
-  \end{center}
-  \begin{itemize}
-  \item Hence, method invocations should be asynchronous
-    \begin{itemize}
-    \item No return values
-    \end{itemize}
-  \item Computations are driven by the incoming data
-    \begin{itemize}
-    \item Initiated by the sender or method caller
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{\only<3-> {Entry Methods}}
-	\onslide<2->{ Asynchronous, non-blocking remote method invocations on chares}
-	\begin{center}
-        \includegraphics<1>[width=0.9\textwidth]{../figures/progmodel/11-global-methods.pdf}
-        \includegraphics<2->[width=0.9\textwidth]{../figures/progmodel/12-async-nonblock-rmi.pdf}
-	\end{center}
-\end{frame}
-
 
 
 \begin{frame}
