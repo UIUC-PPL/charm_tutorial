@@ -13,7 +13,7 @@ all: clean $(TARGET) web
 	#pdflatex $<
 
 clean:
-	rm -f $(wildcard *.ilg *.aux *.log *.dvi *.idx *.toc *.lof *.lot *.spl *.blg *.bbl *.out *.nav *.snm *.ps *~)
+	rm -f $(wildcard *.ilg *.aux *.log *.dvi *.idx *.toc *.lof *.lot *.spl *.blg *.bbl *.out *.nav *.snm *.ps *.vrb *~)
 	rm -f $(TARGET)
 
 web: $(TARGET)
