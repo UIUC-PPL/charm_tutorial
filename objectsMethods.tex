@@ -1,4 +1,21 @@
 \begin{frame}[fragile]
+  \frametitle{Charm++}
+  \begin{itemize}
+    \item C++-based parallel runtime system
+      \begin{itemize}
+      \item Composed of a set of globally-visible parallel objects that interact
+      \item The objects interact by asynchronously invoking methods on each other
+      \end{itemize}
+    \item Charm++ runtime
+      \begin{itemize}
+      \item Manages the parallel objects and (re)maps them to processes
+      \item Provides scheduling, load balancing, and a host of other features,
+        requiring little user intervention
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Globally-Visible Objects}
   \begin{center}
     \includegraphics[width=0.8\textwidth]{figures/objectGlobalAddress.pdf}

@@ -91,19 +91,19 @@
    \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-   \frametitle{Charm Termination}
-   \begin{itemize}
-   \item There is a special system call \code{CkExit()} that terminates the
-     parallel execution on all processors (but it is called on one processor)
-     and performs the requisite cleanup
-   \item The traditional \code{exit()} is insufficient because it only
-     terminates one process, not the entire parallel job (and will cause a
-     hang)
-   \item \code{CkExit()} should be called when you can safely terminate the
-     application (you may want to synchronize before calling this)
-   \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+%    \frametitle{Charm Termination}
+%    \begin{itemize}
+%    \item There is a special system call \code{CkExit()} that terminates the
+%      parallel execution on all processors (but it is called on one processor)
+%      and performs the requisite cleanup
+%    \item The traditional \code{exit()} is insufficient because it only
+%      terminates one process, not the entire parallel job (and will cause a
+%      hang)
+%    \item \code{CkExit()} should be called when you can safely terminate the
+%      application (you may want to synchronize before calling this)
+%    \end{itemize}
+% \end{frame}
 
 \begin{frame}
    \frametitle{Compiling a Charm++ Program}
@@ -208,56 +208,56 @@ proxy.bar(5);
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Asynchronous Methods}
-  \begin{itemize}
-  \item Method invocation is not ordered (between chares, entry methods on one
-    chare, etc.)!
-  \item For example, if a chare executes this code:
-  \begin{lstlisting}
-CProxy_<charename> proxy = CProxy_<charename>::ckNew();
-proxy.foo();
-proxy.bar(5);
-  \end{lstlisting}
-  \item These prints may occur in \textbf{any} order
-  \begin{lstlisting}
-<charename>::foo() {
-  ckout << "foo executes" << endl;
-}
+% \begin{frame}[fragile]
+%   \frametitle{Asynchronous Methods}
+%   \begin{itemize}
+%   \item Method invocation is not ordered (between chares, entry methods on one
+%     chare, etc.)!
+%   \item For example, if a chare executes this code:
+%   \begin{lstlisting}
+% CProxy_<charename> proxy = CProxy_<charename>::ckNew();
+% proxy.foo();
+% proxy.bar(5);
+%   \end{lstlisting}
+%   \item These prints may occur in \textbf{any} order
+%   \begin{lstlisting}
+% <charename>::foo() {
+%   ckout << "foo executes" << endl;
+% }
 
-<charename>::bar(int param) {
-  ckout << "bar executes with " << param << endl;
-}
-\end{lstlisting}
-  \end{itemize}
-\end{frame}
+% <charename>::bar(int param) {
+%   ckout << "bar executes with " << param << endl;
+% }
+% \end{lstlisting}
+%   \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Asynchronous Methods}
-  \begin{itemize}
-  \item For example, if a chare invokes the same entry method twice:
-  \begin{lstlisting}
-proxy.bar(7);
-proxy.bar(5);
-  \end{lstlisting}%
-  \item These may be delivered in \textbf{any} order
-  \begin{lstlisting}
-<charename>::bar(int param) {
-  ckout << "bar executes with " << param << endl;
-}
-\end{lstlisting}
-  \item Output
-\begin{lstlisting}
-bar executes with 5
-bar executes with 7
-\end{lstlisting}
-\textbf{OR}
-\begin{lstlisting}
-bar executes with 7
-bar executes with 5
-\end{lstlisting}
-  \end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Asynchronous Methods}
+%   \begin{itemize}
+%   \item For example, if a chare invokes the same entry method twice:
+%   \begin{lstlisting}
+% proxy.bar(7);
+% proxy.bar(5);
+%   \end{lstlisting}%
+%   \item These may be delivered in \textbf{any} order
+%   \begin{lstlisting}
+% <charename>::bar(int param) {
+%   ckout << "bar executes with " << param << endl;
+% }
+% \end{lstlisting}
+%   \item Output
+% \begin{lstlisting}
+% bar executes with 5
+% bar executes with 7
+% \end{lstlisting}
+% \textbf{OR}
+% \begin{lstlisting}
+% bar executes with 7
+% bar executes with 5
+% \end{lstlisting}
+%   \end{itemize}
+% \end{frame}
 
 
 \begin{frame}[fragile]
