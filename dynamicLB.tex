@@ -130,51 +130,51 @@ void pup(PUP::er &p) {
 
 \transition{Dynamic Load Balancing}
 
-\begin{frame}[fragile]
-\frametitle{How to Diagnose Load Imbalance}
-\begin{itemize}
- \item Often hidden in statements such as:
- \begin{itemize}
-  \item Very high synchronization overhead
-  \begin{itemize}
-   \item Most processors are waiting at a reduction
-  \end{itemize}
- \end{itemize}
- \item Count total amount of computation (ops/flops) per processor
- \begin{itemize}
-  \item In each phase! 
-  \item Because the balance may change from phase to phase
- \end{itemize}
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{How to Diagnose Load Imbalance}
+% \begin{itemize}
+%  \item Often hidden in statements such as:
+%  \begin{itemize}
+%   \item Very high synchronization overhead
+%   \begin{itemize}
+%    \item Most processors are waiting at a reduction
+%   \end{itemize}
+%  \end{itemize}
+%  \item Count total amount of computation (ops/flops) per processor
+%  \begin{itemize}
+%   \item In each phase! 
+%   \item Because the balance may change from phase to phase
+%  \end{itemize}
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Golden Rule of Load Balancing}
-\emph{Fallacy: objective of load balancing is to minimize variance in load across processors}
+% \begin{frame}[fragile]
+% \frametitle{Golden Rule of Load Balancing}
+% \emph{Fallacy: objective of load balancing is to minimize variance in load across processors}
 
-\begin{itemize}
- \item[]\emph{Example:}
- \begin{itemize}
-  \item  50,000 tasks of equal size, 500  processors:
-  \begin{itemize}
-   \item A: All processors get 99, except last 5 gets $100+99 = 199$
-   \item OR, B:  All processors have 101, except last 5 get 1
-  \end{itemize}
- \end{itemize}
- \item[] Identical variance, but situation A is much worse!
-\end{itemize}
-
-
-\emph{Golden Rule: It is ok if a few processors idle, but avoid having processors that are overloaded with work}
+% \begin{itemize}
+%  \item[]\emph{Example:}
+%  \begin{itemize}
+%   \item  50,000 tasks of equal size, 500  processors:
+%   \begin{itemize}
+%    \item A: All processors get 99, except last 5 gets $100+99 = 199$
+%    \item OR, B:  All processors have 101, except last 5 get 1
+%   \end{itemize}
+%  \end{itemize}
+%  \item[] Identical variance, but situation A is much worse!
+% \end{itemize}
 
 
-\emph{Finish time} = $max_i$(Time on processor $i$)
-\begin{itemize}
-\item[] excepting data dependence and communication overhead issues
-\end{itemize}
+% \emph{Golden Rule: It is ok if a few processors idle, but avoid having processors that are overloaded with work}
 
-The speed of any group is the speed of slowest member of that group.
-\end{frame}
+
+% \emph{Finish time} = $max_i$(Time on processor $i$)
+% \begin{itemize}
+% \item[] excepting data dependence and communication overhead issues
+% \end{itemize}
+
+% The speed of any group is the speed of slowest member of that group.
+% \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Automatic Dynamic Load Balancing}
@@ -223,35 +223,35 @@ The speed of any group is the speed of slowest member of that group.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Example: Stencil}
-\begin{lstlisting}[basicstyle=\tiny]
-while (!converged) {
-  serial {
-    int x = thisIndex.x, y = thisIndex.y, z = thisIndex.z;
-    copyToBoundaries();
-    thisProxy(wrapX(x-1),y,z).updateGhosts(i, RIGHT, dimY, dimZ, right);
-    /* ...similar calls to send the 6 boundaries... */
-    thisProxy(x,y,wrapZ(z+1)).updateGhosts(i, FRONT, dimX, dimY, front);
-  }
-  for (remoteCount = 0; remoteCount < 6; remoteCount++) {
-    when updateGhosts[i](int i, int d, int w, int h, double b[w*h])
-    serial { updateBoundary(d, w, h, b); }
-  }
-  serial {
-    int c = computeKernel() < DELTA;
-    CkCallback cb(CkReductionTarget(Jacobi, checkConverged), thisProxy);
-    if (i%5 == 1) contribute(sizeof(int), \&c, CkReduction::logical_and, cb);
-  }
-  if (i % lbPeriod == 0) { serial { AtSync(); } when ResumeFromSync() {} }
-  if (++i % 5 == 0) {
-    when checkConverged(bool result) serial {
-      if (result) { mainProxy.done(); converged = true; }
-    }
-  }
-}
-\end{lstlisting}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Example: Stencil}
+% \begin{lstlisting}[basicstyle=\tiny]
+% while (!converged) {
+%   serial {
+%     int x = thisIndex.x, y = thisIndex.y, z = thisIndex.z;
+%     copyToBoundaries();
+%     thisProxy(wrapX(x-1),y,z).updateGhosts(i, RIGHT, dimY, dimZ, right);
+%     /* ...similar calls to send the 6 boundaries... */
+%     thisProxy(x,y,wrapZ(z+1)).updateGhosts(i, FRONT, dimX, dimY, front);
+%   }
+%   for (remoteCount = 0; remoteCount < 6; remoteCount++) {
+%     when updateGhosts[i](int i, int d, int w, int h, double b[w*h])
+%     serial { updateBoundary(d, w, h, b); }
+%   }
+%   serial {
+%     int c = computeKernel() < DELTA;
+%     CkCallback cb(CkReductionTarget(Jacobi, checkConverged), thisProxy);
+%     if (i%5 == 1) contribute(sizeof(int), \&c, CkReduction::logical_and, cb);
+%   }
+%   if (i % lbPeriod == 0) { serial { AtSync(); } when ResumeFromSync() {} }
+%   if (++i % 5 == 0) {
+%     when checkConverged(bool result) serial {
+%       if (result) { mainProxy.done(); converged = true; }
+%     }
+%   }
+% }
+% \end{lstlisting}
+% \end{frame}
 
 % \begin{frame}
 % \frametitle{Performance}
@@ -303,30 +303,30 @@ while (!converged) {
 %\end{centering}
 %\end{frame}
 %
-\begin{frame}[fragile]
-\frametitle{Load Balancing Strategies}
-\begin{itemize}
- \item Classified by when it is done:
- \begin{itemize}
-  \item Initially
-  \item Dynamic: Periodically
-  \item Dynamic: Continuously
- \end{itemize}
- \item Classified by whether decisions are taken with global information
- \begin{itemize}
-  \item Fully centralized
-  \begin{itemize}
-   \item Quite good a choice when load balancing period is high
-  \end{itemize}
- \item Fully distributed
- \begin{itemize}
-  \item Each processor knows only about a constant number of neighbors
-  \item Extreme case: totally local decision (send work to a random destination processor, with some probability).
- \end{itemize}
-\item Use \emph{aggregated} global  information, and \emph{detailed} neighborhood info.
-\end{itemize}
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Load Balancing Strategies}
+% \begin{itemize}
+%  \item Classified by when it is done:
+%  \begin{itemize}
+%   \item Initially
+%   \item Dynamic: Periodically
+%   \item Dynamic: Continuously
+%  \end{itemize}
+%  \item Classified by whether decisions are taken with global information
+%  \begin{itemize}
+%   \item Fully centralized
+%   \begin{itemize}
+%    \item Quite good a choice when load balancing period is high
+%   \end{itemize}
+%  \item Fully distributed
+%  \begin{itemize}
+%   \item Each processor knows only about a constant number of neighbors
+%   \item Extreme case: totally local decision (send work to a random destination processor, with some probability).
+%  \end{itemize}
+% \item Use \emph{aggregated} global  information, and \emph{detailed} neighborhood info.
+% \end{itemize}
+% \end{itemize}
+% \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Dynamic Load Balancing Scenarios}
@@ -438,12 +438,12 @@ Centralized strategies:
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Typical Load Balancing Steps}
-\begin{centering}
-\includegraphics[width=1.0\textwidth]{figures/LBStepsDiagram}
-\end{centering}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Typical Load Balancing Steps}
+% \begin{centering}
+% \includegraphics[width=1.0\textwidth]{figures/LBStepsDiagram}
+% \end{centering}
+% \end{frame}
 
 % \begin{frame}[fragile]
 % \frametitle{Object Partitioning Strategies}
@@ -500,118 +500,118 @@ Centralized strategies:
 % \end{itemize}
 % \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Crack Propagation}
-\begin{centering}
-\includegraphics[width=0.4\textwidth]{figures/chunkGraph16}
-\includegraphics[width=0.4\textwidth]{figures/chunkGraph128}
-\end{centering}
-Decomposition into 16 chunks (left) and 128 chunks, 8 for each PE (right). The middle area contains cohesive elements. Both decompositions obtained using Metis. Pictures: S. Breitenfeld, and P. Geubelle
+% \begin{frame}[fragile]
+% \frametitle{Crack Propagation}
+% \begin{centering}
+% \includegraphics[width=0.4\textwidth]{figures/chunkGraph16}
+% \includegraphics[width=0.4\textwidth]{figures/chunkGraph128}
+% \end{centering}
+% Decomposition into 16 chunks (left) and 128 chunks, 8 for each PE (right). The middle area contains cohesive elements. Both decompositions obtained using Metis. Pictures: S. Breitenfeld, and P. Geubelle
 
-As computation progresses, crack propagates, and new elements are added, leading to more complex computations in some chunks
-\end{frame}
+% As computation progresses, crack propagates, and new elements are added, leading to more complex computations in some chunks
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Load Balancing Crack Propagation}
-\begin{centering}
-\includegraphics[width=1.0\textwidth]{figures/LButilizationCrackPropWithAnnotation}
-\end{centering}
-\end{frame}
-
-
-\begin{frame}[fragile]
-\frametitle{Distributed Load balancing}
-\begin{itemize}
- \item Centralized strategies
- \begin{itemize}
-  \item Still ok for 3000 processors for NAMD
- \end{itemize}
- \item Distributed balancing is needed when:
- \begin{itemize}
-  \item Number of processors is large and/or 
-  \item load variation is rapid
- \end{itemize}
- \item Large machines: 
- \begin{itemize}
-  \item Need to handle locality of communication
-  \begin{itemize}
-   \item Topology sensitive placement
-  \end{itemize}
-  \item Need to work with scant global information
-  \begin{itemize}
-   \item Approximate or aggregated global information (average/max load)
-   \item Incomplete global info (only “neighborhood”)
-   \item Work diffusion strategies (1980s work by Kale and others!)
-  \end{itemize}
-  \item Achieving global effects by local action…
- \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Load Balancing on Large Machines}
-\begin{itemize}
- \item Centralized load balancing strategies don’t scale on extremely large machines
- \item Limitations of centralized strategies:
- \begin{itemize}
-  \item Central node: memory/communication bottleneck
-  \item Decision-making algorithms tend to be very slow
- \end{itemize}
- \item Limitations of distributed strategies:
- \begin{itemize}
-  \item Difficult to achieve well-informed load balancing decisions
- \end{itemize}
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Load Balancing Crack Propagation}
+% \begin{centering}
+% \includegraphics[width=1.0\textwidth]{figures/LButilizationCrackPropWithAnnotation}
+% \end{centering}
+% \end{frame}
 
 
-\begin{frame}[fragile]
-\frametitle{Simulation Study - Memory Overhead}
-lb\_test experiments performed with the performance simulator BigSim
-\includegraphics[width=1.0\textwidth]{figures/LBMemOverhead}
-\begin{itemize}
- \item lb\_test benchmark is a parameterized program that creates a 
-specified number of communicating objects in 2D-mesh.
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Distributed Load balancing}
+% \begin{itemize}
+%  \item Centralized strategies
+%  \begin{itemize}
+%   \item Still ok for 3000 processors for NAMD
+%  \end{itemize}
+%  \item Distributed balancing is needed when:
+%  \begin{itemize}
+%   \item Number of processors is large and/or 
+%   \item load variation is rapid
+%  \end{itemize}
+%  \item Large machines: 
+%  \begin{itemize}
+%   \item Need to handle locality of communication
+%   \begin{itemize}
+%    \item Topology sensitive placement
+%   \end{itemize}
+%   \item Need to work with scant global information
+%   \begin{itemize}
+%    \item Approximate or aggregated global information (average/max load)
+%    \item Incomplete global info (only “neighborhood”)
+%    \item Work diffusion strategies (1980s work by Kale and others!)
+%   \end{itemize}
+%   \item Achieving global effects by local action…
+%  \end{itemize}
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{Load Balancing on Large Machines}
+% \begin{itemize}
+%  \item Centralized load balancing strategies don’t scale on extremely large machines
+%  \item Limitations of centralized strategies:
+%  \begin{itemize}
+%   \item Central node: memory/communication bottleneck
+%   \item Decision-making algorithms tend to be very slow
+%  \end{itemize}
+%  \item Limitations of distributed strategies:
+%  \begin{itemize}
+%   \item Difficult to achieve well-informed load balancing decisions
+%  \end{itemize}
+% \end{itemize}
+% \end{frame}
 
 
-\begin{frame}[fragile]
-\frametitle{Hierarchical Load Balancers}
-\begin{itemize}
-\item Partition processor allocation into processor groups
-\item Apply different strategies at each level
-\item Scalable to a large number of processors
-\end{itemize}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Simulation Study - Memory Overhead}
+% lb\_test experiments performed with the performance simulator BigSim
+% \includegraphics[width=1.0\textwidth]{figures/LBMemOverhead}
+% \begin{itemize}
+%  \item lb\_test benchmark is a parameterized program that creates a 
+% specified number of communicating objects in 2D-mesh.
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Our Hybrid Scheme}
-\includegraphics[width=1.0\textwidth]{figures/hybridLBScheme}
-\end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Hybrid Load Balancing Performance}
-\includegraphics[width=0.5\textwidth]{figures/hybridLBPerf}
-\includegraphics[width=0.5\textwidth]{figures/hybridLBquality}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Hierarchical Load Balancers}
+% \begin{itemize}
+% \item Partition processor allocation into processor groups
+% \item Apply different strategies at each level
+% \item Scalable to a large number of processors
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{MetaBalancer - When and how to load balance?}
-\begin{itemize}    
-    \item Difficult to find the optimum load balancing period
-    \begin{itemize}
-       \item Depends on the application characteristics
-       \item Depends on the machine the application is run on
-    \end{itemize}
+% \begin{frame}[fragile]
+% \frametitle{Our Hybrid Scheme}
+% \includegraphics[width=1.0\textwidth]{figures/hybridLBScheme}
+% \end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{Hybrid Load Balancing Performance}
+% \includegraphics[width=0.5\textwidth]{figures/hybridLBPerf}
+% \includegraphics[width=0.5\textwidth]{figures/hybridLBquality}
+% \end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{MetaBalancer - When and how to load balance?}
+% \begin{itemize}    
+%     \item Difficult to find the optimum load balancing period
+%     \begin{itemize}
+%        \item Depends on the application characteristics
+%        \item Depends on the machine the application is run on
+%     \end{itemize}
     
-    \item Monitors the application continuously and predicts behavior.
-    \item Decides when to invoke which load balancer.
-    \item Command line argument - \texttt{+MetaLB}
-\end{itemize}
-\end{frame}
+%     \item Monitors the application continuously and predicts behavior.
+%     \item Decides when to invoke which load balancer.
+%     \item Command line argument - \texttt{+MetaLB}
+% \end{itemize}
+% \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Metabalancer Utilization Graph for Fractography}
-\includegraphics[width=\textwidth]{figures/meta-util}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Metabalancer Utilization Graph for Fractography}
+% \includegraphics[width=\textwidth]{figures/meta-util}
+% \end{frame}
