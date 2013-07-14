@@ -261,51 +261,6 @@ bar executes with 5
 
 
 \begin{frame}[fragile]
-  \frametitle{Asynchronous Example: \texttt{.ci} file}
-\begin{lstlisting}
-mainmodule MyModule {
-  mainchare Main {
-    entry Main(CkArgMsg *m);
-  };
-  chare Simple {
-    entry Simple(double y);
-    entry void findArea(int radius, bool done);
-  };
-};
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Asynchronous Example: \texttt{.cpp} file}
-\begin{itemize}
-  \item Does this program execute correctly?
-\end{itemize}
-\scriptsize
-\begin{lstlisting}[basicstyle=\footnotesize]
-struct Main : public CBase_Main {
-  Main(CkArgMsg* m) {
-    double pi = 3.1415;
-    CProxy_Simple sim =  CProxy_Simple::ckNew(pi);
-    for (int i = 1; i< 10; i++) sim.findArea(i, false);
-    sim.findArea(10, true);
-  };
-};
-
-struct Simple : public CBase_Simple {
- float y;
- Simple(double pi) {
-   y = pi;
-   ckout << "Hello from a simple chare running on " << CkMyPe() << endl;
- }
- void findArea(int r, bool done) {
-   ckout << "Area of a circle of radius" << r << " is " << y*r*r << endl;
-   if (done) CkExit();
- }
-};
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Data types and entry methods}
 \begin{itemize}
   \item You can pass basic C++ types to entry methods (\texttt{int},
