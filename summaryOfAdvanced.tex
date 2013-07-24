@@ -1,0 +1,193 @@
+%\transition{Advanced Material}
+\begin{frame}[fragile]
+  \frametitle{Shared Memory Optimizations}
+  \begin{itemize}
+    \item Objects' memory buffers disjoint
+    \item Communication will leverage refcounted message pointers to avoid copying
+    \item Avoids packing/unpacking within node
+    \item Single copy of node level read only structures
+    \item Dedicated thread for intra-node communication
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Controlling Placement}
+  \begin{itemize}
+    \item In some applications, load patterns don’t change much as computation progresses
+    \begin{itemize}
+      \item You, the programmer, may want to control which chare lives on which processors
+      \item This is also true when  load may evolve over time, but you want to control initial placement of chares
+    \end{itemize}
+    \item The feature in Charm++ for this purpose is called Map Objects
+    \begin{itemize}
+      \item Sec. 13.2.2 of the Charm++ manual
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Messages}
+  \begin{itemize}
+    \item Avoids extra copy
+    \item Can be custom packed
+    \item Reusable
+    \item Useful for transfer of complex data structures
+    \item It provides explicit control for the application over allocation, reuse, and scope
+    \item Encapsulates variable size quantities
+    \item Execution order of messages in the queue can be prioritized
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Groups}
+  \begin{itemize}
+    \item Like a chare-array with one chare per PE
+    \item Encapsulate processor local data
+    \item May access the local member as a regular C++ object
+    \item In .ci file, 
+    \begin{lstlisting}
+group ExampleGroup {
+  // Interface specifications as for normal chares
+  // For instance, the constructor ...
+  entry ExampleGroup(parameters1);
+  // ... and an entry method
+  entry void someEntryMethod(parameters2);
+};
+    \end{lstlisting}
+    \item No difference in .h and .C file definitions
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Node Groups}
+  \begin{itemize}
+    \item A chare-array with one chare per node
+    \begin{itemize}
+      \item In non-smp node groups and node groups are same
+    \end{itemize}
+    \item No difference in .h and .C
+    \item Creation and usage same as others
+    \item An entry method on a node-group member may be executed on any PE of the node
+    \item Concurrent execution of two entry methods of a node-group member may happen
+    \begin{itemize}
+      \item Use \code{[exclusive]} for entry methods which are unsuitable for reentrance safety
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Customizing Entry Method Attributes}
+  \begin{itemize}
+    \item \code{threaded} – executed using separate thread
+    \begin{itemize}
+      \item each thread has a stack, and may be suspended, for sync methods or futures
+      \item to set stack’s size use +stacksize $<$ size in bytes $>$
+    \end{itemize}
+    \item \code{sync} - returns a value
+    \item \code{inline} – entry method invoked immediately if destination chare on same PE
+    \begin{itemize}
+      \item blocking call
+    \end{itemize}
+    \item \code{reductiontarget} – target of an array reduction
+    \begin{itemize}
+      \item Takes parameter marshaled arguments
+    \end{itemize}
+    \item \code{notrace} – not traced for projections
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Customizing Entry Methods}
+  \begin{itemize}
+    \item \code{expedited} – entry method skips the priority-based message queue in Charm++ runtime (for groups)
+    \item \code{immediate} - skips the message scheduling queue (for any chare array)
+    \item \code{nokeep} – message belongs to Charm
+    \item \code{exclusive} – mutual exclusion on execution of entry methods on node-groups 
+    \item \code{python} – can be called from python scripts
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Sections}
+\begin{itemize}
+ \item It is often convenient to define subcollections of elements within a
+   chare array
+   \begin{itemize}
+   \item Example: rows or columns of a 2D chare array
+   \item One may wish to perform collective operations on the subcollection
+     (e.g. broadcast, reduction)
+   \end{itemize}
+ \item Sections are the standard subcollection construct in Charm++
+
+\end{itemize}
+\begin{lstlisting}
+CProxySection_Hello proxy =
+  CProxySection_Hello::ckNew(helloArrayID, 0, 9, 1, 0, 19, 2, 0, 29, 2);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\code{sync} methods}
+\begin{itemize}
+ \item Synchronous as opposed to asynchronous
+ \item They return a value - always a \code{message} type
+ \item Other than that, just like any other entry method:
+\end{itemize}
+In the interface file:
+\begin{lstlisting}
+  entry [sync] MsgData * f(double A[2*m], int m ); 
+\end{lstlisting}
+
+In the C++ file:
+\begin{lstlisting}
+MsgData *f(double X[], int size) {
+  ...
+  m = new MsgData(..);
+  ...
+  return m;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Threaded methods}
+\begin{itemize}
+\item Any method that calls a sync method must be able to suspend:
+  \begin{itemize}
+  \item Needs to be declared as a \code{threaded} method
+  \item A threaded method of a chare C
+    \begin{itemize}
+    \item Can suspend, without blocking the processor
+    \item Other chares can then be executed
+    \item Even other methods of chare C can be executed
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Customized Load Balancers}
+\begin{itemize}
+\item Statistics collected by Charm
+\begin{lstlisting}[basicstyle=\tiny]
+struct LDStats { // load balancing database
+  ProcStats  *procs; //statistics of PEs
+  int count;
+
+  int   n_objs;
+  int   n_migrateobjs;
+  LDObjData* objData; //info regarding chares
+
+  int   n_comm;
+  LDCommData* commData; //communication information
+
+  int  *from_proc, *to_proc; //residence of
+  chares
+}
+\end{lstlisting}
+\item Use LDStats, ProcArray and ObjGraph for processor load and communication
+statistics
+\item \emph{work} is the function invoked by Charm RTS to perform load balancing
+\end{itemize}
+\end{frame}
+

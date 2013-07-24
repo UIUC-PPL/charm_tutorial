@@ -1,0 +1,68 @@
+\documentclass{beamer}
+
+\input{include_pkg}
+\input{include_cfg}
+\input{include_theme}
+\input{include_cmd}
+
+\title[Parallel Migratable Objects]{Programming with Parallel Migratable Objects}
+\institute[UIUC]{Parallel Programming Laboratory \\University of Illinois Urbana-Champaign}
+\author{Laxmikant V.~Kal\'e, Eric Bohm}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\transition{Please check http://charm.cs.illinois.edu/tutorial/ for the latest material}
+%\tableofcontents
+
+\section[Concepts]{Introduction}
+\input{challenges}
+\subsection[Object Design]{Object Design}
+\transition{A proven approach: objects}
+\input{objectDesign}
+%\transition{A proven approach: method-driven objects}
+\input{objectsMethods}
+\subsection[Execution Mode]{Execution Model}
+\input{executionModel}
+\subsection[Benefits]{Benefits of Charm++}
+\input{benefits}
+\subsection[Task Parallelism]{Task Parallelism}
+\transition{Task Parallelism with Objects}\input{taskParallelism}
+\subsection[Collections]{Object Collections}
+\input{objectCollections}
+\transition{Overdecomposing Your Application}\input{overdecomposition}
+\subsection[Application Design]{Application Design}
+\input{modularityComposability}
+\input{patterns}
+\subsection[Design Examples]{Design Examples}
+\transition{Designing Parallel Applications with Charm++}
+\input{caseStudies}
+\section[Charm++]{Charm++ Syntax}
+\transition{Charm++}\input{charmSyntax}
+\subsection[Charm++]{Structured Dagger}
+\transition{Sequencing and Coordination}\input{sequencing}
+\input{distributedTable}
+\section[LB]{Using Dynamic Load Balancing}
+\transition{The PUP Framework}
+\input{dynamicLB}
+\section[Fault Tol]{Checkpointing and Resilience}
+\transition{Resilience}
+\input{faultTolerance}
+\section[AMPI & Interop]{Interoperability}
+\input{interoperability}
+\section[Tuning]{Performance Tuning}
+\input{perf}
+\section[Debugging]{Debugging}
+\input{debug}
+\input{heterogeneity}
+\section[Messages, Groups, Shared Mem]{Further Optimization}
+\transition{Overview of Performance Enhancement Features} 
+\input{summaryOfAdvanced}
+\input{conclusion}
+
+\end{document}
+
+
+
