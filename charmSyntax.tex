@@ -112,34 +112,6 @@
    \end{center}
 \end{frame}
 
-\begin{frame}[fragile]
-   \frametitle{Hello World Example}\scriptsize
-\begin{itemize}
-\item \texttt{hello.ci} file
-   \begin{lstlisting}
-mainmodule hello {
-  mainchare Main {
-    entry Main(CkArgMsg *m);
-  };
-};
-   \end{lstlisting}
-\item \texttt{hello.cpp} file
-\lstset{basicstyle=\footnotesize}
-   \begin{lstlisting}
-#include <stdio.h>
-#include "hello.decl.h"
-
-class Main : public CBase_Main {
-  public: Main(CkArgMsg* m) {
-    ckout << "Hello World!" << endl;
-    CkExit();
-  };
-};
-
-#include "hello.def.h"
-   \end{lstlisting}
-\end{itemize}
-\end{frame}
 
 \begin{frame}
   \frametitle{Hello World Example}
@@ -420,15 +392,6 @@ entry void foobar2(CProxy_Main main);
   \lstinputlisting{code/piWorker.C}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Fibonacci Example}
-  \lstinputlisting{code/fib1.ci}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Fibonacci Example}
-  \lstinputlisting[basicstyle=\tiny]{code/fib1.C}
-\end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Declaring a Chare Array}
@@ -508,16 +471,6 @@ entry void foobar2(CProxy_Main main);
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Charm Array: Hello Example }
-  \lstinputlisting{code/arrayHello.ci}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Charm Array: Hello Example }
-  \lstinputlisting[basicstyle=\scriptsize]{code/arrayHello.cpp}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Collective Communication Operations}
   \begin{itemize}
     \item Point-to-point operations involve only two objects
@@ -527,6 +480,34 @@ entry void foobar2(CProxy_Main main);
     \item A spanning tree is used to send/receive data
   \end{itemize}
     \begin{center} \includegraphics[width=0.5\textwidth]{figures/spanningTree.pdf} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects: Runtime Service}
+  \begin{itemize}
+    \item System knows how to `find' objects efficiently: $(collection, index) \to processor$
+    \item Applications can specify a mapping, or use simple
+      runtime-provided options (e.g. blocked, round-robin)
+    \item Distribution can be static, or dynamic!
+    \item Key abstraction: application logic doesn't change, even
+      though performance might
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects: Runtime Service}
+  \begin{itemize}
+    \item Can develop and test logic in objects separately from their distribution
+    \item Separation in time: make it work, then make it fast
+    \item Division of labor: domain specialist writes object code, computationalist writes mapping
+    \item Portability: different mappings for different systems, scales, or configurations
+    \item Shared progress: improved mapping techniques can benefit existing code
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects}
+  \begin{center}\includegraphics[width=0.9\textwidth]{figures/elements2.pdf}\end{center}
 \end{frame}
 
 \begin{frame}[fragile]

@@ -47,45 +47,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Collections of Objects: Communication}
-  \begin{itemize}
-    \item Point-to-point: to one element of a collection
-    \item Broadcast: message to whole collection
-    \item Multicast: message to subset of collection
-    \item Reductions: message from (part of) collection
-    \item Runtime system provides efficient delivery for all
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Collections of Objects: Runtime Service}
-  \begin{itemize}
-    \item System knows how to `find' objects efficiently: $(collection, index) \to processor$
-    \item Applications can specify a mapping, or use simple
-      runtime-provided options (e.g. blocked, round-robin)
-    \item Distribution can be static, or dynamic!
-    \item Key abstraction: application logic doesn't change, even
-      though performance might
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Collections of Objects: Runtime Service}
-  \begin{itemize}
-    \item Can develop and test logic in objects separately from their distribution
-    \item Separation in time: make it work, then make it fast
-    \item Division of labor: domain specialist writes object code, computationalist writes mapping
-    \item Portability: different mappings for different systems, scales, or configurations
-    \item Shared progress: improved mapping techniques can benefit existing code
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Collections of Objects}
-  \begin{center}\includegraphics[width=0.9\textwidth]{figures/elements2.pdf}\end{center}
-\end{frame}
-
 
 
 %% Object Collections: Supporting Data Decomposition (Phil)

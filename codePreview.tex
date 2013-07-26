@@ -1,0 +1,50 @@
+\begin{frame}[fragile]
+   \frametitle{Hello World Example}\scriptsize
+\begin{itemize}
+\item \texttt{hello.ci} file
+   \begin{lstlisting}
+mainmodule hello {
+  mainchare Main {
+    entry Main(CkArgMsg *m);
+  };
+};
+   \end{lstlisting}
+\item \texttt{hello.cpp} file
+\lstset{basicstyle=\footnotesize}
+   \begin{lstlisting}
+#include <stdio.h>
+#include "hello.decl.h"
+
+class Main : public CBase_Main {
+  public: Main(CkArgMsg* m) {
+    ckout << "Hello World!" << endl;
+    CkExit();
+  };
+};
+
+#include "hello.def.h"
+   \end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+   \frametitle{Hello World with Chare}\scriptsize
+    Hello World example with singleton chares.
+\end{frame}
+
+
+\subsection[Collections]{Object Collections}
+\input{objectCollections}
+
+
+\begin{frame}[fragile]
+  \frametitle{Charm Array: Hello Example }
+  \lstinputlisting{code/arrayHello.ci}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Charm Array: Hello Example }
+  \lstinputlisting[basicstyle=\scriptsize]{code/arrayHello.cpp}
+\end{frame}
+
+
