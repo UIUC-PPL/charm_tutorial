@@ -132,6 +132,22 @@ explicitly
   \end{columns}
 \end{frame}
 
+\begin{frame}[t]
+\frametitle{Utility for Multi-cores, Many-cores, Accelerators}
+  \begin{itemize}
+    \item Objects connote and promote locality
+    \item Message-driven execution is
+    \begin{itemize}
+      \item A strong principle of prediction for data and code use
+      \item Much stronger than principle of locality
+      \begin{itemize}
+        \item Can be used to scale memory wall
+        \item Prefetching of needed data, e.g, into scratch pad memories
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.6\textwidth]{figures/schedulerInvocation} \end{center}
+\end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Load Balancing}

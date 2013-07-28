@@ -28,14 +28,47 @@ class Main : public CBase_Main {
 \end{frame}
 
 \begin{frame}[fragile]
-   \frametitle{Hello World with Chare}\scriptsize
-    Hello World example with singleton chares.
-\end{frame}
+   \frametitle{Hello World with Chares}\scriptsize
+\begin{columns}
+\begin{column}{.45\linewidth}
+\texttt{hello.ci} file
+   \begin{lstlisting}
+mainmodule hello {
+  mainchare Main { 
+   entry Main(CkArgMsg *m); 
+  };
+  chare Singleton {
+   entry Singleton();
+  };
+};
+   \end{lstlisting}
+\end{column}
+\begin{column}{.55\linewidth}
+\texttt{hello.cpp} file
+\begin{lstlisting}
+#include <stdio.h>
+#include "hello.decl.h"
 
+class Main : public CBase_Main {
+  public: Main(CkArgMsg* m) {
+    CProxy_Singleton::ckNew();
+  };
+};
+
+class Singleton : public CBase_Singleton {
+  public: Singleton() {
+    ckout << "Hello World!" << endl;
+    CkExit();
+  };
+};
+#include "hello.def.h"
+\end{lstlisting}
+\end{column}
+\end{columns}
+\end{frame}
 
 \subsection[Collections]{Object Collections}
 \input{objectCollections}
-
 
 \begin{frame}[fragile]
   \frametitle{Charm Array: Hello Example }
