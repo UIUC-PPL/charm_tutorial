@@ -5,6 +5,7 @@ TARGET = tutorial.pdf
 .PHONY: all web
 
 all: clean $(TARGET) web
+anl: clean tutorial_ATPESC.pdf
 
 %.pdf: %.tex
 	pdflatex $<
