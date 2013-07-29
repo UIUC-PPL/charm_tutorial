@@ -24,7 +24,7 @@ public: CProxy_Fib parent; bool isRoot; int result, count;
         CkPrintf("Fibonacci number is: %d\n", result); 
         CkExit();
       } else {
-        parent.response(result);
+        parent.respond(result);
         delete this;
       }
     }
