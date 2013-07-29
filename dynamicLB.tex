@@ -194,6 +194,19 @@ The speed of any group is the speed of slowest member of that group.
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Code to Use Load Balancing}
+\begin{itemize}
+\item Write PUP method to serialize the state of a chare
+\item Insert \code{if (myLBStep) AtSync();} call at natural barrier
+\item Implement \code{ResumeFromSync()} to resume execution
+\begin{itemize}
+\item Typical ResumeFromSync contribute to a reduction
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
 \begin{frame}[fragile]
 \frametitle{Using the Load Balancer}
 \begin{itemize}
@@ -208,17 +221,6 @@ The speed of any group is the speed of slowest member of that group.
 \item \code{-balancer RefineLB}
 \item runtime option
 \item \code {+balancer RefineLB}
-\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Code to Use Load Balancing}
-\begin{itemize}
-\item Insert \code{if (myLBStep) AtSync() else ResumeFromSync();} call at natural barrier
-\item Implement \code{ResumeFromSync()} to resume execution
-\begin{itemize}
-\item Typical ResumeFromSync contribute to a reduction
 \end{itemize}
 \end{itemize}
 \end{frame}
