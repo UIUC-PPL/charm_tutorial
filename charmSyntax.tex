@@ -92,6 +92,46 @@
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Creating a Chare}
+  \begin{itemize}
+    \item A chare declared as \code{chare <charename> \{...\};} can be
+      instantiated by the following call:
+  \end{itemize}
+\begin{lstlisting}
+CProxy_<charename>::ckNew(... constructor arguments ...);
+\end{lstlisting}
+  \begin{itemize}
+  \item To communicate with this class in the future, a \textit{proxy} to it
+    must be retained
+  \end{itemize}
+\begin{lstlisting}
+CProxy_<charename> proxy = 
+  CProxy_<charename>::ckNew(... constructor arguments ...);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Chare Proxies}
+  \begin{itemize}
+  \item A chare's own proxy can be obtained through a special variable
+    \code{thisProxy}
+  \item Chare proxies can also be passed so chares can learn about others
+  \item In this snippet, \code{<charename>} learns about a chare instance
+    \code{main}, and then invokes a method on it:
+  \end{itemize}
+\texttt{.ci} file
+\begin{lstlisting}
+entry void foobar2(CProxy_Main main);
+\end{lstlisting}
+\texttt{.cpp} file
+\begin{lstlisting}
+<charename>::foobar2(CProxy_Main main) {
+  main.foo();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
    \frametitle{Charm Termination}
    \begin{itemize}
    \item There is a special system call \code{CkExit()} that terminates the
@@ -130,24 +170,6 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Creating a Chare}
-  \begin{itemize}
-    \item A chare declared as \code{chare <charename> \{...\};} can be
-      instantiated by the following call:
-  \end{itemize}
-\begin{lstlisting}
-CProxy_<charename>::ckNew(... constructor arguments ...);
-\end{lstlisting}
-  \begin{itemize}
-  \item To communicate with this class in the future, a \textit{proxy} to it
-    must be retained
-  \end{itemize}
-\begin{lstlisting}
-CProxy_<charename> proxy = 
-  CProxy_<charename>::ckNew(... constructor arguments ...);
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Chare Creation Example: \texttt{.ci} file}
@@ -298,75 +320,25 @@ entry void foobar(int length, int data[length]);
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Chare Proxies}
-  \begin{itemize}
-  \item A chare's own proxy can be obtained through a special variable
-    \code{thisProxy}
-  \item Chare proxies can also be passed so chares can learn about others
-  \item In this snippet, \code{<charename>} learns about a chare instance
-    \code{main}, and then invokes a method on it:
-  \end{itemize}
-\texttt{.ci} file
-\begin{lstlisting}
-entry void foobar2(CProxy_Main main);
-\end{lstlisting}
-\texttt{.cpp} file
-\begin{lstlisting}
-<charename>::foobar2(CProxy_Main main) {
-  main.foo();
-}
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Chare Proxy Example}
-\texttt{.ci} file
-\begin{lstlisting}[basicstyle=\tiny]
-  mainchare Main {
-    entry Main(CkArgMsg *m);
-    entry void finished();
-  };
-  chare Simple {
-    entry Simple(CProxy_Main mainProxy);
-  };
-\end{lstlisting}
-\texttt{.cpp} file
-\begin{lstlisting}[basicstyle=\tiny]
-  struct Main : public CBase_Main {
-    Main(CkArgMsg *m) {
-      CProxy_Simple::ckNew(thisProxy);      
-    }
-    void finished() { CkExit(); }
-  };
-  struct Simple : public CBase_Simple {
-    Simple(CProxy_Main mainProxy) {
-      ckout << "Hello from Simple" << endl;
-      mainProxy.finished();
-    }
-  };
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Readonlys}
   \begin{itemize}
   \item A \textit{readonly} is a global (within a module) read-only variable
     that can only be written to in the \texttt{mainchare}'s constructor
   \item Can then be read (\textbf{not written!}) by any chare in the module
   \item It is declared in the \texttt{.ci} file:
-\begin{lstlisting}
+  \begin{lstlisting}
   readonly <type> <name>;
   readonly CProxy_Main mainProxy;
   readonly int numChares;
-\end{lstlisting}
+  \end{lstlisting}
   \item And defined the the \texttt{.cpp} file:
-\begin{lstlisting}
+  \begin{lstlisting}
   <type> <name>;
   CProxy_Main mainProxy;
   int numChares;
-\end{lstlisting}
+  \end{lstlisting}
   \item And set in the \texttt{mainchare}'s constructor
-\begin{lstlisting}
+  \begin{lstlisting}
   <charename>::<charename>(CkArgMsg *m) {
     mainProxy = thisProxy;
     numChares = 10;
@@ -374,9 +346,10 @@ entry void foobar2(CProxy_Main main);
 \end{lstlisting}
 
 
-  \end{itemize}
+\end{itemize}
 \end{frame}
 
+\eat{
 \begin{frame}[fragile]
   \frametitle{PI Example}
   \lstinputlisting{code/pi.ci}  
@@ -391,10 +364,11 @@ entry void foobar2(CProxy_Main main);
   \frametitle{PI Example}
   \lstinputlisting{code/piWorker.C}
 \end{frame}
-
+}
 
 \begin{frame}[fragile]
   \frametitle{Declaring a Chare Array}
+  \texttt{.ci} file:
   \begin{lstlisting}
     array [1d] foo {
       entry foo(); // constructor
@@ -471,18 +445,6 @@ entry void foobar2(CProxy_Main main);
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Collective Communication Operations}
-  \begin{itemize}
-    \item Point-to-point operations involve only two objects
-    \item Collective operations that involve a collection of objects
-    \item Broadcast: calls a method in each object of the array
-    \item Reduction: collects a contribution from each object of the array
-    \item A spanning tree is used to send/receive data
-  \end{itemize}
-    \begin{center} \includegraphics[width=0.5\textwidth]{figures/spanningTree.pdf} \end{center}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Collections of Objects: Runtime Service}
   \begin{itemize}
     \item System knows how to `find' objects efficiently: $(collection, index) \to processor$
@@ -509,6 +471,19 @@ entry void foobar2(CProxy_Main main);
   \frametitle{Collections of Objects}
   \begin{center}\includegraphics[width=0.9\textwidth]{figures/elements2.pdf}\end{center}
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collective Communication Operations}
+  \begin{itemize}
+    \item Point-to-point operations involve only two objects
+    \item Collective operations that involve a collection of objects
+    \item Broadcast: calls a method in each object of the array
+    \item Reduction: collects a contribution from each object of the array
+    \item A spanning tree is used to send/receive data
+  \end{itemize}
+    \begin{center} \includegraphics[width=0.5\textwidth]{figures/spanningTree.pdf} \end{center}
+\end{frame}
+
 
 \begin{frame}[fragile]
   \frametitle{Broadcast}
