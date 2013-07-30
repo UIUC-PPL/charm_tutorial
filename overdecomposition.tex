@@ -58,13 +58,14 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Grainsize}
+  \frametitle{Overdecomposition and Grainsize}
   \begin{itemize}
+    \item Common misconception: overdecomposition must be expensive
     \item (working) Definition: the amount of computation per potentially
       parallel event (task creation, enqueue/dequeue, messaging,
       locking, etc.)
   \end{itemize}
-  \begin{center} \includegraphics[width=0.7\textwidth]{figures/grain1.png} \end{center}
+%   \begin{center} \includegraphics[width=0.7\textwidth]{figures/grain1.png} \end{center}
 \end{frame}
 
 \begin{frame}
@@ -87,6 +88,15 @@
 \begin{frame}
   \frametitle{Grainsize and Scalability}
   \begin{center} \includegraphics[width=0.7\textwidth]{figures/grain2.png} \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Grainsize Study for Stencil Computation}
+  \begin{itemize}
+    \item Blue Waters (JYC) , 2 nodes, 32 cores each
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.7\textwidth]{figures/jacobi-grainsize.pdf} \end{center}
 \end{frame}
 
 \begin{frame}
