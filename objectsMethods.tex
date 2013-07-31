@@ -86,10 +86,31 @@
       \end{itemize}
     \end{column}
     \begin{column}{0.45\textwidth}
+%      \includegraphics[width=1\textwidth]{figures/sequencing.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Methods: Natural Units of Sequential Computation}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+      \item Methods still have the same sequential semantics
+        \begin{itemize}
+        \item Atomicity: methods do not execute in parallel
+        \end{itemize}
+      \item Methods cannot be interrupted  or preempted
+      \item Methods interact and update state of an object in the same way
+      \item Method sequencing is what changes from sequential computation
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
       \includegraphics[width=1\textwidth]{figures/sequencing.pdf}
     \end{column}
   \end{columns}
 \end{frame}
+
 
 % \begin{frame}[fragile]
 %   \frametitle{Dependencies and Dataflow}
