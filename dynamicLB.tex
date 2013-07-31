@@ -306,6 +306,28 @@ while (!converged) {
 %\end{frame}
 %
 \begin{frame}[fragile]
+\frametitle{Dynamic Load Balancing Scenarios}
+\begin{itemize}
+ \item Examples representing typical classes of situations
+ \begin{itemize}
+  \item Particles distributed over simulation space
+  \begin{itemize}
+   \item Dynamic: because Particles move.
+   \item Cases:\\
+   Highly non-uniform distribution (cosmology)\\
+   Relatively Uniform distribution 
+   %\begin{description}[parskip]
+   %\item Highly non-uniform distribution (cosmology)
+   %\item Relatively Uniform distribution 
+   %\end{description}
+  \end{itemize}
+ \end{itemize}
+\item Structured grids, with dynamic refinements/coarsening
+\item Unstructured grids with dynamic refinements/coarsening
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Load Balancing Strategies}
 \begin{itemize}
  \item Classified by when it is done:
@@ -327,28 +349,6 @@ while (!converged) {
  \end{itemize}
 \item Use \emph{aggregated} global  information, and \emph{detailed} neighborhood info.
 \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Dynamic Load Balancing Scenarios}
-\begin{itemize}
- \item Examples representing typical classes of situations
- \begin{itemize}
-  \item Particles distributed over simulation space
-  \begin{itemize}
-   \item Dynamic: because Particles move.
-   \item Cases:\\
-   Highly non-uniform distribution (cosmology)\\
-   Relatively Uniform distribution 
-   %\begin{description}[parskip]
-   %\item Highly non-uniform distribution (cosmology)
-   %\item Relatively Uniform distribution 
-   %\end{description}
-  \end{itemize}
- \end{itemize}
-\item Structured grids, with dynamic refinements/coarsening
-\item Unstructured grids with dynamic refinements/coarsening
 \end{itemize}
 \end{frame}
 
@@ -381,7 +381,7 @@ while (!converged) {
 % \end{itemize}
 %\end{itemize}
 %\end{frame}
-
+\eat{
 \begin{frame}[fragile]
 \frametitle{Dynamic Load Balancing using Objects}
 
@@ -417,7 +417,7 @@ Object based decomposition (I.e. virtualized decomposition) helps
 \end{itemize}
 \end{itemize}
 \end{frame}
-
+}
 \begin{frame}[fragile]
 \frametitle{Periodic Load Balancing}
 
