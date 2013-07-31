@@ -11,7 +11,9 @@
     \item Supports migration, load balancing, fault tolerance and other Charm++
     functionality
     \item Use cases - Rocstar, BRAMS, NPB, Lulesh etc
-    \item Build with AMPI as target and compile using ampi* compilers
+    \item Build with AMPI as target and compile using ampi* compilers\\
+    ./build AMPI net-linux-x86\_64 --with-production --enable-tracing -j8\\
+    ampiCC myAMPIpgm.C -o myAMPIpgm
   \end{itemize}
 \end{frame}
 

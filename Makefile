@@ -5,8 +5,9 @@ ANL_TARGET = tutorial_ATPESC.pdf
 
 .PHONY: all web
 
-all: clean $(TARGET) web
+all: anl
 anl: clean $(ANL_TARGET)
+old: clean $(TARGET) web
 
 %.pdf: %.tex
 	pdflatex $<
