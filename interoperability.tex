@@ -23,11 +23,9 @@
 
   \begin{itemize}
     \item Any library written in Charm++ can be called from MPI
-    \pause
     \item Charm++ resides in the same memory space as the MPI program
     \item Control transfer between MPI and Charm++ analogous to the control transfer
     between a program and an external library being used by the program
-    \pause
     \item Currently requires mpi-based build of Charm++
 
   \end{itemize}
@@ -48,20 +46,17 @@
   MPI_Init(argc,argv); //initialize MPI
   //Do MPI related work here
   \end{lstlisting}
-  \pause
   \begin{lstlisting}[basicstyle=\footnotesize]
   //create comm to be used by Charm++
   MPI_Comm_split(MPI_COMM_WORLD, myRank % 2, myRank, newComm); 
   CharmLibInit(newComm,….) //initialize Charm++ over my communicator
   \end{lstlisting}
-  \pause
   \begin{lstlisting}[basicstyle=\footnotesize]
   if(myRank % 2) 
     StartHello(…); //invoke Charm++ library on one set
   else 
     //do MPI work on other set
   \end{lstlisting}
-  \pause
   \begin{lstlisting}[basicstyle=\footnotesize]
   kNeighbor(…);  //invoke Charm++ library on both sets individually
   CharmLibExit();  //destroy Charm++ 
@@ -84,7 +79,6 @@
       StartCharmScheduler();
     }
     \end{lstlisting}
-  \pause
   \item Use CkExit to return the control back to MPI
   \item Include {\em mpi-interoperate.h} in MPI and Charm++ code
   \end{itemize}
