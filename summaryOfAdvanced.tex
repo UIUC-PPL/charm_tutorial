@@ -1,12 +1,12 @@
 %\transition{Advanced Material}
 \begin{frame}[fragile]
-  \frametitle{Queisence Detection}
+  \frametitle{Quiesence Detection}
   \begin{itemize}
     \item What if determining global termination of an application is difficult?
-    \item Mechanism to detect completion - Queisence!
+    \item Mechanism to detect completion - Quiesence!
     \item From any chare, invoke \emph{CkStartQD(CkCallback(CkIndex\_Main::finished(), mainProxy));}
     \item Runs in background, waits for all outstanding messages to be consumed.
-    \item Invokes the callback when queisence is detected.
+    \item Invokes the callback when quiesence is detected.
   \end{itemize}
 \end{frame}
 
