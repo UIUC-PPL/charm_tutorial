@@ -13,15 +13,52 @@
   \item A rich set of tool features : time profile, time lines, usage profile, histogram, extrema tool
   \item Detect performance problems: load imbalance, grain size, communication bottleneck, etc 
   \end{itemize}
-  \item Demo of using Projections to analyze performance bottleneck
   \end{itemize}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Using Projections }
+ \begin{itemize}
+  \item Tools of aggregated performance viewing
+   \begin{itemize}
+    \item Time profile
+    \item Histogram
+    \item Communication over time
+   \end{itemize}
+  \item Tools of processor level granularity
+  \begin{itemize}
+   \item Overview
+   \item Timeline
+  \end{itemize}
+  \item Tools of derived/processed data
+  \begin{itemize}
+   \item Extrema analysis : identifies outliers
+   \item Noise miner : highlights probable interference
+  \end{itemize}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Problem Identification }
 \begin{itemize}
-\item Example
+ \item Load imbalance
+ \begin{itemize}
+  \item Time profile : lower CPU usage
+  \item Extrema analysis tool:
+  \begin{itemize}
+   \item Least idle processors
+  \end{itemize}
+  \item Load the over-loaded processors in Timeline
+  \item Histogram : grain size issues  
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Using Projections }
+\begin{itemize}
+\item Example Demonstration
 \begin{itemize}
 \item Trying to identify the next performance obstacle for NAMD
 \begin{itemize}
