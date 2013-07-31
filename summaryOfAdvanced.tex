@@ -149,21 +149,30 @@ MsgData *f(double X[], int size) {
 \end{lstlisting}
 \end{frame}
 
+
 \begin{frame}[fragile]
 \frametitle{Threaded methods}
-\begin{itemize}
-\item Any method that calls a sync method must be able to suspend:
+ \begin{itemize}
+  \item Any method that calls a sync method must be able to suspend:
   \begin{itemize}
-  \item Needs to be declared as a \code{threaded} method
-  \item A threaded method of a chare C
-    \begin{itemize}
+   \item Needs to be declared as a \code{threaded} method
+   \item A threaded method of a chare C
+   \begin{itemize}
     \item Can suspend, without blocking the processor
     \item Other chares can then be executed
     \item Even other methods of chare C can be executed
-    \end{itemize}
-  \end{itemize}
+   \end{itemize}
+  \end{itemize}  
+ \item Low level thread operations for advanced users:
+ \begin{itemize}
+   \item \texttt{CthThread CthSelf()}
+   \item \texttt{CthAwaken(CthThread t)}
+   \item \texttt{CthYield()}
+   \item \texttt{CthSuspend()}
+ \end{itemize}
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}[fragile]
 \frametitle{Customized Load Balancers}
