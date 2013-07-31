@@ -152,6 +152,16 @@ entry void foobar2(CProxy_Main main);
    \end{center}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Building Charm++}
+  \begin{itemize}
+  \item git clone -b charm-6.5 git://charm.cs.uiuc.edu/charm.git
+  \item ./build $<$TARGET$>$ $<$ARCH$>$ $<$OPTS$>$
+  \item TARGET = Charm++, AMPI, bgampi, LIBS etc.
+  \item ARCH = net-linux-x86\_64, pamilrts-bluegeneq etc.
+  \item OPTS = --with-production, --enable-tracing, xlc, smp, -j8 etc.
+  \end{itemize}
+\end{frame}
 
 \begin{frame}
   \frametitle{Hello World Example}

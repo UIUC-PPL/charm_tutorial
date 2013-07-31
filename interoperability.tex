@@ -61,7 +61,7 @@
   \end{lstlisting}
   \pause
   \begin{lstlisting}[basicstyle=\footnotesize]
-  kNeighbor(…);  //invoke Charm++ library on both sets
+  kNeighbor(…);  //invoke Charm++ library on both sets individually
   CharmLibExit();  //destroy Charm++ 
   \end{lstlisting}
 \end{frame}
@@ -74,7 +74,7 @@
     \item Add interface functions that can be called from MPI, and triggers
     Charm++ RTS-
     \begin{lstlisting}[basicstyle=\footnotesize]
-    void HelloStart(int elems)
+    void StartHello(int elems)
       if(CkMyPe() == 0) {
         CProxy_MainHello mainhello =
         CProxy_MainHello::ckNew(elems); 
