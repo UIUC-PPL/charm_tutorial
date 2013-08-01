@@ -1,0 +1,7 @@
+Based on feedback from the ATPESC tutorial:
+
+1. MPI programmers are still not really understanding the perspective shift necessary to understand what SDAG is all about.
+a. suggest an example side by side comparison to lead MPI programmers into the object oriented and asynchronous thinking of Charm++.  Possibly AMR, though that may be too complicated.
+
+2. People would like a "what applications are Charm++ especially good for" list.  Yes, it could be used for anything.  However that is just cheerleading.  People want a more objective list of application characteristics that would motivate adoption of Charm++.  As a first pass, if the application has static balance, large granularity, and bulk synchronous use of collectives, there is negligible benefit from Charm++ and may be better served by MPI.
+
