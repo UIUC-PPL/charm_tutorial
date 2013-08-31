@@ -547,9 +547,25 @@ Program finished.
   \item Obtain the following code:\\ git clone git://charm.cs.uiuc.edu/users/tutorial\_exercise
   \item Read the README.
   \item Change to toy directory, and read assignment.txt.
-  \item Uncomment the CHARMC declaration at top of Makefile.
+  \item Uncomment the CHARMC declaration at top of Makefile and make.
   \item ./charmrun -A $<$your\_account$>$ +p4 ./hello 16.
   \item Modify paramter to be an array instead of int.
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using in Entry Methods}
+\begin{itemize}
+  \item \texttt{.ci} file:
+\begin{lstlisting}
+entry void foobar(int length, int data[length]);
+\end{lstlisting}
+  \item \texttt{.cpp} file:
+\begin{lstlisting}
+<charename>::foobar(int length, int* data) {
+ // ... foobar code ...
+}
+\end{lstlisting}
+\end{itemize}
 \end{frame}
 
