@@ -1,9 +1,0 @@
-mainmodule MyModule {
-  mainchare Main {
-    entry Main(CkArgMsg *m);
-  };
-  
-  chare Simple {
-    entry Simple(int x, double y);
-  };
-};

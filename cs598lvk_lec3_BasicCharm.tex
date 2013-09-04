@@ -1,0 +1,48 @@
+\documentclass{beamer}
+\usepackage{etex}
+\reserveinserts{28}
+
+\input{include_pkg}
+\input{include_cfg}
+\input{include_theme}
+\input{include_cmd}
+
+\title{Basic Charm++}
+
+\author[Laxmikant V.~Kale]{
+Laxmikant V.~Kale
+}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}[fragile]
+  \frametitle{Charm++ Introduction}
+    \begin{itemize}
+    \item \textbf{Chares} are C++ objects that have special methods that can be invoked
+    from remote processor
+    \item \textbf{Entry methods} are methods on Chare classes that can be invoked
+    remotely
+    \end{itemize}
+\end{frame}
+
+\input{charmSyntax1}
+
+\begin{frame}[fragile]
+  \frametitle{Prime Example: prime.ci}
+  \lstinputlisting{cs598lvk/assignments/mp0/isPrime/prime.ci}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Prime Example: prime.C}
+  \lstinputlisting[basicstyle=\tiny]{cs598lvk/assignments/mp0/isPrime/primeMaster.C}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Prime Example: prime.C contd.}
+  \lstinputlisting[basicstyle=\tiny]{cs598lvk/assignments/mp0/isPrime/primeWorker.C}
+\end{frame}
+
+\input{charmSyntax2}
+
+\end{document}

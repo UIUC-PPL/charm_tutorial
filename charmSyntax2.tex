@@ -1,0 +1,101 @@
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects: Runtime Service}
+  \begin{itemize}
+    \item System knows how to `find' objects efficiently: $(collection, index) \to processor$
+    \item Applications can specify a mapping, or use simple
+      runtime-provided options (e.g. blocked, round-robin)
+    \item Distribution can be static, or dynamic!
+    \item Key abstraction: application logic doesn't change, even
+      though performance might
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects: Runtime Service}
+  \begin{itemize}
+    \item Can develop and test logic in objects separately from their distribution
+    \item Separation in time: make it work, then make it fast
+    \item Division of labor: domain specialist writes object code, computationalist writes mapping
+    \item Portability: different mappings for different systems, scales, or configurations
+    \item Shared progress: improved mapping techniques can benefit existing code
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collections of Objects}
+  \begin{center}\includegraphics[width=0.9\textwidth]{figures/elements2.pdf}\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Collective Communication Operations}
+  \begin{itemize}
+    \item Point-to-point operations involve only two objects
+    \item Collective operations that involve a collection of objects
+    \item Broadcast: calls a method in each object of the array
+    \item Reduction: collects a contribution from each object of the array
+    \item A spanning tree is used to send/receive data
+  \end{itemize}
+    \begin{center} \includegraphics[width=0.5\textwidth]{figures/spanningTree.pdf} \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Broadcast}
+  \begin{itemize}
+    \item A message to each object in a collection
+    \item The chare array proxy object is used to perform a broadcast
+    \item It looks like a function call to the proxy object
+    \item From the main chare:
+    \begin{lstlisting}
+CProxy_Hello helloArray = CProxy_Hello::ckNew(helloArraySize);
+helloArray.foo();
+    \end{lstlisting}
+    \item From a chare array element that is a member of the same array:
+     \begin{lstlisting}
+ thisProxy.foo()
+    \end{lstlisting}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Reduction}
+  \begin{itemize}
+  \item Combines a set of values: sum, max, aggregate
+  \item Usually reduces the set of values to a single value
+  \item Combination of values requires an operator
+  \item The operator must be commutative and associative
+  \item Each object calls \code{contribute} in a reduction
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Reduction: Example}
+  \lstinputlisting{code/reductionMainTarget.ci}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Reduction: Example}
+  \lstinputlisting[basicstyle=\tiny]{code/reductionMainTarget.cpp}
+Output:
+  \begin{lstlisting}[basicstyle=\tiny]
+value: 1176
+Program finished.
+  \end{lstlisting}
+\end{frame}
+
+\removeForClass{
+\begin{frame}[fragile]
+  \frametitle{Quick Hands-on}
+  \begin{itemize}
+  \item Log onto your vesta account.
+  \item Obtain the following code:\\ git clone git://charm.cs.uiuc.edu/users/tutorial\_exercise
+  \item Read the README.
+  \item Change to toy directory, and read assignment.txt.
+  \item Uncomment the CHARMC declaration at top of Makefile and make.
+  \item ./charmrun -A $<$your\_account$>$ +p4 ./hello 16.
+  \item Modify paramter to be an array instead of int.
+  \end{itemize}
+\end{frame}
+}
+
+%comment for removeForClass macro to work

@@ -3,5 +3,12 @@
 \newcommand{\transition}[1]{\begin{frame}[plain]\begin{center}\LARGE #1\end{center}\end{frame}}
 \newcommand{\comment}[1]{ }
 \newcommand{\eat}[1]{ }
+
 \DefineVerbatimEnvironment{codeverb}{Verbatim}{fontsize=\small}
 
+\let \isForClass 1
+\if \isForClass 1
+  \newcommand{\removeForClass}[2]{#2}
+  \else
+  \newcommand{\removeForClass}[2]{#1}
+\fi

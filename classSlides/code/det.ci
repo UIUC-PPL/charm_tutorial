@@ -1,9 +1,0 @@
-mainmodule Determinants {
-  mainchare Main {
-    entry Main(CkArgMsg *m);
-    entry void response(int index, int det);
-  };
-  chare DeterminantChare {
-    entry DeterminantChare(CProxy_Main main, int i, int n, int matrix[n*n]);
-  };
-};

@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage[colorlinks=true]{hyperref}
+
+\title{MP0}
+\title{CS 598: Parallel Migratable Objects}
+\author{Fall 2013}
+\date{Due date: September 3, 10pm}
+
+\begin{document}
+\maketitle
+
+This MP is an introductory assignment to learn how to build Charm++ and run
+Charm++ programs. You will also learn how to use \texttt{Projections}
+performance analysis and visualization tool. \\
+
+For learning Charm++ programming and concepts, refer to
+\href{http://charm.cs.illinois.edu/manuals/html/charm++/}{Charm++ Manual} and
+the \href{http://charmplusplus.org/}{Charm++ Webpage.}\\
+
+\textbf{Step 1:} To run Charm++ programs, you need to have a Charm++ build
+installed. If you want to build your own installation, follow the build
+instructions \href{http://charm.cs.illinois.edu/manuals/html/charm++/A.html}{here}. Both
+on EWS and Taub Caumpus cluster, there are two installations of Charm++ that can
+be used instead of building Charm++ yourself. Path is the same in both machines. 
+\begin{itemize}
+\item /home/acun2/charm/net-linux-x86\_64
+\item /home/acun2/charm/net-linux-x86\_64-smp\\
+\end{itemize}
+For this MP0, you only need to use EWS. Taub has a batch
+system to submit jobs which will be required to use later, however for this MP
+it is optional.\\
+For EWS login instructions go to
+\href{http://it.engineering.illinois.edu/ews/lab-information/ews-faq}{EWS FAQ
+page.} \\
+For Taub login instructions go to
+\href{https://campuscluster.illinois.edu/user\_info/doc/}{Taub User Guide.} \\
+\\
+\textbf{Step 2:} An svn repository has been created for the class
+\href{https://subversion.ews.illinois.edu/svn/fa13-cs598lvk/}{here} at EWS, where you can find the Charm++ code for MP0. \\
+\begin{itemize}
+\item Checkout the code from the repository by: \\
+        \textit{svn co
+        https://subversion.ews.illinois.edu/svn/fa13-cs598lvk/netID \\
+        where netID is your actual netID}
+\item A directory named mp0 should be created, go into that directory: \\
+        \textit{cd netID/mp0}
+\item Analyze the code and run the program with \textit{make test} command.
+It should print "Total number of primes within the range [0 - 100000] is 9591." In the program Master chare fires k chares, i'th Worker chare fired is responsible for
+computing number of primes between [ i*M ..(i+1)*M ]. They return the counts to
+the Master chare. M and k are command line arguments. You can change these numbers in the \texttt{Makefile} and experiment.
+
+\end{itemize}
+    To run a program in Taub cluster you need to submit batch scripts, sample
+    running script is added to your SVN repositories.  \\
+
+\textbf{Step 3:}  After running the program, you will see \texttt{Projections}
+logs created in the same directory. Anaylze them using the \texttt{Projections} tool, take a snapshot of the timeline of the program and turn it in. \texttt{Projections} can be
+downloaded from \href{http://charm.cs.uiuc.edu/software}{here} and the
+\texttt{Projections} manual can
+be found
+\href{http://charm.cs.illinois.edu/manuals/html/projections/manual-1p.html}
+{here}. \\
+
+\textbf{Submission:} \\
+Submission will be done to SVN repositories.
+\begin{itemize}
+\item  For each file F you create, that you want to check in, do: \\
+        \textit{svn add F}\\
+        and frequently (after you have modified F, and have the next better
+        version) do:\\ 
+        \textit{svn ci F}
+\item  There will be a penalty for late submissions.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,12 @@
+mainmodule basicReduct_Main { 
+  mainchare Main { 
+    entry Main(); 
+    entry void reductionCallback(CkReductionMsg *msg); 
+  };  
+  array [1D] Elem { 
+    entry Elem(); 
+    entry void doWork(); 
+  }; 
+}
+
+  

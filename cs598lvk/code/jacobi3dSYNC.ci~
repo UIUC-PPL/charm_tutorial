@@ -1,0 +1,53 @@
+mainmodule jacobi3d {
+  readonly CProxy_Main mainProxy;
+  readonly int arrayDimX;
+  readonly int arrayDimY;
+  readonly int arrayDimZ;
+  readonly int blockDimX;
+  readonly int blockDimY;
+  readonly int blockDimZ;
+  readonly int num_chare_x;
+  readonly int num_chare_y;
+  readonly int num_chare_z;
+
+  mainchare Main {
+    entry Main(CkArgMsg *m);
+    entry void done(int iterations);
+  };
+
+  array [3D] Jacobi {
+    entry Jacobi(void);
+    entry void updateGhosts(int ref, int dir, int w, int h, double gh[w*h]);
+    entry [reductiontarget] void checkConverged(bool result);
+    entry void run() {
+      while (!converged) {
+        atomic {
+          copyToBoundaries();
+          int x = thisIndex.x, y = thisIndex.y, z = thisIndex.z;
+          int bdX = blockDimX, bdY = blockDimY, bdZ = blockDimZ;
+          thisProxy(wrapX(x-1),y,z).updateGhosts(iter, RIGHT,  bdY, bdZ, rightGhost);
+          thisProxy(wrapX(x+1),y,z).updateGhosts(iter, LEFT,   bdY, bdZ, leftGhost);
+          thisProxy(x,wrapY(y-1),z).updateGhosts(iter, TOP,    bdX, bdZ, topGhost);
+          thisProxy(x,wrapY(y+1),z).updateGhosts(iter, BOTTOM, bdX, bdZ, bottomGhost);
+          thisProxy(x,y,wrapZ(z-1)).updateGhosts(iter, BACK,   bdX, bdY, backGhost);
+          thisProxy(x,y,wrapZ(z+1)).updateGhosts(iter, FRONT,  bdX, bdY, frontGhost);
+          freeBoundaries();
+        }
+        for (remoteCount = 0; remoteCount < 6; remoteCount++)
+          when updateGhosts[iter](int ref, int dir, int w, int h, double buf[w*h]) atomic {
+            updateBoundary(dir, w, h, buf);
+          }
+        atomic {
+          double error = computeKernel();
+          int conv = error < DELTA;
+          if (iter % 5 == 1) {
+            contribute(sizeof(int), &conv, CkReduction::logical_and, CkCallback(CkReductionTarget(Jacobi, checkConverged), thisProxy));
+          }
+        }
+        if (++iter % 5 == 0)
+          when checkConverged(bool result)
+            if (result) atomic { mainProxy.done(iter); converged = true; }
+      }
+    };
+  };
+};
