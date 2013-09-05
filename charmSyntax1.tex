@@ -3,12 +3,12 @@
   \begin{itemize}
     \item C++ objects (including Charm++ objects)
       \begin{itemize}
-      \item Defined in regular \texttt{.h} and \texttt{.cpp} files
+      \item Defined in regular \texttt{.h} and \texttt{.C} files
       \end{itemize}
     \item Chare objects, entry methods (asynchronous methods)
       \begin{itemize}
       \item Defined in \texttt{.ci} file
-      \item Implemented in the \texttt{.cpp} file
+      \item Implemented in the \texttt{.C} file
       \end{itemize}
   \end{itemize}
   \begin{center}
@@ -27,6 +27,7 @@
       \code{MyModule.decl.h} and \code{MyModule.def.h}
   \end{itemize}
   \begin{center}
+  \texttt{.ci file}
   \begin{lstlisting}
     [main]module MyModule {
       //... chare definitions ...
@@ -43,14 +44,17 @@
       methods that may be invoked remotely
     \item The following code, when compiled, generates a C++ class
       \code{CBase\_MyChare} that encapsulates the RTS object
-    \item This generated class is extended and implemented in the \texttt{.cpp}
+    \item This generated class is extended and implemented in the \texttt{.C}
       file
   \end{itemize}
+  \texttt{.ci file}
   \begin{lstlisting}
     [main]chare MyChare {
       //... entry method definitions ...
     };
-
+  \end{lstlisting}
+  \texttt{.C file}
+  \begin{lstlisting}
     class MyChare : public CBase_MyChare {
       //... entry method implementations ...
     };
@@ -69,7 +73,7 @@
     entry void foo();
     entry void bar(int param);
   \end{lstlisting}
-  \texttt{.cpp} file:
+  \texttt{.C} file:
   \begin{lstlisting}
     MyChare::MyChare() { /*... constructor code ...*/ }
 
@@ -122,7 +126,7 @@ CProxy_MyChare proxy =
 \begin{lstlisting}
 entry void foobar2(CProxy_Main main);
 \end{lstlisting}
-\texttt{.cpp} file
+\texttt{.C} file
 \begin{lstlisting}
 MyChare::foobar2(CProxy_Main main) {
   main.foo();
@@ -169,7 +173,7 @@ MyChare::foobar2(CProxy_Main main) {
     \item Compiling
       \begin{itemize}
       \item \texttt{charmc hello.ci}
-      \item \texttt{charmc -c hello.cpp}
+      \item \texttt{charmc -c hello.C}
       \item \texttt{charmc -o hello hello.o}
       \end{itemize}
     \item Running
@@ -187,7 +191,7 @@ MyChare::foobar2(CProxy_Main main) {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Chare Creation Example: \texttt{.cpp} file}
+  \frametitle{Chare Creation Example: \texttt{.C} file}
   \lstinputlisting[basicstyle=\footnotesize]{code/chareCreate.C}
 \end{frame}
 
@@ -280,7 +284,7 @@ mainmodule MyModule {
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Asynchronous Example: \texttt{.cpp} file}
+  \frametitle{Asynchronous Example: \texttt{.C} file}
 \begin{itemize}
   \item Does this program execute correctly?
 \end{itemize}
@@ -320,7 +324,7 @@ struct Simple : public CBase_Simple {
 \begin{lstlisting}
 entry void foobar(int length, int data[length]);
 \end{lstlisting}
-  \item \texttt{.cpp} file:
+  \item \texttt{.C} file:
 \begin{lstlisting}
 MyChare::foobar(int length, int* data) {
  // ... foobar code ...
@@ -341,7 +345,7 @@ MyChare::foobar(int length, int* data) {
   readonly CProxy_Main mainProxy;
   readonly int numChares;
   \end{lstlisting}
-  \item And defined the the \texttt{.cpp} file:
+  \item And defined the the \texttt{.C} file:
   \begin{lstlisting}
   <type> <name>;
   CProxy_Main mainProxy;
@@ -389,6 +393,7 @@ MyChare::foobar(int length, int* data) {
       // ... entry methods ...
     }
   \end{lstlisting}
+  \texttt{.C} file:
 
   \begin{lstlisting}
     struct foo : public CBase_foo {
@@ -438,12 +443,14 @@ MyChare::foobar(int length, int* data) {
   \item 2d: \code{thisIndex.x} and \code{thisIndex.y} returns the indices of
     the current chare array element
   \end{itemize}
+  \texttt{.ci} file:
   \begin{lstlisting}
     array [1d] foo {
       entry foo();
     }
   \end{lstlisting}
 
+  \texttt{.C} file:
   \begin{lstlisting}
     struct foo : public CBase_foo {
       foo() {
