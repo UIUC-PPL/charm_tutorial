@@ -1,0 +1,72 @@
+\documentclass{beamer}
+\usepackage{etex}
+\reserveinserts{28}
+
+\input{include_pkg}
+\input{include_cfg}
+\input{include_theme}
+\input{include_cmd}
+
+\title{Basic Charm++}
+
+\author[Laxmikant V.~Kale]{
+Laxmikant V.~Kale
+}
+\date{\today}
+
+\begin{frame}[fragile]
+  \frametitle{Chare Arrays}
+  \begin{itemize}
+    \item Indexed collections of chares
+      \begin{itemize}
+      \item Every item in the collection has a unique index and proxy
+      \item Can be indexed like an array or by an arbitrary object
+      \item Can be sparse or dense
+      \item Elements may be dynamically inserted and deleted
+      \end{itemize}
+    \item For many scientific applications, collections of chares are a
+      convenient abstraction
+    \item Instead of creating networks of chares that learn about each other
+      (by sending proxies to each other), each element in a chare array knows
+      about all the others
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Chare Array Location}
+  \begin{itemize}
+  \item By default, chare arrays are distributed to the processors in a
+    ``blocked'' distribution
+  \end{itemize}
+  \begin{center} \includegraphics[width=0.8\textwidth]{diagrams/blockedDist.pdf} \end{center}
+  \begin{itemize}
+  \item A initial mapping function can be specified (input is the index, output
+    is the processor)
+    \begin{itemize}
+    \item Called the \emph{home PE} of the element
+    \end{itemize}
+  \item Chare array elements can be migrated by the user or the runtime (load balancing)
+  \end{itemize}
+\end{frame}
+
+
+\begin{document}
+
+\input{charmSyntax2}
+
+%\begin{frame}[fragile]
+%  \frametitle{PI Example: pi.ci}
+%  \lstinputlisting{cs598lvk/code/pi.ci}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%  \frametitle{PI Example: pi.C}
+%  \lstinputlisting[basicstyle=\tiny]{cs598lvk/code/piMaster.C}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%  \frametitle{PI Example: pi.C}
+%  \lstinputlisting{cs598lvk/code/piWorker.C}
+%\end{frame}
+
+\end{document}

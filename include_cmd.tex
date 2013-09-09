@@ -9,6 +9,11 @@
 \let \isForClass 1
 \if \isForClass 1
   \newcommand{\removeForClass}[2]{#2}
-  \else
+\else
   \newcommand{\removeForClass}[2]{#1}
+\fi
+\if \isForClass 1
+  \newcommand{\removeForTutorial}[2]{#1}
+\else
+  \newcommand{\removeForTutorial}[2]{#2}
 \fi
