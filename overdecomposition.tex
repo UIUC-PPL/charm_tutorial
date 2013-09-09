@@ -160,10 +160,12 @@ reasoning should be based on computation per message)
       constructing two new chares, compute the fibonacci sequentially
     \end{itemize}
   \end{itemize}
-  \begin{center} \includegraphics[width=0.7\textwidth]{figures/tree-threshold.pdf} \end{center}
+  \begin{center} \includegraphics[width=0.55\textwidth]{figures/tree-threshold.pdf} \end{center}
   \begin{itemize}
-    \item $fib(5), fib(4)$ are fine grains, $fib(3), fib(2)$ are coarser grains
-    \item The coarser grains now amortize the cost of the fine-grained execution
+    \item Setting the grainsize limit at 4 (which is too small, but
+      good for illustration)
+    \item The internal nodes of the tree do very little work, but
+    \item The coarser grains now amortize the cost of the fine-grained chares
   \end{itemize}
 \end{frame}
 
