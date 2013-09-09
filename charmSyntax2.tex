@@ -17,10 +17,12 @@
     struct foo : public CBase_foo {
       foo() { }
       foo(CkMigrateMessage*) { }
+      // ... entry methods ...
     };
     struct bar : public CBase_bar {
       bar() { }
       bar(CkMigrateMessage*) { }
+      // ... entry methods ...
     };
   \end{lstlisting}
 \end{frame}
@@ -48,8 +50,6 @@
     proxy to an individual element in the array
   \end{itemize}
   \begin{lstlisting}
-    CProxyElement_foo elm = myFoo[5];
-    elm.invokeEntry();
     myFoo[4].invokeEntry();
   \end{lstlisting}
 \end{frame}
@@ -139,6 +139,10 @@ helloArray.foo();
      \begin{lstlisting}
  thisProxy.foo()
     \end{lstlisting}
+    \item From any chare that has a proxy \texttt{p} to the chare array
+      \begin{lstlisting}
+ p.foo()
+      \end{lstlisting}
   \end{itemize}
 \end{frame}
 

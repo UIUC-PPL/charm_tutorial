@@ -14,7 +14,7 @@ struct hello : CBase_hello {
   hello() { }
   hello(CkMigrateMessage*) { }
   void printHello() {
-    CkPrintf("%d: hello from %d\n", CkMyPe(), thisIndex);
+    CkPrintf("PE[%d]: hello from p[%d]\n", CkMyPe(), thisIndex);
     if (thisIndex == arraySize - 1) CkExit();
     else thisProxy[thisIndex + 1].printHello();
   }
