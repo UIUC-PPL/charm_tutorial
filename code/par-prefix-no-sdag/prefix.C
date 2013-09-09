@@ -35,7 +35,6 @@ void Prefix::displayValue(char* prefix, int len) {
 void Prefix::startPrefixCalculation() {
   // Send message for step 0
   sendMessageForStep(0);
-
   // Check to see if this chare object has finished receiving values
   checkFinished();
 }
@@ -78,16 +77,13 @@ void Prefix::passValue(unsigned int incomingValue, int stepNum) {
     // Process any bufferedMessages that need to be processed now
     int msgProcessedFlag = 1;
     while (msgProcessedFlag) {
-
       // Clear the msgProcessedFlag
       msgProcessedFlag = 0;
 
       // Seached the bufferedMessages for a stepNum == stepCount
       MsgBuffer* msg = bufferedMessages;
       while (msg != NULL) {
-
         if (msg->stepNum == stepCount) {
-
           // Remove msg from the linked list of bufferedMessages
           if (msg->prev != NULL) msg->prev->next = msg->next;
           if (msg->next != NULL) msg->next->prev = msg->prev;
@@ -97,13 +93,10 @@ void Prefix::passValue(unsigned int incomingValue, int stepNum) {
           value += msg->value;
           stepCount++;
           sendMessageForStep(stepCount);
-
           // No long need the message buffer, so delete it
           delete msg;
-
           // Set the msgProcessedFlag
           msgProcessedFlag = 1;
-
           // Found it, so stop searching the bufferedMessages list
           break;
 
@@ -113,7 +106,6 @@ void Prefix::passValue(unsigned int incomingValue, int stepNum) {
 	}
       }
     }
-
     // Check to see if this chare object is finished receiving values
     checkFinished();
   }
@@ -124,21 +116,16 @@ void Prefix::checkFinished() {
   //   passValue() messages that it is going to receive, send the remaining
   //   passValue() messages.
   if ((1 << stepCount) > thisIndex) {
-
     // Increment stepCount (the send for this step should have already
     //   taken place so begin by checking the next step
     stepCount++;
-
     // Send the remaining passValue() messages
     while ((1 << stepCount) < numElements) {
-
       // Send the message for this step
       sendMessageForStep(stepCount);
-
       // Move onto the next step
       stepCount++;
     }
-
     // Notify the main chare that this chare object has completed
     mainProxy.checkIn();
   }  
@@ -151,5 +138,4 @@ void Prefix::sendMessageForStep(int stepNum) {
     thisProxy[targetIndex].passValue(value, stepNum);
   }
 }
-
 #include "prefix.def.h"
