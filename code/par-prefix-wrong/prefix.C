@@ -42,8 +42,8 @@ struct Prefix : public CBase_Prefix {
   Prefix(CkMigrateMessage*){};
 
   void run(){
-    if(thisProxy%)
-    thisProxy[thisIndex+pow(2,stage)].getValue(stage, value);
+    if(thisIndex%(int)pow(2,stage)==0)
+      thisProxy[thisIndex+pow(2,stage)].getValue(stage, value);
   }
 
   void getValue(int stage, int incoming_value){
