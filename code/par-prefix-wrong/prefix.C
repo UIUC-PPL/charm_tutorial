@@ -30,31 +30,29 @@ struct Main : public CBase_Main {
 
 struct Prefix : public CBase_Prefix {
   int value;
-  int stage;
-  int numStages;
+  int distance;
   Prefix() {
-    stage = 0;
-    numStages = log2(numElements);
+    distance = 1;
     srand(time(NULL));
     value = rand() % 10;
-    run();
+    step();
   }
   Prefix(CkMigrateMessage*){};
 
-  void run(){
-    if(thisIndex%(int)pow(2,stage)==0)
-      thisProxy[thisIndex+pow(2,stage)].getValue(stage, value);
+  void step(){
+    if(thisIndex+distance<numElements)
+      thisProxy[thisIndex+distance].passValue(value);
   }
 
-  void getValue(int stage, int incoming_value){
+  void passValue(int incoming_value){
     value += incoming_value;
-    if(numStages >= stage){
-      stage++;
-      run();
+    distance = distance*2;
+    if(distance < numElements){
+      step();
     }
     else{
       mainProxy.done();
-      CkPrintf("\nPrefix[%d].value = %d\n", CkMyPe(), value);
+      CkPrintf("\nPrefix[%d].value = %d\n", thisIndex, value);
     }
   }
 

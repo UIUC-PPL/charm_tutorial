@@ -10,7 +10,7 @@ mainmodule prefix{
 
   array [1D] Prefix {
     entry Prefix();
-    entry void run();
-    entry void getValue(int, int);
+    entry void step();
+    entry void passValue(int);
   };
 };
