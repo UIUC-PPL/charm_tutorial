@@ -45,6 +45,15 @@ struct Prefix : public CBase_Prefix {
     int sendIndex = thisIndex + (1<<stage);
     if(sendIndex < numElements)
       thisProxy[sendIndex].passValue(stage, value);
+    if(thisIndex-(1<<stage) < 0){
+      stage++;
+      if(stage < numStages)
+        step(value);              
+    }
+    if(stage >= numStages){
+      CkPrintf("Prefix[%d].value = %d\n", thisIndex, value);
+      contribute(CkCallback(CkReductionTarget(Main, done), mainProxy));
+    }
   }
 
   void passValue(int incoming_stage, int incoming_value){
@@ -57,7 +66,7 @@ struct Prefix : public CBase_Prefix {
       step(value);
       if(flag == 1){
       CkPrintf("flag 1.\n");
-        for(int i=stage+1; i<numStages; i++){
+        for(int i=stage; i<numStages; i++){
             if(buffer[i] == 0) break; 
             value += buffer[i];
             stage++;
@@ -65,10 +74,6 @@ struct Prefix : public CBase_Prefix {
         }
         flag = 0;
       }
-    }
-    else{
-      CkPrintf("Prefix[%d].value = %d\n", thisIndex, value);
-      contribute(CkCallback(CkReductionTarget(Main, done), mainProxy));
     }
   }
 
