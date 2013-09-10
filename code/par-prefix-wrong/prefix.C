@@ -20,11 +20,9 @@ struct Main : public CBase_Main {
     prefixArray = CProxy_Prefix::ckNew(numElements);
   }
   Main(CkMigrateMessage* msg) {};
+
   void done(){
-    doneCount++;
-    if(doneCount >= numElements){
       CkExit();
-    }
   }
 };
 
@@ -51,8 +49,9 @@ struct Prefix : public CBase_Prefix {
       step();
     }
     else{
-      mainProxy.done();
       CkPrintf("\nPrefix[%d].value = %d\n", thisIndex, value);
+      CkCallback cb(CkReductionTarget(Main, done), mainProxy);
+      contribute(cb);
     }
   }
 

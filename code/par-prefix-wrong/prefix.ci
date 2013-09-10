@@ -5,7 +5,7 @@ mainmodule prefix{
 
   mainchare Main {
     entry Main(CkArgMsg*);
-    entry void done();
+    entry [reductiontarget] void done();
   };
 
   array [1D] Prefix {
