@@ -51,7 +51,7 @@ struct Prefix : public CBase_Prefix {
     CkPrintf("[%d] get value from stage [%d]\n", thisIndex, incoming_stage);
     buffer[incoming_stage] = incoming_value;
     if(incoming_stage > stage) flag = 1;
-    else if(numStages >= stage){
+    else if(numStages > stage){
       value += buffer[incoming_stage];
       stage++;
       step(value);
