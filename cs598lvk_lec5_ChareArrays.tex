@@ -56,6 +56,62 @@ Laxmikant V.~Kale
 \input{charmSyntax2}
 
 \begin{frame}[fragile]
+  \frametitle{Prefix Sum Algorithm}
+  \begin{itemize}
+  \item Given array A[0..N-1], produce B[N], such that B[k] is the sum of all
+  elements of A up to A[k]
+  \end{itemize}
+    \begin{lstlisting}
+    B[0] = A[0];
+    for (i=1; i<N; i++) 
+    B[i] = B[i-1] + A[i];
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Parallel Prefix Sum Algorithm}
+  \begin{itemize}
+  \item Data dependency from iteration to iteration.
+  \item How can this be parallelized at all?
+    \begin{lstlisting}
+    B[0] = A[0];
+    for (i=1; i<N; i++) 
+    B[i] = B[i-1] + A[i];
+    \end{lstlisting}
+    \item It looks like the problem is inherently sequential, but theoreticians
+    came up with a beautiful algorithm called recursive doubling or just
+    parallel prefix
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Parallel Prefix: Recursive Doubling Algorithm}
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{figures/par_prefix_sum.png} 
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Parallel Prefix: Engineering}
+  \begin{itemize}
+    \item Issue : N \textgreater \textgreater  P
+    \item Recursive doubling : Naïve implementation
+    Operation count: log(N) . N
+    \item A better implementation, well-engineered:
+    \begin{itemize}
+    \item Take blocking of data into account
+    \item Each processor calculate its sum, then 
+            Participates in a parallel algorithm (with P numbers) 
+            to get sum to its left, and then adds to all its elements
+    \item N + log(P) + N: Only doubling of operation Count
+    \item What did we do?
+    Same algorithm, better parallelization/engineering
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
   \frametitle{Parallel Prefix Example: prefix.ci}
   \lstinputlisting{code/par-prefix-wrong/prefix.ci}
 \end{frame}
