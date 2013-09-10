@@ -58,6 +58,9 @@ struct Prefix : public CBase_Prefix {
     }
   }
 
+
+
+
   void passValue(int incoming_stage, int incoming_value){
     //CkPrintf("[%d] get value from stage [%d]\n", thisIndex, incoming_stage);
     buffer[incoming_stage] = incoming_value;
@@ -79,7 +82,6 @@ struct Prefix : public CBase_Prefix {
       }
     }
   }
-
 };
 
 #include "prefix.def.h"
