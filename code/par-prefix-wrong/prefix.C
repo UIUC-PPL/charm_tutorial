@@ -50,8 +50,7 @@ struct Prefix : public CBase_Prefix {
     }
     else{
       CkPrintf("\nPrefix[%d].value = %d\n", thisIndex, value);
-      CkCallback cb(CkReductionTarget(Main, done), mainProxy);
-      contribute(cb);
+      contribute(CkCallback(CkReductionTarget(Main, done), mainProxy));
     }
   }
 
