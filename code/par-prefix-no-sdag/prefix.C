@@ -29,6 +29,7 @@ struct Main : public CBase_Main {
 struct Prefix : public CBase_Prefix {
   int* buffer;
   int value, stage, numStages, flag;
+  int futureNum;
   Prefix() {
     stage = 0;
     flag = 0;
@@ -66,19 +67,23 @@ struct Prefix : public CBase_Prefix {
     buffer[incoming_stage] = incoming_value;
 
     //if the data is coming from a higher stage, set the flag
-    if(incoming_stage > stage) flag = 1;
+    if(incoming_stage > stage){
+      flag = 1;
+      futureNum = incoming_stage;
+    }
     else{
       value += buffer[incoming_stage];
       stage++;
       step(value);
       if(flag == 1){
-        for(int i=stage; i<numStages; i++){
+        int i;
+        for(i=stage; i<numStages; i++){
             if(buffer[i] == 0) break; 
             value += buffer[i];
             stage++;
             step(value);
-            flag = 0;
         }
+        if(i==futureNum) flag = 0;
       }
     }
   }
