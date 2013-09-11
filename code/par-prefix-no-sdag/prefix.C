@@ -69,7 +69,7 @@ struct Prefix : public CBase_Prefix {
     //if the data is coming from a higher stage, set the flag
     if(incoming_stage > stage){
       flag = 1;
-      futureNum = incoming_stage;
+      if(incoming_stage > futureNum) futureNum = incoming_stage;
     }
     else{
       value += buffer[incoming_stage];
