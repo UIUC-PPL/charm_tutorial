@@ -14,9 +14,6 @@ struct Main : public CBase_Main {
     if (msg->argc > 1)
       numElements = atoi(msg->argv[1]);
     delete msg;
-    CkPrintf("\nRunning \"Parallel Prefix\" with %d elements "
-                "using %d processors.\n", numElements, CkNumPes());
-
     prefixArray = CProxy_Prefix::ckNew(numElements);
   }
   Main(CkMigrateMessage* msg) {};
@@ -45,15 +42,12 @@ struct Prefix : public CBase_Prefix {
   void passValue(int incoming_value){
     value += incoming_value;
     distance = distance*2;
-    if(distance < numElements){
-      step();
-    }
+    if(distance < numElements) step();
     else{
       CkPrintf("\nPrefix[%d].value = %d\n", thisIndex, value);
       contribute(CkCallback(CkReductionTarget(Main, done), mainProxy));
     }
   }
-
 };
 
 #include "prefix.def.h"
