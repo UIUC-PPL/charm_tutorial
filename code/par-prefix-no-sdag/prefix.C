@@ -27,14 +27,13 @@ struct Main : public CBase_Main {
 };
 
 struct Prefix : public CBase_Prefix {
-  int* buffer;
-  int value, stage, numStages, flag;
-  int futureNum;
+  int* valueBuf, *flagBuf;
+  int value, stage, numStages;
   Prefix() {
     stage = 0;
-    flag = 0;
     numStages = log2(numElements);
-    buffer = (int*)calloc(numStages, sizeof(int));
+    valueBuf = (int*)malloc(numStages*sizeof(int));
+    flagBuf = (int*)calloc(numStages, sizeof(int));
     srand(time(NULL)+thisIndex);
     value = rand()%10+1;
     CkPrintf("Before Prefix[%d].value = %d\n", thisIndex, value);
@@ -63,30 +62,18 @@ struct Prefix : public CBase_Prefix {
 
 
   void passValue(int incoming_stage, int incoming_value){
-    //CkPrintf("[%d] get value from stage [%d]\n", thisIndex, incoming_stage);
-    buffer[incoming_stage] = incoming_value;
 
-    //if the data is coming from a higher stage, set the flag
-    if(incoming_stage > stage){
-      flag = 1;
-      if(incoming_stage > futureNum) futureNum = incoming_stage;
-    }
-    else{
-      value += buffer[incoming_stage];
-      stage++;
-      step(value);
-      if(flag == 1){
-        int i;
-        for(i=stage; i<numStages; i++){
-            if(buffer[i] == 0) break; 
-            value += buffer[i];
-            stage++;
-            step(value);
-        }
-        if(i==futureNum) flag = 0;
-      }
+    flagBuf[incoming_stage] = 1;
+    valueBuf[incoming_stage] = incoming_value;
+
+    for(int i=stage; i<numStages; i++){
+        if(flagBuf[i] == 0) break; 
+        value += valueBuf[i];
+        stage++;
+        step(value);
     }
   }
+
 };
 
 #include "prefix.def.h"
