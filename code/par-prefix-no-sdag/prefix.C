@@ -18,9 +18,10 @@ struct Main : public CBase_Main {
   void done() { CkExit(); }
 };
 
+
+
 struct Prefix : public CBase_Prefix {
-  int* valueBuf, *flagBuf;
-  int value, stage, numStages;
+  int* valueBuf, *flagBuf, value, stage, numStages;
   Prefix() {
     stage = 0;
     numStages = log2(numElements);
@@ -48,12 +49,7 @@ struct Prefix : public CBase_Prefix {
       }
     }
   }
-
-
-
-
   void passValue(int incoming_stage, int incoming_value){
-
     flagBuf[incoming_stage] = 1;
     valueBuf[incoming_stage] = incoming_value;
 
@@ -64,7 +60,6 @@ struct Prefix : public CBase_Prefix {
         step(value);
     }
   }
-
 };
 
 #include "prefix.def.h"
