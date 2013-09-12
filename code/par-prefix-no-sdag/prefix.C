@@ -6,24 +6,16 @@
 /*readonly*/ int numElements;
 
 struct Main : public CBase_Main {
-  int doneCount;
   Main(CkArgMsg* msg) {
     mainProxy= thisProxy;
     numElements = 8;  // Default numElements to 8
-    doneCount = 0;
-    if (msg->argc > 1)
-      numElements = atoi(msg->argv[1]);
+    if (msg->argc > 1) numElements = atoi(msg->argv[1]);
     delete msg;
-    CkPrintf("\nRunning \"Parallel Prefix\" with %d elements "
-                "using %d processors.\n", numElements, CkNumPes());
-
     prefixArray = CProxy_Prefix::ckNew(numElements);
   }
   Main(CkMigrateMessage* msg) {};
 
-  void done(){
-      CkExit();
-  }
+  void done() { CkExit(); }
 };
 
 struct Prefix : public CBase_Prefix {
@@ -36,7 +28,6 @@ struct Prefix : public CBase_Prefix {
     flagBuf = (int*)calloc(numStages, sizeof(int));
     srand(time(NULL)+thisIndex);
     value = rand()%10+1;
-    CkPrintf("Before Prefix[%d].value = %d\n", thisIndex, value);
     step(value);
   }
   Prefix(CkMigrateMessage*){};
