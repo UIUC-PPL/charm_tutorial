@@ -1,0 +1,43 @@
+mainmodule prefix {
+
+  readonly CProxy_Main mainProxy;
+  readonly int numElements;
+
+
+  mainchare Main {
+    entry Main(CkArgMsg* msg);
+    entry [reductiontarget] void checkIn();
+  };
+
+
+  array [1D] Prefix {
+    entry Prefix();
+    entry void passValue(int step, unsigned int incomingValue);
+
+
+
+
+
+
+
+    entry void startPrefixCalculation() {
+      for(stepCount = 0; (1 << stepCount) < numElements; stepCount++) {
+        serial {
+          istep = (1<<stepCount);
+        }
+        serial "send_value" {
+          targetIndex = thisIndex + istep;
+          if (targetIndex < numElements)
+            thisProxy[targetIndex].passValue(stepCount, value);
+        }
+        if (thisIndex >= istep)
+          when passValue[stepCount] (int step, unsigned int val) serial {
+            value += val;
+          }
+      }
+      serial "done" {
+        contribute(CkCallback(CkReductionTarget(Main, checkIn), mainProxy));
+      }
+    };
+  };
+};
