@@ -1,6 +1,5 @@
 #include "prefix.decl.h"
 #include <stdlib.h>
-#include <time.h>
 /* readonly */ CProxy_Main mainProxy;
 /* readonly */ int numElements;
 
@@ -25,10 +24,10 @@ class Prefix : public CBase_Prefix {
   Prefix_SDAG_CODE
 
   public:
-    int stepCount, istep, targetIndex, value;
+    int stage, targetIndex, value;
 
     Prefix() {
-      srand(time(NULL) + thisIndex);
+      srand(thisIndex);
       value = rand() % 10;      // Random positive int between 0 and 9 (inclusive)
     }
     Prefix(CkMigrateMessage *msg) { }

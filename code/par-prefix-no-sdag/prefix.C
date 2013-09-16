@@ -27,7 +27,7 @@ struct Prefix : public CBase_Prefix {
     numStages = log2(numElements);
     valueBuf = (int*)malloc(numStages*sizeof(int));
     flagBuf = (int*)calloc(numStages, sizeof(int));
-    srand(time(NULL)+thisIndex);
+    srand(thisIndex);
     value = rand()%10+1;
     step(value);
   }

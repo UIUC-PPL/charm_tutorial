@@ -40,7 +40,8 @@ mainmodule jacobi3d {
         serial {
           double error = computeKernel();
           int conv = error < DELTA;
-          contribute(sizeof(int), &conv, CkReduction::logical_and, CkCallback(CkReductionTarget(Jacobi, checkConverged), thisProxy));
+          CkCallback cb(CkReductionTarget(Jacobi, checkConverged), thisProxy);
+          contribute(sizeof(int), &conv, CkReduction::logical_and, cb);
         }
         when checkConverged(bool result)
           if (result) serial { mainProxy.done(iter); converged = true; }

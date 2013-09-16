@@ -20,19 +20,17 @@ mainmodule prefix {
 
 
 
+
     entry void startPrefixCalculation() {
-      for(stepCount = 0; (1 << stepCount) < numElements; stepCount++) {
-        serial {
-          istep = (1<<stepCount);
-        }
+      for(stage = 0; (1 << stage) < numElements; stage++) {
         serial "send_value" {
-          targetIndex = thisIndex + istep;
+          targetIndex = thisIndex + (1<<stage);
           if (targetIndex < numElements)
-            thisProxy[targetIndex].passValue(stepCount, value);
+            thisProxy[targetIndex].passValue(stage, value);
         }
-        if (thisIndex >= istep)
-          when passValue[stepCount] (int step, unsigned int val) serial {
-            value += val;
+        if (thisIndex >= (1<<stage))
+          when passValue[stage] (int incoming_stage, unsigned int incoming_value) serial {
+            value += incoming_value;
           }
       }
       serial "done" {
