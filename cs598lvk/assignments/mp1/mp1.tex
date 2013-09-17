@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage[colorlinks=true]{hyperref}
+
+\title{MP1 \\ CS 598: Parallel Migratable Objects}
+\author{Fall 2013}
+\date{Due date: September 27, 10pm}
+
+\begin{document}
+\maketitle
+
+\textbf{Description:} 
+
+For this assignment you need to write a Charm++ program which does load
+balancing of elements in a chare array using the given parallel prefix code in
+the class slides or with your own parallel prefix code. \\
+First, you need to create a chare array where each chare has a different number 
+of values: randomly create a number between \texttt{min} and \texttt{max} where
+min, max and chare array size are command line parameters. 
+Use parallel prefix to
+decide which chare array element should send how many values to which chare
+array element and send those messages. In the end every chare in the chare array
+need to have equal number of elements. You can either use QD to terminate or
+your own method to detect if all the messages that needs to be received are
+received. 
+
+\textbf{Running your code:}
+The program should have the following signature:
+\textit{./charmrun /mp1 +p4 chare-array-size min max} \\
+You should test your code on Taub cluster with upto x?? number of processors.
+
+\textbf{Submission:}
+Create an mp1 directory in your SVN repository folder and add your code into
+that folder and check in the your code.
+\begin{itemize}
+\item  For each file F you create, that you want to check in, do: \\
+        \textit{svn add F}\\
+        and frequently (after you have modified F, and have the next better
+        version) do:\\ 
+        \textit{svn ci F}
+\item  There will be a penalty for late submissions.
+\end{itemize}
+
+\end{document}
