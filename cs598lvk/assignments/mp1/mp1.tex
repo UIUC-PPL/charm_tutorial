@@ -11,19 +11,33 @@
 \maketitle
 
 \textbf{Description:} 
+For this assignment you need to write a Charm++ program which does manual load
+balancing of integer numbers among elements of a chare array using the 
+given parallel prefix code in the class slides or with your own parallel 
+prefix code. 
 
-For this assignment you need to write a Charm++ program which does load
-balancing of elements in a chare array using the given parallel prefix code in
-the class slides or with your own parallel prefix code. \\
-First, you need to create a chare array where each chare has a different number 
-of values: randomly create a number between \texttt{min} and \texttt{max} where
-min, max and chare array size are command line parameters. 
-Use parallel prefix to
-decide which chare array element should send how many values to which chare
-array element and send those messages. In the end every chare in the chare array
-need to have equal number of elements. You can either use QD to terminate or
-your own method to detect if all the messages that needs to be received are
-received. 
+First, you create a chare array of size $s$, where each chare $i$ generates 
+(and hence owns) $n_i$ integer numbers. For every chare $i$, $n_i$ is a 
+randomly generated number between $min$ and $max$. 
+$min$, $max$ and $s$ are command line parameters. 
+Once $n_i$ is generated, chare $i$ generates $n_i$ random 
+integers (using rand()). The task is to load balance the count
+of integer number among chares, i.e. if $n = n_1 + n_2 \cdots n_s$,
+each chare should get approximately $\frac{n}{s}$ integers.
+
+You can either use QD to terminate or your own method to detect when
+the load balancing is complete.
+
+\emph{Correctness Test}: The checksum of the integers in the beginning
+should be same as checksum of the integers after the load balancing
+Use \emph{bitvec\_or} operation of the integers to compute checksum in Charm++
+reduction.
+
+\emph{Hint}: Use reduction to get the average number of integer per chare. 
+The average should be useful in deciding which integers should be at which chares
+after load balancing. Use parallel prefix to decide which chare array element 
+should send which integers to which chare array element. Figure~\ref{prefix}
+may provide further hints.
 
 \textbf{Running your code:}
 The program should have the following signature:
