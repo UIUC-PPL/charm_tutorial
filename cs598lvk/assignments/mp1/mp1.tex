@@ -6,7 +6,7 @@
 
 \title{MP1 \\ CS 598: Parallel Migratable Objects}
 \author{Fall 2013}
-\date{Due date: September 27, 10pm}
+\date{Due date: Thursday, September 26, 10pm}
 
 \begin{document}
 \maketitle
@@ -26,7 +26,7 @@ integers (using rand()). The task is to load balance the count
 of integer number among chares, i.e. if $n = n_1 + n_2 \cdots n_s$,
 each chare should get approximately $\frac{n}{s}$ integers.
 
-You can either use QD to terminate or your own method to detect when
+You can either use QD(Quiescence Detection) to terminate or your own method to detect when
 the load balancing is complete.
 
 \emph{Correctness Test}: The checksum of the integers in the beginning
@@ -50,8 +50,8 @@ may provide further hints.
 
 \textbf{Running your code:}
 The program should have the following signature:
-\textit{./charmrun /mp1 +p4 chare-array-size min max} \\
-You should test your code on Taub cluster with upto x?? number of processors.
+\textit{./charmrun ./mp1 +p4 chare-array-size min max} \\
+You should test your code on Taub cluster. \\
 
 \textbf{Submission:}
 Create an mp1 directory in your SVN repository folder and add your code into
