@@ -36,7 +36,8 @@ reduction.
 
 \emph{Hint}: Use reduction to get the average number of integer per chare. 
 The average should be useful in deciding which integers should be at which chares
-after load balancing. Use parallel prefix to decide which chare array element 
+after load balancing. Use exclusive parallel prefix (count of integers in chare $i$
+is not counted in $prefix_i $) to decide which chare array element 
 should send which integers to which chare array element. Figure~\ref{prefix}
 may provide further hints.
 
