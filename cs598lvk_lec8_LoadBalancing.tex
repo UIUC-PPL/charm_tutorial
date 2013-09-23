@@ -1,0 +1,158 @@
+\documentclass{beamer}
+\usepackage{etex}
+\reserveinserts{28}
+
+\input{include_pkg}
+\input{include_cfg}
+\input{include_theme}
+\input{include_cmd}
+
+\title{Basic Charm++}
+
+\author[Laxmikant V.~Kale]{
+Laxmikant V.~Kale
+}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}[fragile]
+  \frametitle{Observations: Exascale applications}
+    \begin{itemize}
+    \item Development of new models must be driven by the needs of exascale
+    applications
+      \begin{itemize}
+        \item Multi-resolution
+        \item Multi-module (multi-physics)
+        \item Dynamic/adaptive: to handle application variation
+        \item Adapt to a volatile computational environment
+        \item Exploit heterogeneous architecture
+        \item Deal with thermal and energy considerations
+      \end{itemize}
+    \item Consequences:
+      \begin{itemize}
+        \item Must support automated resource management
+        \item Must support interoperability and parallel composition
+      \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Static Mapping (i.e. assignment)}
+    \begin{itemize}
+      \item In some applications, load patterns don’t change much as computation progresses
+      \begin{itemize}
+        \item You, the programmer, may want to control which chare lives on which processors
+        \item This is also true when  load may evolve over time, but you want to control initial placement of chares
+      \end{itemize}
+      \item The feature in Charm++ for this purpose is called \textbf{Map
+      Objects}
+      \item Sec. 13.2.2 of the Charm++ manual
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{CkArrayOptions}
+    \begin{itemize}
+      \item To specify static initial mapping, we must first learn this feature
+      \begin{itemize}
+        \item Whenever a chare array is created, one can pass an optional
+        parameter of type CkArrayOptions
+      \end{itemize}
+    \end{itemize}
+      \begin{lstlisting}
+      CkArrayOptions opts(numElements);
+      Set properties in opts (e.g. opts.setAnytimeMigration(false); )
+      P = Cproxy_A::CkNew(parameters, opts);
+      \end{lstlisting}
+    \begin{itemize}
+      \item Many propperties of arrays can be set using this method.
+      \item In particular, we can specify a map object
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{CkArrayMap}
+    \begin{lstlisting}
+     class CkArrayMap : public Group
+     {
+     public:
+       //…
+       //Return an ``arrayHdl'', given some information about the array
+       virtual int registerArray(CkArrayIndex numElements,CkArrayID aid);
+       //Return the home processor number for this element of this array
+       virtual int procNum(int arrayHdl,const CkArrayIndex element);
+      }
+    \end{lstlisting}
+    \begin{itemize}
+    \item If you want to specify a map for a chare array you are about to
+    create, you must first define a subclass of CkArrayMap
+    \item It is a “Group”.. More on that much later
+    \item You don’t need to know any more than inheriting from it for now
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Defining your own map}
+    \begin{lstlisting}
+     class BlockMap : public CkArrayMap
+     { public:
+       BlockMap(void) {}
+       BlockMap(CkMigrateMessage *m){}
+       int registerArray(CkArrayIndex& numElements,CkArrayID aid) { return 0;}
+       int procNum(int /*arrayHdl*/,const CkArrayIndex& idx) {
+           int elem=*(int *)idx.data();
+           int penum =  (elem/(32/CkNumPes()));
+           return penum;
+       }
+     };
+    \end{lstlisting}
+    \begin{itemize}
+        \item \texttt{CkArrayIdx} is a datatye that’s normally used by the system. You
+        can peek into it to extract indices. The example works for 1D array
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Putting them alll together}
+    \begin{lstlisting}
+      //Create the map group
+      CProxy_BlockMap myMap=CProxy_BlockMap::ckNew();
+      //Make a new array using that map
+      CkArrayOptions opts(nElements);
+      opts.setMap(myMap);
+      a1=CProxy_A1::ckNew( parameters,opts);
+    \end{lstlisting}
+    \begin{itemize}
+    \item Create a map object, 
+    \item pass it to an \texttt{CkArrayOptions} object (opts here), and then 
+    \item pass that to \texttt{ckNew}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Why is CkArrayMap an object}
+    \begin{itemize}
+      \item It looks like a function.. Given an Index, return a PE (processor
+      number)
+      \item In many simple cases, that is enough
+      \item In general, you may want to remember some data in state information, so you can construct the answer quickly
+      \item The system may ask you for this information at creation, but also later during method invocation
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Exercises}
+    \begin{itemize}
+        \item Write a map object for cyclic distribution of a 1D chare array
+        \item Write a map object for a 2D chare array in a block fashion, ensuring that they are too load imbalanced, even when running on non-square number of processors
+        \begin{itemize}
+            \item Should work for any combination of array sizes and number of processors
+        \end{itemize}
+        \item Extend the previous one for the case where each processor has a x,y,z coordinate (the physical network is a torus, for example)
+    \end{itemize}
+\end{frame}
+
+\input{dynamicLB}
+
+\end{document}

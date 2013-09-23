@@ -17,117 +17,6 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{The PUP Process}
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/PUPProcess.png}
-  \end{center}
-\end{frame}
-
-
-% \begin{frame}[fragile]
-% \frametitle{PUP Usage Sequence}
-%   \begin{center}
-%     \includegraphics[width=0.8\textwidth]{figures/PUPUsage.png}
-%   \end{center}
-% \begin{columns}
-%  \begin{column}{0.5\textwidth}
-%  \begin{itemize}
-%  \item Migration out:
-%  \begin{itemize}
-%  \item ckAboutToMigrate
-%  \item Sizing
-%  \item Packing
-%  \item Destructor
-%  \end{itemize}
-%  \end{itemize}
-%  \end{column}
-%  \begin{column}{0.5\textwidth}
-%  \begin{itemize}
-%  \item Migration in:
-%  \begin{itemize}
-%  \item Migration constructor
-%  \item UnPacking
-%  \item ckJustMigrated
-%  \end{itemize}
-%  \end{itemize}
-% \end{column}
-% \end{columns}
-% \end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Writing a PUP routine}
- \begin{columns}
- \begin{column}{0.5\textwidth}
-   \begin{lstlisting}
-class MyChare : public CBase_MyChare {
-  int a;
-  float b;
-  char c;
-  float localArray[LOCAL_SIZE];
-};
- \end{lstlisting}
- \end{column}
- \begin{column}{0.5\textwidth}
-  \begin{lstlisting}
-void pup(PUP::er &p) {
-   CBase_MyChare::pup(p);
-   p | a;
-   p | b;
-   p | c;
-   p(localArray, LOCAL_SIZE);
-}
-  \end{lstlisting}
-  \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Writing a PUP routine}
- \begin{columns}
- \begin{column}{0.5\textwidth}
-   \begin{lstlisting}
-class MyChare : public CBase_MyChare {
-  int heapArraySize;
-  float* heapArray;
-  MyClass *pointer;
-};
- \end{lstlisting}
- \end{column}
- \begin{column}{0.5\textwidth}
-  \begin{lstlisting}
-void pup(PUP::er &p) {
-   CBase_MyChare::pup(p);
-   p | heapArraySize;
-   if (p.isUnpacking()) {
-     heapArray = new float[heapArraySize];
-   }
-   p(heapArray, heapArraySize);
-   bool isNull = !pointer;
-   p | isNull;
-   if (!isNull) {
-     if (p.isUnpacking()) pointer = new MyClass();
-     p | *pointer;
-   }
- }
-}
-  \end{lstlisting}
-  \end{column}
-  \end{columns}
-\end{frame}
-
-
-\begin{frame}[fragile]
-\frametitle{PUP: Concerns}
-\begin{itemize}
-\item If variables are added to an object, update the PUP routine
-\item If the object allocates data on the heap, copy it recursively, not just the pointer
-\item Remember to allocate memory while unpacking
-\item Sizing, Packing, and Unpacking must scan the variables in the same order
-\item Test PUP routines with “+balancer RotateLB”
-\end{itemize}
-\end{frame}
-
 \transition{Dynamic Load Balancing}
 
 \begin{frame}[fragile]
@@ -255,56 +144,175 @@ while (!converged) {
 \end{lstlisting}
 \end{frame}
 
-% \begin{frame}
-% \frametitle{Performance}
-% \begin{centering}
-% \includegraphics[width=0.5\textwidth]{figures/beforeLB}
-% \includegraphics[width=0.5\textwidth]{figures/afterLB}
-% \end{centering}
-% \end{frame}
+%for class
+ \begin{frame}
+ \frametitle{Performance}
+ \begin{centering}
+ \includegraphics[width=0.5\textwidth]{figures/beforeLB}
+ \includegraphics[width=0.5\textwidth]{figures/afterLB}
+ \end{centering}
+ \end{frame}
 
-%\begin{frame}[fragile]
-%\frametitle{Grainsize and Load Balancing}
-%\begin{itemize}
-%\item[] How Much Balance Is Possible?
-%\end{itemize}
-%\begin{columns}
-%  \begin{column}[T]{2.8in}
-%  \includegraphics[width=2.8in, height=2.0in]{figures/histogramGrains}
-%  \end{column}
-%
-%  \begin{column}[T]{5cm}
-%  Solution:\\ 
-%  Split compute objects that may have too much work,
-%  using a heuristic based on number of interacting atoms
-%  \end{column}
-%\end{columns}
-%\end{frame}
+\begin{frame}[fragile]
+\frametitle{Grainsize and Load Balancing}
+\begin{itemize}
+\item[] How Much Balance Is Possible?
+\end{itemize}
+\begin{columns}
+  \begin{column}[T]{2.8in}
+  \includegraphics[width=2.8in, height=2.0in]{figures/histogramGrains}
+  \end{column}
 
-%\begin{frame}[fragile]
-%\frametitle{Grainsize For Extreme Scaling}
-%\begin{itemize}
-% \item Strong Scaling is limited by expressed parallelism
-% \begin{itemize}
-%  \item Minimum iteration time limited by lengthiest computation
-%  \begin {itemize} 
-%    \item Largest grains set lower bound
-%  \end{itemize}
-% \end{itemize}
-% \item 1-away generalized to k-away provides fine granularity control
-%\end{itemize}
-%\begin{centering}
-%\includegraphics[width=1.0\textwidth]{figures/1away2away}
-%\end{centering}
-%\end{frame}
-%
-%\begin{frame}[fragile]
-%\frametitle{NAMD: 2-AwayX Example}
-%\begin{centering}
-%\includegraphics[width=1.0\textwidth]{figures/2awayDiagramPlusHistos}
-%\end{centering}
-%\end{frame}
-%
+  \begin{column}[T]{5cm}
+  Solution:\\ 
+  Split compute objects that may have too much work,
+  using a heuristic based on number of interacting atoms
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Grainsize For Extreme Scaling}
+\begin{itemize}
+ \item Strong Scaling is limited by expressed parallelism
+ \begin{itemize}
+  \item Minimum iteration time limited by lengthiest computation
+  \begin {itemize} 
+    \item Largest grains set lower bound
+  \end{itemize}
+ \end{itemize}
+ \item 1-away generalized to k-away provides fine granularity control
+\end{itemize}
+\begin{centering}
+\includegraphics[width=1.0\textwidth]{figures/1away2away}
+\end{centering}
+\end{frame}
+%\end for class 
+
+\begin{frame}[fragile]
+\frametitle{NAMD: 2-AwayX Example}
+\begin{centering}
+\includegraphics[width=1.0\textwidth]{figures/2awayDiagramPlusHistos}
+\end{centering}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The PUP Process}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/PUPProcess.png}
+  \end{center}
+\end{frame}
+
+%for class
+\begin{frame}[fragile]
+\frametitle{PUP Usage Sequence}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/PUPUsage.png}
+  \end{center}
+\begin{columns}
+ \begin{column}{0.5\textwidth}
+ \begin{itemize}
+ \item Migration out:
+   \begin{itemize}
+    \item ckAboutToMigrate
+    \item Sizing
+    \item Packing
+    \item Destructor
+    \end{itemize}
+ \end{itemize}
+ \end{column}
+
+ \begin{column}{0.5\textwidth}
+ \begin{itemize}
+    \item Migration in:
+    \begin{itemize}
+    \item Migration constructor
+    \item UnPacking
+    \item ckJustMigrated
+    \end{itemize}
+  \end{itemize}
+\end{column}
+
+\end{columns}
+\end{frame}
+%\end for class 
+
+\begin{frame}[fragile]
+\frametitle{Writing a PUP routine}
+ \begin{columns}
+ \begin{column}{0.5\textwidth}
+   \begin{lstlisting}
+class MyChare : public CBase_MyChare {
+  int a;
+  float b;
+  char c;
+  float localArray[LOCAL_SIZE];
+};
+ \end{lstlisting}
+ \end{column}
+ \begin{column}{0.5\textwidth}
+  \begin{lstlisting}
+void pup(PUP::er &p) {
+   CBase_MyChare::pup(p);
+   p | a;
+   p | b;
+   p | c;
+   p(localArray, LOCAL_SIZE);
+}
+  \end{lstlisting}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Writing a PUP routine}
+ \begin{columns}
+ \begin{column}{0.5\textwidth}
+   \begin{lstlisting}
+class MyChare : public CBase_MyChare {
+  int heapArraySize;
+  float* heapArray;
+  MyClass *pointer;
+};
+ \end{lstlisting}
+ \end{column}
+ \begin{column}{0.5\textwidth}
+  \begin{lstlisting}
+void pup(PUP::er &p) {
+   CBase_MyChare::pup(p);
+   p | heapArraySize;
+   if (p.isUnpacking()) {
+     heapArray = new float[heapArraySize];
+   }
+   p(heapArray, heapArraySize);
+   bool isNull = !pointer;
+   p | isNull;
+   if (!isNull) {
+     if (p.isUnpacking()) pointer = new MyClass();
+     p | *pointer;
+   }
+ }
+}
+  \end{lstlisting}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{PUP: Concerns}
+\begin{itemize}
+\item If variables are added to an object, update the PUP routine
+\item If the object allocates data on the heap, copy it recursively, not just the pointer
+\item Remember to allocate memory while unpacking
+\item Sizing, Packing, and Unpacking must scan the variables in the same order
+\item Test PUP routines with “+balancer RotateLB”
+\end{itemize}
+\end{frame}
+
+
+
+
 \begin{frame}[fragile]
 \frametitle{Dynamic Load Balancing Scenarios}
 \begin{itemize}
@@ -352,35 +360,38 @@ while (!converged) {
 \end{itemize}
 \end{frame}
 
-%\begin{frame}[fragile]
-%\frametitle{Example Case: Particles}
-% Orthogonal Recursive Bisection (ORB)
-% %should wrapfig the little diagram here
-% \begin{itemize} 
-%  \item At each stage: divide Particles equally
-%  \item Processor don’t need to be a power of 2:
-%  \begin{itemize} 
-%   \item Divide in proportion 
-%   \begin{itemize} 
-%    \item 2:3 with 5 processors
-%   \end{itemize}
-%  \end{itemize}
-% \item How to choose the dimension along which to cut?
-% \begin{itemize} 
-%  \item Choose the longest one
-% \end{itemize}
-% \item How to draw the line?
-% \begin{itemize} 
-%  \item All data on one processor? Sort along each dimension
-%  \item Otherwise: run a distributed histogramming algorithm to find the line, recursively
-% \end{itemize}
-% \item Find the entire tree, and then do all data movement at once
-% \begin{itemize} 
-%  \item Or do it in two-three steps.
-%  \item But no reason to redistribute particles after drawing each line.
-% \end{itemize}
-%\end{itemize}
-%\end{frame}
+%for class 
+\begin{frame}[fragile]
+\frametitle{Example Case: Particles}
+ Orthogonal Recursive Bisection (ORB)
+ %should wrapfig the little diagram here
+ \begin{itemize} 
+  \item At each stage: divide Particles equally
+  \item Processor don’t need to be a power of 2:
+  \begin{itemize} 
+   \item Divide in proportion 
+   \begin{itemize} 
+    \item 2:3 with 5 processors
+   \end{itemize}
+  \end{itemize}
+ \item How to choose the dimension along which to cut?
+ \begin{itemize} 
+  \item Choose the longest one
+ \end{itemize}
+ \item How to draw the line?
+ \begin{itemize} 
+  \item All data on one processor? Sort along each dimension
+  \item Otherwise: run a distributed histogramming algorithm to find the line, recursively
+ \end{itemize}
+ \item Find the entire tree, and then do all data movement at once
+ \begin{itemize} 
+  \item Or do it in two-three steps.
+  \item But no reason to redistribute particles after drawing each line.
+ \end{itemize}
+\end{itemize}
+\end{frame}
+%\end for class 
+
 \eat{
 \begin{frame}[fragile]
 \frametitle{Dynamic Load Balancing using Objects}
@@ -447,60 +458,68 @@ Centralized strategies:
 \end{centering}
 \end{frame}
 
-% \begin{frame}[fragile]
-% \frametitle{Object Partitioning Strategies}
-% \begin{itemize}
-%  \item You can use graph partitioners like METIS, K-R
-%  \begin{itemize}
-%   \item BUT: graphs are smaller, and optimization criteria are different
-%  \end{itemize}
-%  \item Greedy strategies:
-%  \begin{itemize}
-%   \item If communication costs are low: use a simple greedy strategy
-%   \begin{itemize}
-%    \item Sort objects by decreasing load
-%    \item Maintain processors in a heap (by assigned load)
-%    \item In each step: \\
-%    %\begin{description}
-%    % \item 
-%    assign the heaviest remaining object to the least loaded processor
-%    %\end{description}
-%   \end{itemize}
-%   \item With small-to-moderate communication cost:
-%   \begin{itemize}
-%    \item Same strategy, but add communication costs as you add an object to a processor
-%   \end{itemize}
-%   \item Always add a refinement step at the end:
-%   \begin{itemize}
-%    \item Swap work from heaviest loaded processor to ``some other processor''
-%    \item Repeat a few times or until no improvement 
-%   \end{itemize}
-%  \end{itemize}
-% \end{itemize}
-% \end{frame}
+%for class
+\begin{frame}[fragile]
+\frametitle{Object Partitioning Strategies}
+
+\begin{itemize}
+
+\item You can use graph partitioners like METIS, K-R
+ \begin{itemize}
+  \item BUT: graphs are smaller, and optimization criteria are different
+ \end{itemize}
+
+ \item Greedy strategies:
+
+ \begin{itemize}
+  \item If communication costs are low: use a simple greedy strategy
+
+  \begin{itemize}
+   \item Sort objects by decreasing load
+   \item Maintain processors in a heap (by assigned load)
+   \item In each step:
+   \item assign the heaviest remaining object to the least loaded processor
+  \end{itemize}
+
+  \item With small-to-moderate communication cost:
+  \begin{itemize}
+   \item Same strategy, but add communication costs as you add an object to a processor
+  \end{itemize}
+
+  \item Always add a refinement step at the end:
+  \begin{itemize}
+   \item Swap work from heaviest loaded processor to ``some other processor''
+   \item Repeat a few times or until no improvement 
+  \end{itemize}
+
+ \end{itemize}
+
+ \end{itemize}
+\end{frame}
 
 
-% \begin{frame}[fragile]
-% \frametitle{Object Partitioning Strategies 2}
-% When communication cost is significant:
-% \begin{itemize}
-%  \item Still use greedy strategy, but:
-%  \begin{itemize}
-%   \item At each assignment step, choose between assigning O to least loaded processor and the processor that already has objects that communicate most with O.
-%   \begin{itemize}
-%    \item Based on the degree of difference in the two metrics
-%    \item Two-stage assignments:\\
-%     In early stages,  consider communication costs as long as the processors are
-%     in the same (broad) load “class”,\\
-%     In later stages, decide based on load
-%   \end{itemize}
-%  \end{itemize}
-% \end{itemize}
-% Branch-and-bound
-% \begin{itemize}
-%  \item Searches for optimal, but can be stopped after a fixed time
-% \end{itemize}
-% \end{frame}
+\begin{frame}[fragile]
+ \frametitle{Object Partitioning Strategies 2}
+ When communication cost is significant:
+ \begin{itemize}
+  \item Still use greedy strategy, but:
+  \begin{itemize}
+   \item At each assignment step, choose between assigning O to least loaded processor and the processor that already has objects that communicate most with O.
+   \begin{itemize}
+   \item Based on the degree of difference in the two metrics
+   \item Two-stage assignments:\\
+     In early stages,  consider communication costs as long as the processors are
+     in the same (broad) load “class”,\\
+     In later stages, decide based on load
+   \end{itemize}
+  \end{itemize}
+ \end{itemize}
+ Branch-and-bound
+ \begin{itemize}
+  \item Searches for optimal, but can be stopped after a fixed time
+ \end{itemize}
+\end{frame}
+%end for class
 
 \begin{frame}[fragile]
 \frametitle{Crack Propagation}
