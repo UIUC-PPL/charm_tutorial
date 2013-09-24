@@ -7,7 +7,7 @@
 \input{include_theme}
 \input{include_cmd}
 
-\title{Basic Charm++}
+\title{Load Balancing in Charm++}
 
 \author[Laxmikant V.~Kale]{
 Laxmikant V.~Kale
@@ -17,30 +17,55 @@ Laxmikant V.~Kale
 \begin{document}
 
 \begin{frame}[fragile]
-  \frametitle{Observations: Exascale applications}
+  \frametitle{Observations: Parallel applications}
     \begin{itemize}
-    \item Development of new models must be driven by the needs of exascale
-    applications
+    \item Obtaining best performance on parallel computers is difficult due to properties exhibited by applications 
       \begin{itemize}
-        \item Multi-resolution
-        \item Multi-module (multi-physics)
-        \item Dynamic/adaptive: to handle application variation
-        \item Adapt to a volatile computational environment
-        \item Exploit heterogeneous architecture
-        \item Deal with thermal and energy considerations
+        \item Multi-resolution - variation in task granularity
+        \item Multi-module - loosely connected diverse tasks
+        \item {\color{red} Dynamic/adaptive: to handle application variation}
+        \item {\color{red} Adapt to a volatile computational environment}
+        \item Exploit heterogeneous architecture - GPUs, MICs
       \end{itemize}
     \item Consequences:
       \begin{itemize}
         \item Must support automated resource management
-        \item Must support interoperability and parallel composition
+        \item This lecture is focussed on {\color{red} load balancing}
       \end{itemize}
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Static Mapping (i.e. assignment)}
+  \frametitle{What is load imbalance?}
+  \begin{columns}
+  \begin{column}{.6\textwidth} 
+  \centering
+  \includegraphics[width=\textwidth]{cs598lvk/diagrams/load_imbalance.jpg}
+  \end{column}
+  \begin{column}{.4\textwidth} 
+  \begin{itemize}
+  \item Application completes only when all processor finishes 
+  \item Different processors gets variable work
+  \item Resource wasted in waiting
+  \end{itemize}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{What is desirable?}
+  \centering
+  \includegraphics[width=.7\textwidth]{cs598lvk/diagrams/balanced.png}
+  \begin{itemize}
+  \item Work is evenly divided among processors to make best use of the available resources
+  \item How - Static and Dynamic Load balancing
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Static Mapping for Load Balancing}
     \begin{itemize}
-      \item In some applications, load patterns don’t change much as computation progresses
+      \item In some applications, load pattern does not change much as computation progresses
       \begin{itemize}
         \item You, the programmer, may want to control which chare lives on which processors
         \item This is also true when  load may evolve over time, but you want to control initial placement of chares
