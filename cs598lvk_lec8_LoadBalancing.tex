@@ -77,7 +77,7 @@ Laxmikant V.~Kale
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{CkArrayOptions}
+    \frametitle{CkArrayOptions - customizing array creation}
     \begin{itemize}
       \item To specify static initial mapping, we must first learn this feature
       \begin{itemize}
@@ -86,28 +86,30 @@ Laxmikant V.~Kale
       \end{itemize}
     \end{itemize}
       \begin{lstlisting}
-      CkArrayOptions opts(numElements);
-      Set properties in opts (e.g. opts.setAnytimeMigration(false); )
-      P = Cproxy_A::CkNew(parameters, opts);
+      CkArrayOptions opts(numElements); //array to be created with numElements chares
+      //set other properties of opts (discussed later in the course)
+      P = CProxy_A::CkNew(parameters, opts);
       \end{lstlisting}
     \begin{itemize}
       \item Many propperties of arrays can be set using this method.
-      \item In particular, we can specify a map object
+      \item {\color{red} In particular, we can specify a map object}
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{CkArrayMap}
+    \frametitle{CkArrayMap - base class of all map objects}
     \begin{lstlisting}
-     class CkArrayMap : public Group
-     {
-     public:
-       //…
-       //Return an ``arrayHdl'', given some information about the array
-       virtual int registerArray(CkArrayIndex numElements,CkArrayID aid);
-       //Return the home processor number for this element of this array
-       virtual int procNum(int arrayHdl,const CkArrayIndex element);
-      }
+    class CkArrayMap : public Group
+    {
+      public:
+      //......
+      
+      //Return the processor number for this element of this array
+      virtual int procNum(int arrayHdl, const CkArrayIndex element);
+
+      //Return an ``arrayHdl'', given some information about the array
+      virtual int registerArray(CkArrayIndex numElements, CkArrayID aid);
+    }
     \end{lstlisting}
     \begin{itemize}
     \item If you want to specify a map for a chare array you are about to
@@ -124,12 +126,15 @@ Laxmikant V.~Kale
      { public:
        BlockMap(void) {}
        BlockMap(CkMigrateMessage *m){}
-       int registerArray(CkArrayIndex& numElements,CkArrayID aid) { return 0;}
+
+       // place elements in blocks of 32
        int procNum(int /*arrayHdl*/,const CkArrayIndex& idx) {
            int elem=*(int *)idx.data();
-           int penum =  (elem/(32/CkNumPes()));
+           int penum =  (elem/32) % CkNumPes();
            return penum;
        }
+       int registerArray(CkArrayIndex& numElements,CkArrayID aid) 
+       { return 0; }
      };
     \end{lstlisting}
     \begin{itemize}
@@ -158,7 +163,7 @@ Laxmikant V.~Kale
 \begin{frame}[fragile]
     \frametitle{Why is CkArrayMap an object}
     \begin{itemize}
-      \item It looks like a function.. Given an Index, return a PE (processor
+      \item It looks like a function.. Given an index, return a PE (processor
       number)
       \item In many simple cases, that is enough
       \item In general, you may want to remember some data in state information, so you can construct the answer quickly
@@ -170,7 +175,7 @@ Laxmikant V.~Kale
     \frametitle{Exercises}
     \begin{itemize}
         \item Write a map object for cyclic distribution of a 1D chare array
-        \item Write a map object for a 2D chare array in a block fashion, ensuring that they are too load imbalanced, even when running on non-square number of processors
+        \item Write a map object for a 2D chare array in a block fashion, ensuring that they are not heavily load imbalanced, even when running on non-square number of processors
         \begin{itemize}
             \item Should work for any combination of array sizes and number of processors
         \end{itemize}
