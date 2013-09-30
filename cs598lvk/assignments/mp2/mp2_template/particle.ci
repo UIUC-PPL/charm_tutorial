@@ -1,0 +1,35 @@
+mainmodule ParticleExercise {
+
+  include "Particle.h";
+  readonly CProxy_Main mainProxy;
+  readonly CProxy_Cell cellProxy;
+  readonly int particlesPerCell;
+  readonly int cellDimension;
+
+  mainchare Main {
+    entry Main(CkArgMsg* m);
+    //TODO: add an entry methods to receive the reductions
+ 
+  };
+
+  array [2D] Cell {
+    entry Cell(void);
+    entry void updateNeighbor(int iter, std::vector<Particle> incoming);
+
+    // Main computation
+    entry void run() {
+        for(iteration=0; iteration<ITERATION; iteration++){
+
+            //TODO: Call updateParticles
+
+            //TODO: Collect incoming particles from 4 neighbours
+        
+            //TODO: Add contribute calls for reductions of max and avg calculation
+
+        }//end of the iteration loop
+
+        //TODO: Add contribute call for finishing the execution
+
+    };
+  };
+};
