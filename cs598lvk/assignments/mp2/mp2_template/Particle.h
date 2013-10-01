@@ -9,11 +9,15 @@ class Particle  {
 public:
     double x;
     double y;
-    Particle(){};
-    Particle(double a, double b){ x=a; y=b; }
+
+    Particle() { }
+    Particle(double a, double b) { 
+      x=a; y=b; 
+    }
+
     void pup(PUP::er &p){
-    p|x;
-    p|y;
+      p|x;
+      p|y;
     }
 
 };

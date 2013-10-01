@@ -31,8 +31,8 @@ class Main: public CBase_Main {
 
     // TODO: Add entry methods which will be a target of the reduction for avg
     // and max counts and exiting when the iterations are done
- 
-    
+
+
 };
 
 // This class represent the cells of the simulation.
@@ -56,18 +56,18 @@ class Cell: public CBase_Cell {
     Cell(CkMigrateMessage* m) {}
 
     void pup(PUP::er &p){
-	CBase_Cell::pup(p);
-	__sdag_pup(p);
-	p|iteration;
-	p|particles;
-        //TODO: if you added more variable, decide if they need to go into the
-        //pup method
+      CBase_Cell::pup(p);
+      __sdag_pup(p);
+      p|iteration;
+      p|particles;
+      //TODO: if you added more variable, decide if they need to go into the
+      //pup method
     }
 
     void updateParticles() {
-        //move the particles
+      //move the particles
 
-        //use perturb function for the location of new particles
+      //use perturb function for the location of new particles
     }
 
     //TODO: you may need more methods.. 
@@ -75,7 +75,7 @@ class Cell: public CBase_Cell {
   private:
 
     void populateCell(int initialElements) {
-        //create random particles and add then to the particles vector
+      //create random particles and add then to the particles vector
     }
 
     //change the location of the particle within the range of 8 neighbours
@@ -92,7 +92,7 @@ class Cell: public CBase_Cell {
       particle->y += deltay;
     }
 
-    
+
 };
 
 #include "ParticleExercise.def.h"
