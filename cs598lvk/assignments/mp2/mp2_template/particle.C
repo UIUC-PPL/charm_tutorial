@@ -48,8 +48,7 @@ class Cell: public CBase_Cell {
 
     Cell() {
       __sdag_init();
-      iteration = 1;
-      initializeBounds();
+      iteration = 0;
       populateCell(particlesPerCell); //creates random particles within the cell
 
     }
@@ -65,12 +64,12 @@ class Cell: public CBase_Cell {
     }
 
     void updateParticles() {
-        //move the particles
+        //TODO:move the particles
 
-        //use perturb function for the location of new particles
+        //TODO:use perturb function for the location of new particles
     }
 
-    //TODO: you may need more methods.. 
+    //you can add more methods if you want or need to
 
   private:
 
