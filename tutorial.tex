@@ -1,4 +1,6 @@
 \documentclass{beamer}
+\usepackage{etex}
+\reserveinserts{28}
 
 \input{include_pkg}
 \input{include_cfg}
@@ -7,43 +9,45 @@
 
 \title[Parallel Migratable Objects]{Programming with Parallel Migratable Objects}
 \institute[UIUC]{Parallel Programming Laboratory \\University of Illinois Urbana-Champaign}
-\author{Laxmikant V.~Kal\'e, Eric Bohm}
+\author{Sanjay Kal\'e and PPL}
 \date{\today}
 
 \begin{document}
 
 \frame{\titlepage}
 
-\transition{Please check http://charm.cs.illinois.edu/tutorial/ for the latest material}
+\transition{{\small
+%  Please check http://charm.cs.illinois.edu/$\texttildelow$nikhil/tutorial\_ATPESC.pdf for the
+%  latest material\\\vspace{10pt}
+  Manual: http://charm.cs.illinois.edu/manuals/html/charm++/manual.html\\\vspace{10pt}
+  Installation: http://charm.cs.illinois.edu/manuals/html/charm++/A.html}}
 %\tableofcontents
-
 \section[Concepts]{Introduction}
 \input{challenges}
 \subsection[Object Design]{Object Design}
-\transition{Charm++ builds upon a proven concept: objects}
+\transition{Charm++ builds upon a proven approach: objects}
 \input{objectDesign}
 %\transition{A proven approach: method-driven objects}
 \input{objectsMethods}
 \subsection[Execution Mode]{Execution Model}
 \input{executionModel}
-\subsection[Benefits]{Benefits of Charm++}
+\section[Hello World]{Hello World}
+\input{codePreview.tex}
+\section[Benefits]{Benefits of Charm++}
 \input{benefits}
-\subsection[Task Parallelism]{Task Parallelism}
-\transition{Task Parallelism with Objects}\input{taskParallelism}
-\subsection[Collections]{Object Collections}
-\input{objectCollections}
+\section[Charm++]{Charm++ Basics}
+\input{charmSyntax1}
+\input{charmSyntax2}
+\section[Overdecomposition]{Overdecomposition}
+\input{taskParallelism}
 \transition{Overdecomposing Your Application}\input{overdecomposition}
-\subsection[Application Design]{Application Design}
-\input{modularityComposability}
-\input{patterns}
-\subsection[Design Examples]{Design Examples}
-\transition{Designing Parallel Applications with Charm++}
-\input{caseStudies}
-\section[Charm++]{Charm++ Syntax}
-\transition{Charm++}\input{charmSyntax1}\input{charmSyntax2}
-\subsection[Charm++]{Structured Dagger}
-\transition{Sequencing and Coordination}\input{sequencing}
+\section[Charm++]{Structured Dagger}
+\input{sequencing}
 \input{distributedTable}
+\section[Application Design]{Application Design}
+\input{caseStudies}
+\section[Tuning]{Performance Tuning}
+\input{perf}
 \section[LB]{Using Dynamic Load Balancing}
 \transition{The PUP Framework}
 \input{dynamicLB}
@@ -52,25 +56,12 @@
 \input{faultTolerance}
 \section[AMPI & Interop]{Interoperability}
 \input{interoperability}
-\section[Tuning]{Performance Tuning}
-\input{perf}
 \section[Debugging]{Debugging}
 \input{debug}
 \input{heterogeneity}
 \section[Messages, Groups, Shared Mem]{Further Optimization}
-\transition{Performance Enhancement Features} 
-\subsection[PUP and Placement]{Migration and Placement}
-\input{migrationIntrospective}
-\input{messages}
-\input{advancedOpt}
-\subsection[Array Sections]{Array Sections}
-\input{sections}
-\subsection[Threaded]{Threaded Charm++}
-\input{threadedSync}
-\subsection{Shared Memory}
-\input{multicore}
-\section[Custom LB]{Advanced Load Balancing}
-\input{writeLB}
+\transition{Overview of Performance Enhancement Features} 
+\input{summaryOfAdvanced}
 \input{conclusion}
 
 \end{document}

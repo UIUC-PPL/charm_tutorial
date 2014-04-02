@@ -1,13 +1,11 @@
 #include LaTeX.mk
 
 TARGET = tutorial.pdf
-ANL_TARGET = tutorial_ATPESC.pdf
 
 .PHONY: all web
 
-all: anl
-anl: clean $(ANL_TARGET)
-old: clean $(TARGET) web
+all: tut
+tut: clean $(TARGET) 
 
 %.pdf: %.tex
 	pdflatex $<
