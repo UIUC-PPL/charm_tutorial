@@ -296,35 +296,37 @@ MyChare::foobar(int length, int* data) {
 \end{itemize}
 \end{frame}
 
-%\begin{frame}[fragile]
-%  \frametitle{Readonlys}
-%  \begin{itemize}
-%  \item A \textit{readonly} is a global (within a module) read-only variable
-%    that can only be written to in the \texttt{mainchare}'s constructor
-%  \item Can then be read (\textbf{not written!}) by any chare in the module
-%  \item It is declared in the \texttt{.ci} file:
-%  \begin{lstlisting}
-%  readonly <type> <name>;
-%  readonly CProxy_Main mainProxy;
-%  readonly int numChares;
-%  \end{lstlisting}
-%  \item And defined the the \texttt{.C} file:
-%  \begin{lstlisting}
-%  <type> <name>;
-%  CProxy_Main mainProxy;
-%  int numChares;
-%  \end{lstlisting}
-%  \item And set in the \texttt{mainchare}'s constructor
-%  \begin{lstlisting}
-%  MyChare::MyChare(CkArgMsg *m) {
-%    mainProxy = thisProxy;
-%    numChares = 10;
-%  }
-%\end{lstlisting}
+\eat{
+\begin{frame}[fragile]
+  \frametitle{Readonlys}
+  \begin{itemize}
+  \item A \textit{readonly} is a global (within a module) read-only variable
+    that can only be written to in the \texttt{mainchare}'s constructor
+  \item Can then be read (\textbf{not written!}) by any chare in the module
+  \item It is declared in the \texttt{.ci} file:
+  \begin{lstlisting}
+  readonly <type> <name>;
+  readonly CProxy_Main mainProxy;
+  readonly int numChares;
+  \end{lstlisting}
+  \item And defined the the \texttt{.C} file:
+  \begin{lstlisting}
+  <type> <name>;
+  CProxy_Main mainProxy;
+  int numChares;
+  \end{lstlisting}
+  \item And set in the \texttt{mainchare}'s constructor
+  \begin{lstlisting}
+  MyChare::MyChare(CkArgMsg *m) {
+    mainProxy = thisProxy;
+    numChares = 10;
+  }
+\end{lstlisting}
 
 
 \end{itemize}
 \end{frame}
+}
 
 \eat{
 \begin{frame}[fragile]
