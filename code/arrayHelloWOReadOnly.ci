@@ -1,0 +1,12 @@
+mainmodule arr {
+
+
+  mainchare Main {
+    entry Main(CkArgMsg*);
+  }
+
+  array [1D] hello {
+    entry hello(int);
+    entry void printHello();
+  }
+}
