@@ -46,31 +46,31 @@
 
 \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{In-memory checkpointing with auto restart}
-\begin{itemize}
+%% \begin{frame}[fragile]
+%%   \frametitle{In-memory checkpointing with auto restart}
+%% \begin{itemize}
 
-\item Idea: checkpoint data in a buddy processor's memory, in addition
-  to a local checkpoint
-\item System auto detects when a node crashes
-\item  Failed process is restarted on a spare, and retrieves it's
-  checkpoint from the buddy
-\item (you can also do without the spare)
-\item Every other processor retrieves its local checkpoint 
-\end{itemize}
+%% \item Idea: checkpoint data in a buddy processor's memory, in addition
+%%   to a local checkpoint
+%% \item System auto detects when a node crashes
+%% \item  Failed process is restarted on a spare, and retrieves it's
+%%   checkpoint from the buddy
+%% \item (you can also do without the spare)
+%% \item Every other processor retrieves its local checkpoint 
+%% \end{itemize}
 
- \begin{lstlisting}[basicstyle=\footnotesize]
+%%  \begin{lstlisting}[basicstyle=\footnotesize]
 
-void CkStartMemCheckpoint(CkCallback &cb)
-\end{lstlisting}
+%% void CkStartMemCheckpoint(CkCallback &cb)
+%% \end{lstlisting}
 
-\end{frame}
+%% \end{frame}
 
-\begin{frame}[fragile]
-  \includegraphics[width=\textwidth]{figures/checkpointTimeIntrepid.png}
-\end{frame}
+%% \begin{frame}[fragile]
+%%   \includegraphics[width=\textwidth]{figures/checkpointTimeIntrepid.png}
+%% \end{frame}
 
-\begin{frame}[fragile]
-  \includegraphics[width=\textwidth]{figures/restartTimeIntrepid.png}
-\end{frame}
+%% \begin{frame}[fragile]
+%%   \includegraphics[width=\textwidth]{figures/restartTimeIntrepid.png}
+%% \end{frame}
 
