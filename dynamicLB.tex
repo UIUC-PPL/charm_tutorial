@@ -116,51 +116,6 @@ while (!converged) {
  \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Grainsize and Load Balancing}
-\begin{itemize}
-\item[] How Much Balance Is Possible?
-\end{itemize}
-\begin{columns}
-  \begin{column}[T]{2.8in}
-  \includegraphics[width=2.8in, height=2.0in]{figures/histogramGrains}
-  \end{column}
-
-  \begin{column}[T]{5cm}
-  Solution:\\ 
-  Split compute objects that may have too much work,
-  using a heuristic based on number of interacting atoms
-  \end{column}
-\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Grainsize For Extreme Scaling}
-\begin{itemize}
- \item Strong Scaling is limited by expressed parallelism
- \begin{itemize}
-  \item Minimum iteration time limited by lengthiest computation
-  \begin {itemize} 
-    \item Largest grains set lower bound
-  \end{itemize}
- \end{itemize}
- \item 1-away generalized to k-away provides fine granularity control
-\end{itemize}
-\begin{centering}
-\includegraphics[width=1.0\textwidth]{figures/1away2away}
-\end{centering}
-\end{frame}
-%\end for class 
-
-\begin{frame}[fragile]
-\frametitle{NAMD: 2-AwayX Example}
-\begin{centering}
-\includegraphics[width=1.0\textwidth]{figures/2awayDiagramPlusHistos}
-\end{centering}
-\end{frame}
-
-\input{pup.tex}
-
-\begin{frame}[fragile]
 \frametitle{How to Diagnose Load Imbalance}
 \begin{itemize}
  \item Often hidden in statements such as:
