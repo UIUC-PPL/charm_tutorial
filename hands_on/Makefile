@@ -1,4 +1,4 @@
-CHARM_HOME=~/Programming/libraries/charm/
+CHARM_HOME=$(HOME)/charm_no_touch/net-darwin-x86_64
 
 EXES=arrayHello chareCreate fib fibSDAG jacobi3d pi reductionMainTarget
 
