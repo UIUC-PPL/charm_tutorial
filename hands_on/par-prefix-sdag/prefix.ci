@@ -1,7 +1,5 @@
 mainmodule prefix {
 
-  readonly CProxy_Main mainProxy;
-  readonly int numElements;
 
 
   mainchare Main {
@@ -11,7 +9,7 @@ mainmodule prefix {
 
 
   array [1D] Prefix {
-    entry Prefix();
+    entry Prefix(int n, CProxy_Main m);
     entry void passValue(int step, unsigned int incomingValue);
 
     entry void startPrefixCalculation() {
@@ -27,7 +25,7 @@ mainmodule prefix {
           }
       }
       serial "done" {
-        CkPrintf("Prefix[%i]: %i\n", thisIndex, value);
+        CkPrintf("Prefix[%i].value: %i\n", thisIndex, value);
         contribute(CkCallback(CkReductionTarget(Main, checkIn), mainProxy));
       }
     };
