@@ -58,6 +58,8 @@ where you can find the Charm++ code for MP0.\\
         where netID is your actual netID
 \item A directory named mp0 should be created, go into that directory:\\
         \texttt{cd netID/mp0}
+\item You may need to modify the Makefile to point CHARMC at your installation of Charm++.
+Don't forget to include \texttt{/bin/charmc} at the end.
 \item Analyze the code and run the program with the command \texttt{make test}.
 It should print ``Total number of primes within the range [0 - 100000] is 9591.''
 In the program, the Master chare creates k chares.
