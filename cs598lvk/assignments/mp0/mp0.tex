@@ -48,19 +48,23 @@ For EWS login instructions go to
 For Taub login instructions go to
 \href{https://campuscluster.illinois.edu/user\_info/doc/}{Taub User Guide}.\\
 \\
-\textbf{Step 2:} An svn repository has been created for the class
-\href{https://subversion.ews.illinois.edu/svn/fa13-cs598lvk/}{here} at EWS, where you can find the Charm++ code for MP0. \\
+\textbf{Step 2:} An svn repository for the class has been created
+\href{https://subversion.ews.illinois.edu/svn/fa14-cs598lvk/}{here},
+where you can find the Charm++ code for MP0.\\
 \begin{itemize}
-\item Checkout the code from the repository by: \\
-        \textit{svn co
-        https://subversion.ews.illinois.edu/svn/fa13-cs598lvk/netID \\
-        where netID is your actual netID}
-\item A directory named mp0 should be created, go into that directory: \\
-        \textit{cd netID/mp0}
-\item Analyze the code and run the program with \textit{make test} command.
-It should print "Total number of primes within the range [0 - 100000] is 9591." In the program Master chare fires k chares, i'th Worker chare fired is responsible for
-computing number of primes between [ i*M ..(i+1)*M ]. They return the counts to
-the Master chare. M and k are command line arguments. You can change these numbers in the \texttt{Makefile} and experiment.
+\item Checkout the code from the repository by:\\
+        \texttt{svn co
+        https://subversion.ews.illinois.edu/svn/fa14-cs598lvk/netID}\\
+        where netID is your actual netID
+\item A directory named mp0 should be created, go into that directory:\\
+        \texttt{cd netID/mp0}
+\item Analyze the code and run the program with the command \texttt{make test}.
+It should print ``Total number of primes within the range [0 - 100000] is 9591.''
+In the program, the Master chare creates k chares.
+The i'th Worker chare created is responsible for computing the number of primes between [i*M .. (i+1)*M].
+Each Worker chare returns their count to the Master chare.
+M and k are command line arguments.
+You can change these numbers in the \texttt{Makefile} and experiment.
 
 \end{itemize}
     To run a program on Taub you need to submit batch scripts.
