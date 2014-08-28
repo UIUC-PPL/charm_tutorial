@@ -22,9 +22,19 @@ and the \href{http://charmplusplus.org/}{Charm++ Webpage}.\\
 
 \textbf{Step 1:} To run Charm++ programs, you need to have a Charm++ build
 installed. If you want to build your own installation, follow the build
-instructions \href{http://charm.cs.illinois.edu/manuals/html/charm++/A.html}{here}. Both
-on EWS and Taub Caumpus cluster, there are two installations of Charm++ that can
-be used instead of building Charm++ yourself. Path is the same in both machines. 
+instructions \href{http://charm.cs.illinois.edu/manuals/html/charm++/A.html}{here}.
+For Linux we recommend the following build line:
+\begin{itemize}
+\item \texttt{./build LIBS net-linux-x86\_64 -j8 --with-production --enable-tracing}
+\end{itemize}
+For Mac we recommend the following build line:
+\begin{itemize}
+\item \texttt{./build LIBS net-darwin-x86\_64 -j8 --with-production --enable-tracing}
+\end{itemize}
+You can also run the interactive smartbuild script and pick your build options using \texttt{./build}.\\
+
+On both EWS and Taub (the campus cluster), there are two installations of Charm++ that can
+be used instead of building Charm++ yourself. The path is the same on both machines.
 \begin{itemize}
 \item /home/acun2/charm/net-linux-x86\_64
 \item /home/acun2/charm/net-linux-x86\_64-smp\\
