@@ -1,5 +1,4 @@
-#CHARMC=/home/acun2/charm/net-darwin-x86_64/bin/charmc $(OPTS)
-CHARMC=/Users/bilge/charm_no_touch/net-darwin-x86_64/bin/charmc $(OPTS)
+CHARMC=/home/acun2/charm/net-linux-x86_64/bin/charmc $(OPTS)
 
 all: arrayHello
 
