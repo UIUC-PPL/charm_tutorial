@@ -6,7 +6,7 @@
 
 \title{MP1 \\ CS 598: Parallel Migratable Objects}
 \author{Fall 2014}
-\date{Due date: Tuesday, September 23, 10 PM}
+\date{Due date: Tuesday, September 25, 10 PM}
 
 \begin{document}
 \maketitle
@@ -31,7 +31,7 @@ numbers. This can create load imbalance depending on the value of $n_i$, which i
 the number of integers the $i^{th}$ chare array element owns. You will perform manual load
 balancing using parallel prefix so as to distribute the numbers such that each
 chare array element owns approximately  $\frac{n}{s}$ integers where  $n = n_1 +
-n_2 \cdots n_s$.\\
+n_2 \cdots n_s$. \textbf{Note that the goal is not sorting the integers here, it is just load balancing the integers that each chare owns while keeping the order of the integers same globally.}\\
 
 
 %First, you create a chare array of size $s$, where each chare $i$ in the chare array generates 
@@ -134,7 +134,7 @@ the load balancing is complete. \\
 The program should have the following signature: \\
 \textit{./charmrun ./mp1 +p4 chare-array-size min max} \\
 
-You should test your code on Taub cluster up to 64 nodes. You can start with a small
+You should test your code on Taub cluster up to 64 processors. You can start with a small
 number of processors and once you make sure your algorithm works, you can test
 with more number of processors. You can use 1024 as
 \textit{chare-array-size} and \textit{min/max} could be in the range of [5,000 - 30,000].
