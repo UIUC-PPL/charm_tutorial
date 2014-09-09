@@ -13,8 +13,8 @@
 
 \textbf{Description:} 
 Parallel prefix can be used to implement a load balancing strategy. In this
-assignment, you will implement a load balancer using parallel prefix. You
-can implement the parallel prefix Charm++ program given in the class slides or
+assignment, you will implement a load balancer using a parallel prefix. You
+can implement the parallel prefix program given in the class slides or you
 can implement your own version. 
 
 %For this assignment you need to write a Charm++ program which does manual load
@@ -26,9 +26,9 @@ To implement the parallel prefix program, create a chare array of size $s$. Each
 chare array element, $i$, generates $n_i$ random integers where the value of
 $n_i$ is randomly generated between $min$ and $max$. The set of numbers generated
 can be stored in an array or stl vector. Your program takes $min$,
-$max$ and $s$ as the command line arguments. Use $rand()$ to generate random
+$max$, and $s$ as the command line arguments. Use $rand()$ to generate random
 numbers. This can create load imbalance depending on the value of $n_i$, which is
-the number of integers $i^{th}$ chare array element owns. Perform manual load
+the number of integers the $i^{th}$ chare array element owns. You will perform manual load
 balancing using parallel prefix so as to distribute the numbers such that each
 chare array element owns approximately  $\frac{n}{s}$ integers where  $n = n_1 +
 n_2 \cdots n_s$.\\
@@ -70,21 +70,21 @@ an example of how load balance can be achieved.
 
 \begin{enumerate}
 
-\item Create a chare array of size $s$ and initialize the integer elements on
+\item Create a chare array of size $s$ and generate the random integers on
 each chare array element. Chare array element $i$ contains $n_i$ random integers
 where $n_i$ is a random number between $min$ and $max$. $min$,
 $max$ and $s$ are input arguments to your program.
 %\item  Create the initial integer elements on all chares
 
-\item Execute the parallel prefix code on number of elements in a chare array
-element, $n_i$, to obtain the prefix sum. Let $p_i$ contain the prefix sum on
+\item Execute the parallel prefix code on the number of elements in a chare array
+element, $n_i$, to obtain the prefix sum. Let $p_i$ contain the prefix sum of the
 chare array element at index $i$ where $p_i = \sum\limits_{k=0}^{i-2} n_k$.
 %\item On every chare, execute code to find prefix sum of number of elements ($p_i$ on chare $i$)
 
-\item Find average number of elements, $avg$, either using reduction or using prefix sum.
+\item Find the average number of elements, $avg$, either using a reduction or using a prefix sum.
 
-\item Once you have the prefix sum, $p_i$, and $avg$, data exchange to load
-balance can be done as follows
+\item Once you have the prefix sum, $p_i$, and $avg$, the data exchange to necessary to achieve load
+balance can be done as follows:
 \begin{itemize}
 \item consider a logical ranking of the elements $0$ to $(n-1)$.
 \item in a balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
@@ -99,18 +99,19 @@ balance can be done as follows
 
 \item Every chare array element identifies the rank for the integer elements it
 owns. For chare array element $i$, the ranks of the elements it contains would
-range from $p_i$ to $p_i + (n_i - 1)$. Integer element with $rank_j$ should be
+range from $p_i$ to $p_i + (n_i - 1)$. Integer element with rank $j$ should be
 sent to chare array element with index $floor(j/avg)$. Send these elements to
 the correct destination using messages. Also send the starting rank so that the
 destination can place these elements in the right location in the array. Do not
-send the elements in separate messages instead bunch them up together so that
-all the elements from a chare array element that needs to be sent to a
-destination is sent in one single message.
+send the elements in separate messages, instead bundle them together so that
+all the elements from a chare array element that need to be sent to a
+destination are sent in a single message.
+% We need to make sure we check this, develop a rubric for this...
 
 %\item On every chare which initially contains elements with ranks $p_i$ to $p_(i+1) - 1$, find the final destination of the elements (element with rankj should go to chare $floor(j/avg)$ ) and send them to the destination chares (also send their starting rank, so the detination can store it in the right place). Do not send individual values in separate messages.. bunch together all the data chare $x$ sends to chare y in a single method invocation.
 
-\item On receiving a message, every chare array element copies these new
-elements in a new list in their correct position (using the ranks)
+\item Upon receiving a message, every chare array element copies these new
+elements into a new list in their correct position (using the ranks).
 %\item On every chare, receive the incoming messages and copy them to a new element list in their correct position (using the ranks)
  
 \end{enumerate}
@@ -120,8 +121,8 @@ should be same as checksum of the integers after the load balancing
 Use \emph{bitvec\_xor} operation of the integers to compute checksum in  \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++
 reductions}. \\
 
-\emph{Exit condition}: You can either use Quiescence Detection (with CkStartQD(..) function, for more
-information about QD go to related
+\emph{Exit condition}: You can either use Quiescence Detection (with the CkStartQD(..) function, for more
+information about QD please see the related
 \href{http://charm.cs.illinois.edu/manuals/html/charm++/12.html#SECTION02350000000000000000}{manual
 section}) to terminate or your own method to detect when
 the load balancing is complete. \\
