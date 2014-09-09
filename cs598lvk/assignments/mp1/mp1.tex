@@ -5,8 +5,8 @@
 \usepackage[colorlinks=true]{hyperref}
 
 \title{MP1 \\ CS 598: Parallel Migratable Objects}
-\author{Fall 2013}
-\date{Due date: Thursday, September 26, 10pm}
+\author{Fall 2014}
+\date{Due date: Tuesday, September 23, 10pm}
 
 \begin{document}
 \maketitle
@@ -17,32 +17,22 @@ balancing of integer numbers among elements of a 1D chare array using the
 given parallel prefix code in the class slides or with your own parallel 
 prefix code. 
 
-First, you create a chare array of size $s$, where each chare $i$ generates 
+First, you create a chare array of size $s$, where each chare $i$ in the chare array generates 
 (and hence owns) $n_i$ integer numbers. For every chare $i$, $n_i$ is a 
 randomly generated number between $min$ and $max$. 
 $min$, $max$ and $s$ are command line parameters. 
 Once $n_i$ is generated, chare $i$ generates $n_i$ random 
-integers (using rand()). The task is to load balance the count
+integers (using rand()). In other words, each chare is creating a random number(between $min$ and $max$), and then creating that many more random numbers(not bounded). You can store the integers in a simple array or a stl vector. The task is to load balance the count
 of integer number among chares, i.e. if $n = n_1 + n_2 \cdots n_s$,
-each chare should get approximately $\frac{n}{s}$ integers.
+each chare should get approximately $\frac{n}{s}$ integers. \\
 
-You can either use Quiescence Detection (with CkStartQD(..) function, for more
-information about QD go to related
-\href{http://charm.cs.illinois.edu/manuals/html/charm++/12.html#SECTION02350000000000000000}{manual
-section}) to terminate or your own method to detect when
-the load balancing is complete. \\
 
-\emph{Correctness Test}: The checksum of the integers in the beginning
-should be same as checksum of the integers after the load balancing
-Use \emph{bitvec\_or} operation of the integers to compute checksum in Charm++
-reduction. \\
-
-\emph{Hint}: Use reduction to get the average number of integer per chare. 
-The average should be useful in deciding which integers should be at which chares
+Use reduction to get the average number of integers per chare. (See \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++ reductions manual section}.) The average should be useful in deciding which integers should be at which chares
 after load balancing. Use exclusive parallel prefix (count of integers in chare $i$
 is not counted in $prefix_i $) to decide which chare array element 
 should send which integers to which chare array element. Figure~\ref{prefix}
-may provide further hints. \\
+may provide hints. \\
+
 
 \begin{figure}[h]
 \centering
@@ -50,6 +40,40 @@ may provide further hints. \\
 \caption{Load balancing integers among chares.}
 \label{prefix}
 \end{figure}
+
+
+\textbf{Detailed Algorithm:} 
+
+\begin{enumerate}
+
+\item  Create the initial integer elements on all chares
+
+\item On every chare, execute code to find prefix sum of number of elements ($p_i$ on chare $i$)
+ 
+\item Find average number of elements either using reduction or information from prefix sum (say avg).
+Data exchange to load balance can be done as follows:
+\begin{itemize}
+\item consider a logical ranking of the elements 1 to n where ranks 0 to $N_1$ - 1 are on chare 1, $N_1$ to $N_2-1$ are on chare 2, and so on..
+\item in the load balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
+\end{itemize}
+
+\item On every chare which initially contains elements with ranks $p_i$ to $p_(i+1) - 1$, find the final destination of the elements (element with rankj should go to chare $floor(j/avg)$ ) and send them to the destination chares (also send their starting rank, so the detination can store it in the right place). Do not send individual values in separate messages.. bunch together all the data chare $x$ sends to chare y in a single method invocation.
+
+\item On every chare, receive the incoming messages and copy them to a new element list in their correct position (using the ranks)
+ 
+\end{enumerate}
+
+\emph{Correctness Test}: The checksum of the integers in the beginning
+should be same as checksum of the integers after the load balancing
+Use \emph{bitvec\_xor} operation of the integers to compute checksum in  \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++
+reductions}. \\
+
+\emph{Exit condition}: You can either use Quiescence Detection (with CkStartQD(..) function, for more
+information about QD go to related
+\href{http://charm.cs.illinois.edu/manuals/html/charm++/12.html#SECTION02350000000000000000}{manual
+section}) to terminate or your own method to detect when
+the load balancing is complete. \\
+
 
 \textbf{Running your code:}
 The program should have the following signature: \\
@@ -60,6 +84,82 @@ number of processors and once you make sure your algorithm works, you can test
 with more number of processors. You can use 1024 as
 \textit{chare-array-size} and \textit{min/max} could be in the range of [5,000 - 30,000].
 \\ \\ \\
+
+\pagebreak
+
+\textbf{A Case Study:} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{before_balance.png}
+\caption{Before load balancing.}
+\label{prefix}
+\end{figure}
+
+After load balancing, all the reds will be in Chare 0, all greens in Chare 1, all blues in Chare2. \\
+Chare 0 will not send anything.\\
+Chare 1 will send everything [3-4] to Chare 0.\\
+Chare 2 will send [5] to Chare 0 and [6-11] to Chare 2.\\
+
+\textbf{P} = Exclusive Prefix Sum \\
+
+\textbf{Fact \#1:}
+If Chare(n) has Size(n) integers, the global rank of the integers are $[P, P+Size(n)-1]$.
+
+\textbf{Fact \#2:}
+After the load balance, Chare(n) needs to have values in the range 
+$[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$\\
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{after_balance.png}
+\caption{After load balancing.}
+\label{prefix}
+\end{figure}
+
+
+\textbf{ Load Balance Algorithm: }
+\begin{itemize}
+\item Decide which part of your array belongs to which chare looking at the global rank of your local array.
+\begin{itemize}
+\item E.g: For Chare 3, local integers have global rank of [5-17]
+\item $[5]$ should be in Chare 0 and [6-11] should be in Chare 1 because of FACT \#2.
+\end{itemize}
+\item Extract values from local array and sent it to the chare together with the index information. 
+\begin{itemize}
+\item int[values], int $start\_index$, int $end\_index$
+\end{itemize}
+
+
+\item Receiving side: The final array can be pre-allocated according to the average. Whenever a chare receives data, put into the pre-allocated place looking at the index information
+
+\end{itemize}
+
+
+
+\textbf{Note:}
+\begin{itemize}
+\item Store the average as double, not as integer.
+\item Even if the avg is not an integer number, the algorithm will still distribute the values evenly, the extra numbers will not be accumulated at the end.
+When calculating the index range $[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$, the values needs to be rounded down.\\
+\end{itemize}
+
+
+\textbf{Another example showing global index values:}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{example.png}
+\label{prefix}
+\end{figure}
+\textbf{Global index values:} $[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$\\
+Chare 0: [0-20] $->$ 21 values after balance\\
+Chare 1: [21-42] $->$ 22 values after balance\\
+Chare 2: [43-64] $->$ 22 values after balance\\
+
+
+\pagebreak
+
 
 \textbf{Submission:}
 Create an mp1 directory in your SVN repository folder and add your code into
