@@ -28,8 +28,9 @@ can be stored in an array or stl vector. Your program takes $min$,
 $max$ and $s$ as the command line arguments. Use $rand()$ to generate random
 numbers. This can create load imbalance depending on the value of $n_i$, which is
 the number of integers $i^{th}$ chare array element owns. Perform manual load
-balancing so as to distribute the numbers such that each chare array element owns
-approximately  $\frac{n}{s}$ integers where  $n = n_1 + n_2 \cdots n_s$.\\
+balancing using parallel prefix so as to distribute the numbers such that each
+chare array element owns approximately  $\frac{n}{s}$ integers where  $n = n_1 +
+n_2 \cdots n_s$.\\
 
 
 %First, you create a chare array of size $s$, where each chare $i$ in the chare array generates 
@@ -45,9 +46,10 @@ approximately  $\frac{n}{s}$ integers where  $n = n_1 + n_2 \cdots n_s$.\\
 To obtain the average number of integers per chare array element, use
 reductions. See
 \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{Charm++
-reductions manual section} for details on reductions. The average is used to
-determine which chare array elements are overloaded and need to send off their
-load. Figure~\ref{prefix} gives an example of how load balance can be achieved. 
+reductions manual section} for details on reductions. The prefix sum and the
+average is used to determine which chare array elements need to send which
+integer elements to their neighbor. Figure~\ref{prefix} gives an example of how
+load balance can be achieved. 
 
 %Use reduction to get the average number of integers per chare. (See \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++ reductions manual section}.) The average should be useful in deciding which integers should be at which chares
 %after load balancing. Use exclusive parallel prefix (count of integers in chare $i$
@@ -69,19 +71,31 @@ load. Figure~\ref{prefix} gives an example of how load balance can be achieved.
 \begin{enumerate}
 
 \item Create a chare array of size $s$ and initialize the integer elements on
-each chare array element. Chare array element $i$ contains $n_i$ integer
-elements where $n_i$ is a random number between $min$ and $max$. $min$,
+each chare array element. Chare array element $i$ contains $n_i$ random integers
+where $n_i$ is a random number between $min$ and $max$. $min$,
 $max$ and $s$ are input arguments to your program.
 %\item  Create the initial integer elements on all chares
 
-\item On every chare, execute code to find prefix sum of number of elements ($p_i$ on chare $i$)
- 
-\item Find average number of elements either using reduction or information from prefix sum (say avg).
-Data exchange to load balance can be done as follows:
+\item Execute the parallel prefix code on number of elements in a chare array
+element, $n_i$, to obtain the prefix sum. Let $p_i$ contain the prefix sum on
+chare array element at index $i$ where $p_i = \sum\limits_{k=0}^{i-2} n_k$.
+%\item On every chare, execute code to find prefix sum of number of elements ($p_i$ on chare $i$)
+
+\item Find average number of elements, $avg$, either using reduction or using prefix sum.
+
+\item Once you have the prefix sum, $p_i$ and $avg$, data exchange to load
+balance can be done as follows
 \begin{itemize}
-\item consider a logical ranking of the elements 1 to n where ranks 0 to $N_1$ - 1 are on chare 1, $N_1$ to $N_2-1$ are on chare 2, and so on..
-\item in the load balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
+\item consider a logical ranking of the elements 1 to n.
+\item in a balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
 \end{itemize}
+
+%\item Find average number of elements either using reduction or information from prefix sum (say avg).
+%Data exchange to load balance can be done as follows:
+%\begin{itemize}
+%\item consider a logical ranking of the elements 1 to n where ranks 0 to $N_1$ - 1 are on chare 1, $N_1$ to $N_2-1$ are on chare 2, and so on..
+%\item in the load balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
+%\end{itemize}
 
 \item On every chare which initially contains elements with ranks $p_i$ to $p_(i+1) - 1$, find the final destination of the elements (element with rankj should go to chare $floor(j/avg)$ ) and send them to the destination chares (also send their starting rank, so the detination can store it in the right place). Do not send individual values in separate messages.. bunch together all the data chare $x$ sends to chare y in a single method invocation.
 
