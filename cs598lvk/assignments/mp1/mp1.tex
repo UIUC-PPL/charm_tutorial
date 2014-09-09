@@ -3,10 +3,11 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorlinks=true]{hyperref}
+\usepackage{parskip}
 
 \title{MP1 \\ CS 598: Parallel Migratable Objects}
 \author{Fall 2014}
-\date{Due date: Thursday, September 25, 10 PM CST}
+\date{Due date: Thursday, September 25, 10 PM CDT}
 
 \begin{document}
 \maketitle
@@ -44,8 +45,9 @@ parallel prefix of the integers, it is just load balancing the integers that eac
 %of integer number among chares, i.e. if $n = n_1 + n_2 \cdots n_s$,
 %each chare should get approximately $\frac{n}{s}$ integers. \\
 
-The prefix sum and the average elements per chare array element is used to
-determine which chare array elements need to send which integer elements.  To
+The prefix sum and the average number of integer elements per chare array
+element are used to
+determine which integer elements each chare  array element needs to send.  To
 obtain the average number of integers per chare array element, use reductions.
 See
 \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{Charm++
@@ -96,11 +98,11 @@ balance can be done as follows:
 \item in a balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
 \item Every chare array element identifies the rank for $elems$, which is the integer elements it
 owns. For chare array element $i$, the ranks of the integers in $elems$ would
-range from $p_i$ to $p_i + (n_i - 1)$. Integer element with rank $j$ should be
-sent to chare array element with index $floor(j/avg)$. Send these elements to
+range from $p_i$ to $p_i + (n_i - 1)$. The integer element with rank $j$ should be
+sent to chare array element with index $\lfloor(j/avg)\rfloor$. Send these elements to
 the correct destination using messages. Also send the starting rank so that the
 destination can place these elements in the right location in the array. Do not
-send the elements in separate messages, instead bundle them together so that
+send the elements in separate messages. Instead bundle them together so that
 all the elements from a chare array element that need to be sent to a
 destination are sent in a single message.
 \end{itemize}
@@ -118,7 +120,8 @@ destination are sent in a single message.
 %\item On every chare which initially contains elements with ranks $p_i$ to $p_(i+1) - 1$, find the final destination of the elements (element with rankj should go to chare $floor(j/avg)$ ) and send them to the destination chares (also send their starting rank, so the detination can store it in the right place). Do not send individual values in separate messages.. bunch together all the data chare $x$ sends to chare y in a single method invocation.
 
 \item Upon receiving a message, every chare array element copies these new
-elements into a new list in their correct position (using the ranks).
+elements into a new list in their correct position (using the rank provided by
+the sender).
 Note, we are simply load balancing the number of integers contained by each chare array element
 and the original overall order of the integers should be preserved.
 %\item On every chare, receive the incoming messages and copy them to a new element list in their correct position (using the ranks)
@@ -144,7 +147,7 @@ The program should have the following signature: \\
 You should test your code on Taub cluster up to 64 processors. You can start with a small
 number of processors and once you make sure your algorithm works, you can test
 with more number of processors. You can use 1024 as
-\textit{chare-array-size} and \textit{min/max} could be in the range of [5,000 - 30,000].
+\textit{chare-array-size} and \textit{min/max} in the range of [5,000 - 30,000].
 \\ \\ \\
 
 %\pagebreak
@@ -166,11 +169,11 @@ Chare 2 will send [5] to Chare 0 and [6-11] to Chare 2.\\
 \textbf{P} = Exclusive Prefix Sum \\
 
 \textbf{Fact \#1:}
-If Chare(n) has Size(n) integers, the global rank of the integers are $[P, P+Size(n)-1]$.
+If Chare $n$ has $k$ integers, the global rank of the integers are $[P, P+k-1]$.
 
 \textbf{Fact \#2:}
-After the load balance, Chare(n) needs to have values in the range 
-$[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$\\
+After the load balance, Chare $n$ needs to have values in the range 
+$[thisIndex()*avg, (thisIndex()+1)*avg-1]$\\
 
 \begin{figure}[h]
 \centering
@@ -182,14 +185,14 @@ $[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$\\
 
 \textbf{ Load Balance Algorithm: }
 \begin{itemize}
-\item Decide which part of your array belongs to which chare looking at the global rank of your local array.
+\item Decide which part of your array belongs to which chare by looking at the global rank of your local array.
 \begin{itemize}
 \item E.g: For Chare 3, local integers have global rank of [5-17]
 \item $[5]$ should be in Chare 0 and [6-11] should be in Chare 1 because of FACT \#2.
 \end{itemize}
-\item Extract values from local array and sent it to the chare together with the index information. 
+\item Extract values from local array and send it to the chare together with the index information. 
 \begin{itemize}
-\item int[values], int $start\_index$, int $end\_index$
+\item int[] values, int $start\_index$, int $end\_index$
 \end{itemize}
 
 
@@ -200,10 +203,12 @@ $[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$\\
 
 
 \textbf{Note:}
+Here is a suggested way for the case where the total number of integers is not
+evenly divisible by $s$ (size of the chare array).
 \begin{itemize}
 \item Store the average as double, not as integer.
-\item Even if the avg is not an integer number, the algorithm will still distribute the values evenly, the extra numbers will not be accumulated at the end.
-When calculating the index range $[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$, the values needs to be rounded down.\\
+\item When calculating the index range $[thisIndex()*avg, (thisIndex()+1)*avg-1]$, the values needs to be rounded down.\\
+%Even if the avg is not an integer number, the algorithm should still distribute the values evenly, the extra numbers will not be accumulated at the end.
 \end{itemize}
 
 
@@ -214,7 +219,7 @@ When calculating the index range $[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$, t
 \includegraphics[width=\textwidth]{example.png}
 \label{prefix}
 \end{figure}
-\textbf{Global index values:} $[thisIndex(n)*avg, (thisIndex(n)+1)*avg-1]$\\
+\textbf{Global index values:} $[thisIndex()*avg, (thisIndex()+1)*avg-1]$\\
 Chare 0: [0-20] $->$ 21 values after balance\\
 Chare 1: [21-42] $->$ 22 values after balance\\
 Chare 2: [43-64] $->$ 22 values after balance\\
