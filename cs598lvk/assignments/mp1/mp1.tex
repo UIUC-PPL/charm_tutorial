@@ -73,7 +73,8 @@ an example of how load balance can be achieved.
 \item Create a chare array of size $s$ and generate the random integers on
 each chare array element. Chare array element $i$ contains $n_i$ random integers
 where $n_i$ is a random number between $min$ and $max$. $min$,
-$max$ and $s$ are input arguments to your program.
+$max$ and $s$ are input arguments to your program.\\$ n_i = rand() \%
+(max - min) + min;\\ for(int\ k\ =\ 0;\ k\ <\ n_i;\ k++)\ {elems[k]\ =\ rand();}$
 %\item  Create the initial integer elements on all chares
 
 \item Execute the parallel prefix code on the number of elements in a chare array
