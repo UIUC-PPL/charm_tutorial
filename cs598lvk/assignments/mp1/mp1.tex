@@ -6,14 +6,14 @@
 
 \title{MP1 \\ CS 598: Parallel Migratable Objects}
 \author{Fall 2014}
-\date{Due date: Tuesday, September 25, 10 PM}
+\date{Due date: Thursday, September 25, 10 PM}
 
 \begin{document}
 \maketitle
 
 \textbf{Description:} 
 Parallel prefix can be used to implement a load balancing strategy. In this
-assignment, you will implement a load balancer using a parallel prefix. You
+assignment, you will implement a load balancer using parallel prefix. You
 can implement the parallel prefix program given in the class slides or you
 can implement your own version. 
 
@@ -31,7 +31,7 @@ numbers. This can create load imbalance depending on the value of $n_i$, which i
 the number of integers the $i^{th}$ chare array element owns. You will perform manual load
 balancing using parallel prefix so as to distribute the numbers such that each
 chare array element owns approximately  $\frac{n}{s}$ integers where  $n = n_1 +
-n_2 \cdots n_s$. \textbf{Note that the goal is not sorting the integers here, it is just load balancing the integers that each chare owns while keeping the order of the integers same globally.}\\
+n_2 \cdots n_s$. \textbf{Note that the goal is not sorting the integers here, it is just load balancing the integers that each chare owns while keeping the order of the integers the same globally.}\\
 
 
 %First, you create a chare array of size $s$, where each chare $i$ in the chare array generates 
