@@ -12,9 +12,9 @@
 \maketitle
 
 \textbf{Description:} 
-For this assignment, you need to write a parallel prefix Charm++ program. You
-can implement the one given in the class slides or can implement your own
-version. You will also perform manual load balancing.
+For this assignment, you will implement a load balancer using the parallel
+prefix. You can implement the parallel prefix Charm++ program given in the class
+slides or can implement your own version. 
 
 %For this assignment you need to write a Charm++ program which does manual load
 %balancing of integer numbers among elements of a 1D chare array using the 
@@ -68,7 +68,11 @@ load. Figure~\ref{prefix} gives an example of how load balance can be achieved.
 
 \begin{enumerate}
 
-\item  Create the initial integer elements on all chares
+\item Create a chare array of size $s$ and initialize the integer elements on
+each chare array element. Chare array element $i$ contains $n_i$ integer
+elements where $n_i$ is a random number between $min$ and $max$. $min$,
+$max$ and $s$ are input arguments to your program.
+%\item  Create the initial integer elements on all chares
 
 \item On every chare, execute code to find prefix sum of number of elements ($p_i$ on chare $i$)
  
