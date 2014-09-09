@@ -12,26 +12,48 @@
 \maketitle
 
 \textbf{Description:} 
-For this assignment you need to write a Charm++ program which does manual load
-balancing of integer numbers among elements of a 1D chare array using the 
-given parallel prefix code in the class slides or with your own parallel 
-prefix code. 
+For this assignment, you need to write a parallel prefix Charm++ program. You
+can implement the one given in the class slides or can implement your own
+version. You will also perform manual load balancing.
 
-First, you create a chare array of size $s$, where each chare $i$ in the chare array generates 
-(and hence owns) $n_i$ integer numbers. For every chare $i$, $n_i$ is a 
-randomly generated number between $min$ and $max$. 
-$min$, $max$ and $s$ are command line parameters. 
-Once $n_i$ is generated, chare $i$ generates $n_i$ random 
-integers (using rand()). In other words, each chare is creating a random number(between $min$ and $max$), and then creating that many more random numbers(not bounded). You can store the integers in a simple array or a stl vector. The task is to load balance the count
-of integer number among chares, i.e. if $n = n_1 + n_2 \cdots n_s$,
-each chare should get approximately $\frac{n}{s}$ integers. \\
+%For this assignment you need to write a Charm++ program which does manual load
+%balancing of integer numbers among elements of a 1D chare array using the 
+%given parallel prefix code in the class slides or with your own parallel 
+%prefix code. 
+
+To implement the parallel prefix program, create a chare array of size $s$. Each
+chare array element, $i$, generates $n_i$ random integers where the value of
+$n_i$ is again randomly generated between $min$ and $max$. The set of numbers generated
+can be stored in an array or stl vector. Your program takes $min$,
+$max$ and $s$ as the command line arguments. Use $rand()$ to generate random
+numbers. This can create load imbalance depending on the value of $n_i$, which is
+the number of integers $i^{th}$ chare array element owns. Perform manual load
+balancing so as to distribute the numbers such that each chare array element owns
+approximately  $\frac{n}{s}$ integers where  $n = n_1 + n_2 \cdots n_s$.\\
 
 
-Use reduction to get the average number of integers per chare. (See \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++ reductions manual section}.) The average should be useful in deciding which integers should be at which chares
-after load balancing. Use exclusive parallel prefix (count of integers in chare $i$
-is not counted in $prefix_i $) to decide which chare array element 
-should send which integers to which chare array element. Figure~\ref{prefix}
-may provide hints. \\
+%First, you create a chare array of size $s$, where each chare $i$ in the chare array generates 
+%(and hence owns) $n_i$ integer numbers. For every chare $i$, $n_i$ is a 
+%randomly generated number between $min$ and $max$. 
+%$min$, $max$ and $s$ are command line parameters. 
+%Once $n_i$ is generated, chare $i$ generates $n_i$ random 
+%integers (using rand()). In other words, each chare is creating a random number(between $min$ and $max$), and then creating that many more random numbers(not bounded). You can store the integers in a simple array or a stl vector. The task is to load balance the count
+%of integer number among chares, i.e. if $n = n_1 + n_2 \cdots n_s$,
+%each chare should get approximately $\frac{n}{s}$ integers. \\
+
+
+To obtain the average number of integers per chare array element, use
+reductions. See
+\href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{Charm++
+reductions manual section} for details on reductions. The average is used to
+determine which chare array elements are overloaded and need to send off their
+load. Figure~\ref{prefix} gives an example of how load balance can be achieved. 
+
+%Use reduction to get the average number of integers per chare. (See \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++ reductions manual section}.) The average should be useful in deciding which integers should be at which chares
+%after load balancing. Use exclusive parallel prefix (count of integers in chare $i$
+%is not counted in $prefix_i $) to decide which chare array element 
+%should send which integers to which chare array element. Figure~\ref{prefix}
+%may provide hints. \\
 
 
 \begin{figure}[h]
