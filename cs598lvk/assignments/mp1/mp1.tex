@@ -86,7 +86,7 @@ chare array element at index $i$ where $p_i = \sum\limits_{k=0}^{i-2} n_k$.
 \item Once you have the prefix sum, $p_i$, and $avg$, the data exchange to necessary to achieve load
 balance can be done as follows:
 \begin{itemize}
-\item consider a logical ranking of the elements $0$ to $(n-1)$.
+\item consider a logical ranking of all the elements $0$ to $(n-1)$.
 \item in a balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
 \end{itemize}
 
@@ -112,14 +112,16 @@ destination are sent in a single message.
 
 \item Upon receiving a message, every chare array element copies these new
 elements into a new list in their correct position (using the ranks).
+Note, we are simply load balancing the number of integers contained by each chare array element
+and the original overall order of the integers should be preserved.
 %\item On every chare, receive the incoming messages and copy them to a new element list in their correct position (using the ranks)
  
 \end{enumerate}
 
 \emph{Correctness Test}: The checksum of the integers in the beginning
-should be same as checksum of the integers after the load balancing
-Use \emph{bitvec\_xor} operation of the integers to compute checksum in  \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++
-reductions}. \\
+should be the same as the checksum of the integers after load balancing.
+Use the \emph{bitvec\_xor} operation over all the integers to compute a checksum (see the \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++
+reductions} section in the manual). \\
 
 \emph{Exit condition}: You can either use Quiescence Detection (with the CkStartQD(..) function, for more
 information about QD please see the related
