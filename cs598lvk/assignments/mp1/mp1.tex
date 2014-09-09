@@ -6,7 +6,7 @@
 
 \title{MP1 \\ CS 598: Parallel Migratable Objects}
 \author{Fall 2014}
-\date{Due date: Thursday, September 25, 10 PM}
+\date{Due date: Thursday, September 25, 10 PM CST}
 
 \begin{document}
 \maketitle
@@ -25,13 +25,14 @@ can implement your own version.
 To implement the parallel prefix program, create a chare array of size $s$. Each
 chare array element, $i$, generates $n_i$ random integers where the value of
 $n_i$ is randomly generated between $min$ and $max$. The set of numbers generated
-can be stored in an array or stl vector. Your program takes $min$,
-$max$, and $s$ as the command line arguments. Use $rand()$ to generate random
+can be stored in an array or stl vector which we will refer to as $elems$. Your program takes $min$,
+$max$, and $s$ as the command line arguments. Use $rand()$ function to generate random
 numbers. This can create load imbalance depending on the value of $n_i$, which is
-the number of integers the $i^{th}$ chare array element owns. You will perform manual load
-balancing using parallel prefix so as to distribute the numbers such that each
-chare array element owns approximately  $\frac{n}{s}$ integers where  $n = n_1 +
-n_2 \cdots n_s$. \textbf{Note that the goal is not sorting the integers here, it is just load balancing the integers that each chare owns while keeping the order of the integers the same globally.}\\
+the number of $elems$ the $i^{th}$ chare array element owns. You will perform manual load
+balancing using parallel prefix so as to distribute the $elems$ such that each
+chare array element owns approximately  $\frac{n}{s}$ $elems$ where  $n = n_1 +
+n_2 \cdots n_s$. \textbf{Note that the goal is not sorting or finding the
+parallel prefix of the integers, it is just load balancing the integers that each chare owns while keeping the order of the integers the same globally.}\\
 
 
 %First, you create a chare array of size $s$, where each chare $i$ in the chare array generates 
@@ -48,8 +49,9 @@ determine which chare array elements need to send which integer elements.  To
 obtain the average number of integers per chare array element, use reductions.
 See
 \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{Charm++
-reductions manual section} for details on reductions. Figure~\ref{prefix} gives
-an example of how load balance can be achieved. 
+reductions manual section} for details on reductions.\\ 
+
+Figure~\ref{prefix} gives an example of how load balance can be achieved.\\
 
 %Use reduction to get the average number of integers per chare. (See \href{http://charm.cs.uiuc.edu/manuals/html/charm++/4.html#SECTION01361000000000000000}{ Charm++ reductions manual section}.) The average should be useful in deciding which integers should be at which chares
 %after load balancing. Use exclusive parallel prefix (count of integers in chare $i$
@@ -73,23 +75,37 @@ an example of how load balance can be achieved.
 \item Create a chare array of size $s$ and generate the random integers on
 each chare array element. Chare array element $i$ contains $n_i$ random integers
 where $n_i$ is a random number between $min$ and $max$. $min$,
-$max$ and $s$ are input arguments to your program.\\$ n_i = rand() \%
+$max$ and $s$ are input arguments to your program.\\Here is the pseudocode for
+this.\\$ n_i = rand() \%
 (max - min) + min;\\ for(int\ k\ =\ 0;\ k\ <\ n_i;\ k++)\ {elems[k]\ =\ rand();}$
 %\item  Create the initial integer elements on all chares
 
 \item Execute the parallel prefix code on the number of elements in a chare array
-element, $n_i$, to obtain the prefix sum. Let $p_i$ contain the prefix sum of the
-chare array element at index $i$ where $p_i = \sum\limits_{k=0}^{i-2} n_k$.
+element, $n_i$, to obtain the prefix sum. Note that prefix sum is not done on
+$elems$ but on $n_i$. Let $p_i$ be the prefix sum of the
+chare array element at index $i$ where $p_i = \sum\limits_{k=0}^{i-1} n_k$.
 %\item On every chare, execute code to find prefix sum of number of elements ($p_i$ on chare $i$)
 
-\item Find the average number of elements, $avg$, either using a reduction or using a prefix sum.
+\item Find the average number of elements, $avg$, either using a reduction or
+using the prefix sum.
 
-\item Once you have the prefix sum, $p_i$, and $avg$, the data exchange to necessary to achieve load
+\item Once you have the prefix sum, $p_i$, and $avg$, the data exchange required to achieve load
 balance can be done as follows:
 \begin{itemize}
 \item consider a logical ranking of all the elements $0$ to $(n-1)$.
 \item in a balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
+\item Every chare array element identifies the rank for $elems$, which is the integer elements it
+owns. For chare array element $i$, the ranks of the integers in $elems$ would
+range from $p_i$ to $p_i + (n_i - 1)$. Integer element with rank $j$ should be
+sent to chare array element with index $floor(j/avg)$. Send these elements to
+the correct destination using messages. Also send the starting rank so that the
+destination can place these elements in the right location in the array. Do not
+send the elements in separate messages, instead bundle them together so that
+all the elements from a chare array element that need to be sent to a
+destination are sent in a single message.
 \end{itemize}
+
+% We need to make sure we check this, develop a rubric for this...
 
 %\item Find average number of elements either using reduction or information from prefix sum (say avg).
 %Data exchange to load balance can be done as follows:
@@ -98,16 +114,6 @@ balance can be done as follows:
 %\item in the load balanced distribution, elements with ranks $avg*i$ to $avg*(i +1)-1$ will reside on chare $i$
 %\end{itemize}
 
-\item Every chare array element identifies the rank for the integer elements it
-owns. For chare array element $i$, the ranks of the elements it contains would
-range from $p_i$ to $p_i + (n_i - 1)$. Integer element with rank $j$ should be
-sent to chare array element with index $floor(j/avg)$. Send these elements to
-the correct destination using messages. Also send the starting rank so that the
-destination can place these elements in the right location in the array. Do not
-send the elements in separate messages, instead bundle them together so that
-all the elements from a chare array element that need to be sent to a
-destination are sent in a single message.
-% We need to make sure we check this, develop a rubric for this...
 
 %\item On every chare which initially contains elements with ranks $p_i$ to $p_(i+1) - 1$, find the final destination of the elements (element with rankj should go to chare $floor(j/avg)$ ) and send them to the destination chares (also send their starting rank, so the detination can store it in the right place). Do not send individual values in separate messages.. bunch together all the data chare $x$ sends to chare y in a single method invocation.
 
