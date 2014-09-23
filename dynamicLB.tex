@@ -470,6 +470,8 @@ specified number of communicating objects in 2D-mesh.
     \begin{itemize}
        \item Depends on the application characteristics
        \item Depends on the machine the application is run on
+       \item Frequent load balancing leads to high overhead and no benefit
+       \item Infrequent load balancing leads to load imbalance and results in no gains
     \end{itemize}
     
     \item Monitors the application continuously and predicts behavior.
@@ -479,6 +481,34 @@ specified number of communicating objects in 2D-mesh.
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Metabalancer Utilization Graph for Fractography}
-\includegraphics[width=\textwidth]{figures/meta-util}
+  \frametitle{Fractography with No Load Balancing}
+  \begin{columns}
+    \begin{column}[T]{2.8in}
+      \includegraphics[width=2.8in, height=1.5in]{figures/without-meta-util}
+    \end{column}
+    \begin{column}[T]{5cm}
+      \begin{itemize}
+        \item[]
+        \item Large variation in processor utilization 
+        \item Low utilization leading to resource wastage 
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fractography with Meta-Balancer}
+  \begin{columns}
+    \begin{column}[T]{2.8in}
+      \includegraphics[width=2.8in, height=1.5in]{figures/meta-util}
+    \end{column}
+    \begin{column}[T]{5cm}
+      \begin{itemize}
+        \vspace {-0.25cm}
+        \item Identifies the need for frequent load balancing in the beginning 
+        \item Frequency of load balancing decreases as load becomes balanced
+        \item Increases overall processor utilization and gives gain of $31\%$
+      \end{itemize}
+    \end{column}
+  \end{columns}
 \end{frame}
