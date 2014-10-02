@@ -32,7 +32,9 @@ class Main: public CBase_Main {
     // TODO: Add entry methods which will be a target of the reduction for avg
     // and max counts and exiting when the iterations are done
 
-
+    void printTotal(int total, int max, int iter){
+        CkPrintf("ITER %d, MAX: %d, TOTAL: %d\n", iter, max, total);
+    }
 };
 
 // This class represent the cells of the simulation.
